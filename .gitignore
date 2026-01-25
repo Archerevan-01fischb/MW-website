@@ -1,0 +1,56 @@
+# IDE
+.idea/
+*.iml
+
+# Claude
+.claude/
+
+# Environment / Secrets
+.env
+*.env
+api/.env
+
+# Files with hardcoded credentials (use .template versions)
+api/start_api.sh
+api/search_api.py
+api/get-pip.py
+
+# Database (large, download from NAS)
+api/midwinter_unified.db
+
+# NAS system files
+@Recently-Snapshot/
+@Recycle/
+
+# Rate limit files
+forms/.rate_*
+
+# Logs
+*.log
+forms/mailing_list.csv
+
+# Large binary files (download from NAS if needed)
+Midwinter_Manual.pdf
+releases/
+
+# Large asset files (deployed directly to NAS, not via git)
+map/
+portraits/new/
+midwinter_map.dzi
+midwinter_map_files/
+sprites/icons/*_new.png
+videos/
+Enemy commanders/
+midwinter-remaster/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp files
+*.tmp
+*.bak
+nul
+midwinter-remaster/
+videos/

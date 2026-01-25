@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>32 Playable Characters - Midwinter Remaster | Complete Character Roster</title>
+    <meta name="description" content="Browse all 32 playable characters in Midwinter. Each character has unique skills, starting locations, and roles in defending the island from General Masters.">
+    <meta name="keywords" content="Midwinter characters, playable characters, character roster, John Stark, character skills, Midwinter heroes">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midwinter-remaster.titanium-helix.com/characters.html">
+    <meta property="og:title" content="32 Playable Characters - Midwinter Remaster">
+    <meta property="og:description" content="Browse all 32 playable characters with unique skills and starting locations.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://midwinter-remaster.titanium-helix.com/characters.html">
+    <meta property="twitter:title" content="32 Playable Characters - Midwinter Remaster">
+    <meta property="twitter:description" content="Browse all 32 playable characters with unique skills and starting locations.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1926 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .nav {
+            background: rgba(10, 22, 40, 0.95);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: #64b4ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .nav a:hover {
+            color: #9dd1ff;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #64b4ff;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #8ba4c4;
+            margin-bottom: 2rem;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .character-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            padding: 1rem;
+            border-radius: 8px;
+            background: rgba(20, 40, 70, 0.3);
+            border: 1px solid rgba(100, 180, 255, 0.1);
+            transition: all 0.2s;
+        }
+        
+        .character-card:hover {
+            background: rgba(30, 60, 100, 0.4);
+            border-color: rgba(100, 180, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .portrait-frame {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border: 2px solid rgba(100, 180, 255, 0.3);
+            border-radius: 4px;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .portrait {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+
+        /* Portrait cycling for characters with new graphics */
+        .portrait-frame.cycling .portrait {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .portrait-frame.cycling .portrait.old {
+            z-index: 1;
+        }
+
+        .portrait-frame.cycling .portrait.new {
+            z-index: 2;
+            opacity: 0;
+        }
+        
+        .character-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #64b4ff;
+            margin-bottom: 0.25rem;
+        }
+        
+        .character-location {
+            font-size: 0.75rem;
+            color: #8ba4c4;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .characters-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } h1 { font-size: 0.7rem; } .character-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; } .character-card { padding: 0.75rem; } .portrait { width: 60px; height: 60px; } .char-name { font-size: 0.4rem; } }
+@media (max-width: 480px) { .character-grid { grid-template-columns: 1fr 1fr; } .portrait { width: 50px; height: 50px; } }
+</style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="decisions.html" class="logo">MW</a>
+            <div class="nav-links">
+                <a href="characters.html">Characters</a>
+                <a href="original.html">Original Game</a>
+                <a href="terrain.html">Terrain</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <h1>The 32 Characters</h1>
+        <p class="subtitle">The defenders of Dovorak Island against General Masters' invasion</p>
+        
+        <div class="characters-grid">
+            <a href="character_1.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/01 - Captain John Stark.png" class="portrait old" alt="Captain John Stark (Original)">
+                    <img src="portraits/new/01 - Captain John Stark.png" class="portrait new" alt="Captain John Stark (New)">
+                </div>
+                <div class="character-name">CAPTAIN JOHN STARK</div>
+                <div class="character-location">On Patrol</div>
+            </a>
+            <a href="character_2.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/08 - Constable Harvey Pringle.png" class="portrait old" alt="Constable Harvey Pringle (Original)">
+                    <img src="portraits/new/08 - Constable Harvey Pringle.png" class="portrait new" alt="Constable Harvey Pringle (New)">
+                </div>
+                <div class="character-name">CONSTABLE HARVEY PRINGLE</div>
+                <div class="character-location">Dogstar Bay</div>
+            </a>
+            <a href="character_3.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/06 - Constable Gordon Macleod.png" class="portrait old" alt="Constable Gordon Macleod (Original)">
+                    <img src="portraits/new/06 - Constable Gordon Macleod.png" class="portrait new" alt="Constable Gordon Macleod (New)">
+                </div>
+                <div class="character-name">CONSTABLE GORDON MACLEOD</div>
+                <div class="character-location">Heavens Gate</div>
+            </a>
+            <a href="character_4.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/05 - Constable Fergus Flynn.png" class="portrait old" alt="Constable Fergus Flynn (Original)">
+                    <img src="portraits/new/05 - Constable Fergus Flynn.png" class="portrait new" alt="Constable Fergus Flynn (New)">
+                </div>
+                <div class="character-name">CONSTABLE FERGUS FLYNN</div>
+                <div class="character-location">Eagle Mountain</div>
+            </a>
+            <a href="character_5.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/21 - Karl Rudzinski.png" class="portrait old" alt="Karl Rudzinski (Original)">
+                    <img src="portraits/new/21 - Karl Rudzinski.png" class="portrait new" alt="Karl Rudzinski (New)">
+                </div>
+                <div class="character-name">KARL RUDZINSKI</div>
+                <div class="character-location">Western Plains</div>
+            </a>
+            <a href="character_6.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/16 - Franco Grazzini.png" class="portrait old" alt="Franco Grazzini (Original)">
+                    <img src="portraits/new/16 - Franco Grazzini.png" class="portrait new" alt="Franco Grazzini (New)">
+                </div>
+                <div class="character-name">FRANCO GRAZZINI</div>
+                <div class="character-location">Lindberg Plateau</div>
+            </a>
+            <a href="character_7.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/18 - Jean-Luc Chabrun.png" class="portrait old" alt="Jean-Luc Chabrun (Original)">
+                    <img src="portraits/new/18 - Jean-Luc Chabrun.png" class="portrait new" alt="Jean-Luc Chabrun (New)">
+                </div>
+                <div class="character-name">JEAN-LUC CHABRUN</div>
+                <div class="character-location">Thunder Coast</div>
+            </a>
+            <a href="character_8.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/29 - Sergeant George Tasker.png" class="portrait old" alt="Sergeant George Tasker (Original)">
+                    <img src="portraits/new/29 - Sergeant George Tasker.png" class="portrait new" alt="Sergeant George Tasker (New)">
+                </div>
+                <div class="character-name">SERGEANT GEORGE TASKER</div>
+                <div class="character-location">Fox Valley</div>
+            </a>
+            <a href="character_9.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/30 - Sergeant Tom Llewellyn.png" class="portrait" alt="Sergeant Tom Llewellyn">
+                </div>
+                <div class="character-name">SERGEANT TOM LLEWELLYN</div>
+                <div class="character-location">Barefoot Valley</div>
+            </a>
+            <a href="character_10.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/31 - Sergeant Victor Grice.png" class="portrait" alt="Sergeant Victor Grice">
+                </div>
+                <div class="character-name">SERGEANT VICTOR GRICE</div>
+                <div class="character-location">Badger Heath</div>
+            </a>
+            <a href="character_11.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/15 - Doctor Pierre Revel.png" class="portrait old" alt="Doctor Pierre Revel (Original)">
+                    <img src="portraits/new/15 - Doctor Pierre Revel.png" class="portrait new" alt="Doctor Pierre Revel (New)">
+                </div>
+                <div class="character-name">DOCTOR PIERRE REVEL</div>
+                <div class="character-location">Coldheart Pass</div>
+            </a>
+            <a href="character_12.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/22 - Konrad Rudel.png" class="portrait old" alt="Konrad Rudel (Original)">
+                    <img src="portraits/new/22 - Konrad Rudel.png" class="portrait new" alt="Konrad Rudel (New)">
+                </div>
+                <div class="character-name">KONRAD RUDEL</div>
+                <div class="character-location">Whispering Mountains</div>
+            </a>
+            <a href="character_13.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/32 - Virginia Caygill.png" class="portrait old" alt="Virginia Caygill (Original)">
+                    <img src="portraits/new/32 - Virginia Caygill.png" class="portrait new" alt="Virginia Caygill (New)">
+                </div>
+                <div class="character-name">VIRGINIA CAYGILL</div>
+                <div class="character-location">Snowstorm Valley</div>
+            </a>
+            <a href="character_14.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/27 - Professor Olaf Kristiansen.png" class="portrait" alt="Professor Olaf Kristiansen">
+                </div>
+                <div class="character-name">PROFESSOR OLAF KRISTIANSEN</div>
+                <div class="character-location">Diamond Valley</div>
+            </a>
+            <a href="character_15.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/20 - Jeremiah Gunn.png" class="portrait" alt="Jeremiah Gunn">
+                </div>
+                <div class="character-name">JEREMIAH GUNN</div>
+                <div class="character-location">Morgans Cove</div>
+            </a>
+            <a href="character_16.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/04 - Constable Federico Garcia.png" class="portrait old" alt="Constable Federico Garcia (Original)">
+                    <img src="portraits/new/04 - Constable Federico Garcia.png" class="portrait new" alt="Constable Federico Garcia (New)">
+                </div>
+                <div class="character-name">CONSTABLE FEDERICO GARCIA</div>
+                <div class="character-location">Sierra Garcia</div>
+            </a>
+            <a href="character_17.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/09 - Constable Homer Wright.png" class="portrait" alt="Constable Homer Wright">
+                </div>
+                <div class="character-name">CONSTABLE HOMER WRIGHT</div>
+                <div class="character-location">Mountains of Summer</div>
+            </a>
+            <a href="character_18.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/07 - Constable Harry Cropper.png" class="portrait old" alt="Constable Harry Cropper (Original)">
+                    <img src="portraits/new/07 - Constable Harry Cropper.png" class="portrait new" alt="Constable Harry Cropper (New)">
+                </div>
+                <div class="character-name">CONSTABLE HARRY CROPPER</div>
+                <div class="character-location">Cormorant Cove</div>
+            </a>
+            <a href="character_19.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/13 - Constable Shigeru Iwamoto.png" class="portrait" alt="Constable Shigeru Iwamoto">
+                </div>
+                <div class="character-name">CONSTABLE SHIGERU IWAMOTO</div>
+                <div class="character-location">Millpond Flats</div>
+            </a>
+            <a href="character_20.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/02 - Constable Bill Doughty.png" class="portrait old" alt="Constable Bill Doughty (Original)">
+                    <img src="portraits/new/02 - Constable Bill Doughty.png" class="portrait new" alt="Constable Bill Doughty (New)">
+                </div>
+                <div class="character-name">CONSTABLE BILL DOUGHTY</div>
+                <div class="character-location">Glen Darrow</div>
+            </a>
+            <a href="character_21.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/24 - Lieutenant Howard Courtenay.png" class="portrait old" alt="Lieutenant Howard Courtenay (Original)">
+                    <img src="portraits/new/24 - Lieutenant Howard Courtenay.png" class="portrait new" alt="Lieutenant Howard Courtenay (New)">
+                </div>
+                <div class="character-name">LIEUTENANT HOWARD COURTENAY</div>
+                <div class="character-location">Salyut Flats</div>
+            </a>
+            <a href="character_22.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/14 - Davy Hart.png" class="portrait" alt="Davy Hart">
+                </div>
+                <div class="character-name">DAVY HART</div>
+                <div class="character-location">Devils Valley</div>
+            </a>
+            <a href="character_23.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/19 - Jenny Adams.png" class="portrait" alt="Jenny Adams">
+                </div>
+                <div class="character-name">JENNY ADAMS</div>
+                <div class="character-location">Deathwatch Pass</div>
+            </a>
+            <a href="character_24.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/03 - Constable Bob Hammond.png" class="portrait" alt="Constable Bob Hammond">
+                </div>
+                <div class="character-name">CONSTABLE BOB HAMMOND</div>
+                <div class="character-location">Mackenzie Head</div>
+            </a>
+            <a href="character_25.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/12 - Constable Oliver Jessop.png" class="portrait" alt="Constable Oliver Jessop">
+                </div>
+                <div class="character-name">CONSTABLE OLIVER JESSOP</div>
+                <div class="character-location">Mull of Tears</div>
+            </a>
+            <a href="character_26.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/23 - Lieutenant Barnaby Gaunt.png" class="portrait old" alt="Lieutenant Barnaby Gaunt (Original)">
+                    <img src="portraits/new/23 - Lieutenant Barnaby Gaunt.png" class="portrait new" alt="Lieutenant Barnaby Gaunt (New)">
+                </div>
+                <div class="character-name">LIEUTENANT BARNABY GAUNT</div>
+                <div class="character-location">White Horse Valley</div>
+            </a>
+            <a href="character_27.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/26 - Nurse Sarah Maddocks.png" class="portrait old" alt="Nurse Sarah Maddocks (Original)">
+                    <img src="portraits/new/26 - Nurse Sarah Maddocks.png" class="portrait new" alt="Nurse Sarah Maddocks (New)">
+                </div>
+                <div class="character-name">NURSE SARAH MADDOCKS</div>
+                <div class="character-location">Mount Shackleton</div>
+            </a>
+            <a href="character_28.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/10 - Constable Kurt Muller.png" class="portrait" alt="Constable Kurt Muller">
+                </div>
+                <div class="character-name">CONSTABLE KURT MULLER</div>
+                <div class="character-location">Sao Jorge Plateau</div>
+            </a>
+            <a href="character_29.html" class="character-card">
+                <div class="portrait-frame">
+                    <img src="portraits/11 - Constable Luke Jackson.png" class="portrait" alt="Constable Luke Jackson">
+                </div>
+                <div class="character-name">CONSTABLE LUKE JACKSON</div>
+                <div class="character-location">Devils Valley</div>
+            </a>
+            <a href="character_30.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/17 - Gregory Flint.png" class="portrait old" alt="Gregory Flint (Original)">
+                    <img src="portraits/new/17 - Gregory Flint.png" class="portrait new" alt="Gregory Flint (New)">
+                </div>
+                <div class="character-name">GREGORY FLINT</div>
+                <div class="character-location">Garcia Valley</div>
+            </a>
+            <a href="character_31.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/28 - Sergeant Charles Ambler.png" class="portrait old" alt="Lieutenant Charles Ambler (Original)">
+                    <img src="portraits/new/28 - Sergeant Charles Ambler.png" class="portrait new" alt="Lieutenant Charles Ambler (New)">
+                </div>
+                <div class="character-name">LIEUTENANT CHARLES AMBLER</div>
+                <div class="character-location">Otter Valley</div>
+            </a>
+            <a href="character_32.html" class="character-card">
+                <div class="portrait-frame cycling">
+                    <img src="portraits/25 - Mrs Amelia Randles.png" class="portrait old" alt="Mrs Amelia Randles (Original)">
+                    <img src="portraits/new/25 - Mrs Amelia Randles.png" class="portrait new" alt="Mrs Amelia Randles (New)">
+                </div>
+                <div class="character-name">MRS AMELIA RANDLES</div>
+                <div class="character-location">Harpers Lake</div>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Portrait cycling for characters with new graphics
+        // Each portrait cycles at a slightly different time for a wave effect
+        // Randomly starts with old or new portrait
+        const cyclingFrames = document.querySelectorAll('.portrait-frame.cycling');
+        const baseCycleTime = 4000; // 4 seconds base cycle
+        const staggerOffset = 200;  // 200ms offset between each portrait
+
+        cyclingFrames.forEach((frame, index) => {
+            // Randomly start with old or new portrait
+            let showingNew = Math.random() > 0.5;
+            const newPortrait = frame.querySelector('.portrait.new');
+
+            if (newPortrait) {
+                // Set initial state
+                newPortrait.style.opacity = showingNew ? 1 : 0;
+
+                // Start each portrait with a different delay based on its position
+                const initialDelay = index * staggerOffset;
+
+                setTimeout(() => {
+                    // Then cycle at the base interval
+                    setInterval(() => {
+                        showingNew = !showingNew;
+                        newPortrait.style.opacity = showingNew ? 1 : 0;
+                    }, baseCycleTime);
+                }, initialDelay);
+            }
+        });
+    </script>
+</body>
+</html>

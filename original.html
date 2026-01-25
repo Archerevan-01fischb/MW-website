@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW - The Original Midwinter (1989)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --border-light: #6a8bba;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-orange: #e87040;
+            --accent-yellow: #d4a840;
+            --tile-bg: #1a2030;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+            z-index: 1000;
+        }
+
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+        }
+
+        .header a:hover { color: var(--accent-yellow); }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            display: block;
+            border: 4px solid var(--border-blue);
+            image-rendering: pixelated;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .subtitle {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            color: var(--accent-yellow);
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 0.15em;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-box {
+            background: var(--tile-bg);
+            border: 2px solid var(--border-blue);
+            padding: 1rem;
+        }
+
+        .info-label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.4rem;
+            color: var(--text-ice);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: var(--text-white);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-blue);
+            letter-spacing: 0.1em;
+        }
+
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature-list li {
+            background: var(--tile-bg);
+            border: 2px solid var(--border-blue);
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-list img {
+            width: 48px;
+            height: 48px;
+            image-rendering: pixelated;
+        }
+
+        .feature-text strong {
+            display: block;
+            color: var(--text-white);
+            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+        }
+
+        .feature-text span {
+            font-size: 0.8rem;
+            color: var(--text-ice);
+        }
+
+        .links-section {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .links-section h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-white);
+            margin-bottom: 1.5rem;
+        }
+
+        .links-section a {
+            display: inline-block;
+            margin: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--border-blue);
+            color: var(--text-white);
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.45rem;
+            letter-spacing: 0.1em;
+            transition: all 0.2s;
+        }
+
+        .links-section a:hover {
+            background: var(--accent-yellow);
+            color: #000;
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } h1 { font-size: 0.7rem; } h2 { font-size: 0.5rem; } p, li { font-size: 0.8rem; line-height: 1.6; } .header { padding: 0.75rem 1rem; } }
+@media (max-width: 480px) { h1 { font-size: 0.55rem; } }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html" class="back-btn">← BACK TO DECISIONS</a>
+        <a href="index.html">TITLE SCREEN</a>
+    </header>
+
+    <main class="content">
+        <img src="images/Title_screen.png" alt="Original Midwinter Title Screen" class="hero-image">
+        
+        <h1>MIDWINTER</h1>
+        <p class="subtitle">A GAME AHEAD OF ITS TIME</p>
+
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-label">RELEASED</div>
+                <div class="info-value">1989</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">DESIGNER</div>
+                <div class="info-value"><a href="https://en.wikipedia.org/wiki/Mike_Singleton" target="_blank" style="color: var(--text-white); text-decoration: none;">Mike Singleton</a></div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">PUBLISHER</div>
+                <div class="info-value">Microprose</div>
+            </div>
+            <div class="info-box">
+                <div class="info-label">PLATFORMS</div>
+                <div class="info-value">DOS, Amiga, Atari ST</div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>THE STORY</h2>
+            <p>In 2099, a volcanic eruption triggers a new ice age that blankets the Earth. On a small volcanic island, survivors have built a fragile civilization. But now, General Masters and his forces are invading from the north, and only you—Captain John Stark, commander of the Free Villages Police Force (FVPF)—can organize the resistance.</p>
+            <p>Midwinter wasn't just a game; it was a pioneering open-world experience that combined action, strategy, and role-playing years before such combinations became standard. Players traversed a massive 160,000 square mile 3D landscape, recruited allies, sabotaged enemy installations, and fought to save their frozen homeland.</p>
+        </section>
+
+        <section class="section">
+            <h2>REVOLUTIONARY FEATURES</h2>
+            <p>Midwinter was open world before that concept even existed, and a sandbox game before that term was coined. Players had complete freedom to approach objectives in any order, using any combination of skills and allies.</p>
+            <ul class="feature-list">
+                <li>
+                    <img src="sprites/icons/Startegic_map.png" alt="Map">
+                    <div class="feature-text">
+                        <strong>160,000 Square Mile Terrain</strong>
+                        <span>Unprecedented 3D landscape size for its era</span>
+                    </div>
+                </li>
+                <li>
+                    <img src="sprites/icons/Ski.png" alt="Skiing">
+                    <div class="feature-text">
+                        <strong>Real-Time Movement</strong>
+                        <span>Ski, drive snowbuggies, or fly hang gliders</span>
+                    </div>
+                </li>
+                <li>
+                    <img src="sprites/icons/Companions.png" alt="Characters">
+                    <div class="feature-text">
+                        <strong>32 Unique Characters</strong>
+                        <span>Each with individual skills, relationships, and stories</span>
+                    </div>
+                </li>
+                <li>
+                    <img src="sprites/icons/Sabotage.png" alt="Sabotage">
+                    <div class="feature-text">
+                        <strong>Emergent Gameplay</strong>
+                        <span>Multiple paths to victory through action or strategy</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section">
+            <h2>MIKE SINGLETON</h2>
+            <p><a href="https://en.wikipedia.org/wiki/Mike_Singleton" target="_blank" style="color: var(--text-ice); text-decoration: underline;">Mike Singleton</a> (1951-2012) was a legendary British game designer known for pushing technical boundaries while creating deeply immersive worlds. Before Midwinter, he created the groundbreaking Lords of Midnight (1984), which pioneered the "landscaping" technique for 3D graphics on 8-bit computers.</p>
+            <p>Midwinter showcased his ability to blend multiple genres into cohesive experiences. The game received universal acclaim and won numerous awards, including the Golden Joystick Award for Best Simulation.</p>
+        </section>
+
+        <div class="links-section">
+            <h3>PLAY THE ORIGINAL</h3>
+            <a href="https://www.gog.com/en/game/midwinter" target="_blank">GOG.COM</a>
+            <a href="https://en.wikipedia.org/wiki/Midwinter_(video_game)" target="_blank">WIKIPEDIA</a>
+        </div>
+    </main>
+</body>
+</html>

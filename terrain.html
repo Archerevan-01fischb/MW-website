@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW - Terrain System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-yellow: #d4a840;
+            --tile-bg: #1a2030;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+        }
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+        }
+        .header a:hover { color: var(--accent-yellow); }
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--text-white);
+            margin-bottom: 2rem;
+        }
+        .coming-soon {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            padding: 2rem;
+            border: 3px solid var(--border-blue);
+            background: var(--tile-bg);
+        }
+        .icon {
+            width: 120px;
+            height: 120px;
+            margin: 2rem auto;
+            image-rendering: pixelated;
+        }
+        .videos-wrapper {
+            display: flex;
+            gap: 2rem;
+            margin: 3rem 0;
+            justify-content: center;
+        }
+        .video-section {
+            flex: 1;
+            max-width: 550px;
+        }
+        .video-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1.5rem;
+        }
+        .video-container {
+            border: 3px solid var(--border-blue);
+            background: var(--tile-bg);
+            padding: 1rem;
+        }
+        .terrain-video {
+            width: 100%;
+            border: 2px solid var(--border-blue);
+        }
+        .section-header {
+            margin: 3rem 0 1.5rem 0;
+        }
+        .section-header h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-ice);
+            opacity: 0.8;
+        }
+        @media (max-width: 900px) {
+            .videos-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        /* Map Viewer */
+        .map-section {
+            margin: 3rem 0;
+        }
+        .map-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1.5rem;
+        }
+        .map-container {
+            border: 3px solid var(--border-blue);
+            background: var(--tile-bg);
+            padding: 0;
+            position: relative;
+        }
+        #map-viewer {
+            width: 100%;
+            height: 600px;
+            background: #0d0d1a;
+        }
+        .map-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(26, 32, 48, 0.9);
+            border-top: 2px solid var(--border-blue);
+        }
+        .map-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--tile-bg);
+            border: 2px solid var(--border-blue);
+            color: var(--text-ice);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .map-btn:hover {
+            background: var(--border-blue);
+            color: var(--text-white);
+        }
+        .map-hint {
+            font-size: 0.7rem;
+            color: var(--text-ice);
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* Style OpenSeadragon navigator */
+        .navigator {
+            border: 2px solid var(--border-blue) !important;
+            background: var(--tile-bg) !important;
+        }
+
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } h1 { font-size: 0.7rem; } h2 { font-size: 0.5rem; } p, li { font-size: 0.8rem; line-height: 1.6; } .header { padding: 0.75rem 1rem; } #map-viewer { height: 400px; } .map-btn { font-size: 0.4rem; padding: 0.4rem 0.6rem; } }
+@media (max-width: 480px) { h1 { font-size: 0.55rem; } #map-viewer { height: 300px; } }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html">← BACK TO DECISIONS</a>
+    </header>
+    <main class="content">
+        <img src="sprites/icons/Startegic_map.png" class="icon" alt="Terrain">
+        <h1>TERRAIN SYSTEM</h1>
+        <div class="coming-soon">
+            DOCUMENTATION COMING SOON<br><br>
+            Deep dive into procedural terrain generation,<br>
+            height maps, and the 160,000 square mile landscape.
+        </div>
+
+        <div class="section-header">
+            <h2>FIRST-PERSON VIEW</h2>
+            <p class="section-subtitle">Compare the original 1989 terrain with the remaster</p>
+        </div>
+
+        <div class="videos-wrapper">
+            <div class="video-section">
+                <h2>ORIGINAL 1989 TERRAIN</h2>
+                <div class="video-container">
+                    <video controls autoplay muted loop class="terrain-video">
+                        <source src="videos/terrain-original.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <div class="video-section">
+                <h2>REMASTERED TERRAIN</h2>
+                <div class="video-container">
+                    <video controls autoplay muted loop class="terrain-video">
+                        <source src="videos/terrain-remastered.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>STRATEGIC VIEW</h2>
+            <p class="section-subtitle">Explore the full 160,000 square mile island</p>
+        </div>
+
+        <div class="map-section">
+            <div class="map-container">
+                <div id="map-viewer"></div>
+                <div class="map-controls">
+                    <button class="map-btn" onclick="mapViewer.viewport.zoomBy(1.5)">ZOOM +</button>
+                    <button class="map-btn" onclick="mapViewer.viewport.goHome()">RESET</button>
+                    <button class="map-btn" onclick="mapViewer.viewport.zoomBy(0.67)">ZOOM -</button>
+                    <button class="map-btn" onclick="toggleFullscreen()">FULLSCREEN</button>
+                </div>
+            </div>
+            <p class="map-hint">Scroll to zoom • Drag to pan • Mini-map in corner</p>
+        </div>
+    </main>
+
+    <!-- OpenSeadragon for Deep Zoom map viewing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+    <script>
+        var mapViewer = OpenSeadragon({
+            id: "map-viewer",
+            tileSources: "map/midwinter_map.dzi",
+            showNavigator: true,
+            navigatorPosition: "TOP_RIGHT",
+            navigatorSizeRatio: 0.15,
+            navigatorMaintainSizeRatio: true,
+            animationTime: 0.5,
+            blendTime: 0.1,
+            constrainDuringPan: true,
+            maxZoomPixelRatio: 2,
+            minZoomImageRatio: 0.8,
+            visibilityRatio: 0.5,
+            zoomPerScroll: 1.4,
+            showZoomControl: false,
+            showHomeControl: false,
+            showFullPageControl: false,
+            showRotationControl: false,
+            // Custom loading placeholder
+            placeholderFillStyle: "#0d0d1a"
+        });
+
+        // Handle tile load errors gracefully
+        mapViewer.addHandler('tile-load-failed', function(event) {
+            console.warn('Tile load failed:', event.tile.url);
+        });
+
+        // Fullscreen toggle
+        function toggleFullscreen() {
+            var container = document.querySelector('.map-container');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.log('Fullscreen not supported');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Update viewer size on fullscreen change
+        document.addEventListener('fullscreenchange', function() {
+            setTimeout(function() {
+                mapViewer.viewport.goHome(true);
+            }, 100);
+        });
+    </script>
+</body>
+</html>

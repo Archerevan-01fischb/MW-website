@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW - Join The Resistance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --border-light: #6a8bba;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-orange: #e87040;
+            --accent-yellow: #d4a840;
+            --tile-bg: #1a2030;
+            --success-green: #40c878;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+            z-index: 1000;
+        }
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+        }
+        .header a:hover { color: var(--accent-yellow); }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .recruit-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            display: block;
+            image-rendering: pixelated;
+            border: 3px solid var(--border-blue);
+            background: #000;
+            padding: 8px;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        .subtitle {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        /* Mission Cards */
+        .missions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .mission-card {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 1.5rem;
+        }
+        .mission-card.highlight {
+            border-color: var(--accent-orange);
+        }
+        .mission-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-blue);
+        }
+        .mission-icon {
+            width: 50px;
+            height: 50px;
+            image-rendering: pixelated;
+        }
+        .mission-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            color: var(--accent-yellow);
+        }
+        .mission-card p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .mission-card ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        .mission-card li {
+            padding: 0.3rem 0;
+            padding-left: 1rem;
+            position: relative;
+            font-size: 0.8rem;
+        }
+        .mission-card li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-orange);
+        }
+
+        /* F9 Feature Box */
+        .feature-box {
+            background: rgba(64, 200, 120, 0.1);
+            border: 2px solid var(--success-green);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .feature-box h4 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.4rem;
+            color: var(--success-green);
+            margin-bottom: 0.5rem;
+        }
+        .feature-box p {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .tuning-screenshot {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--border-blue);
+            margin: 0.75rem 0;
+            display: block;
+        }
+        .key-badge {
+            display: inline-block;
+            background: var(--success-green);
+            color: #000;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.4rem;
+            padding: 0.2rem 0.4rem;
+            margin-right: 0.3rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--tile-bg);
+            border: 3px solid var(--accent-yellow);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .contact-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+        }
+        .contact-section p {
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+        .contact-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-blue);
+            color: var(--text-ice);
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.4rem;
+            transition: all 0.2s;
+        }
+        .contact-btn:hover {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+            transform: translateY(-2px);
+        }
+        .contact-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Mailing List Form */
+        .mailing-section {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .mailing-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .mailing-section .note {
+            text-align: center;
+            font-size: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-ice);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 500px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.35rem;
+            color: var(--text-ice);
+            margin-bottom: 0.4rem;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            background: #000;
+            border: 2px solid var(--border-blue);
+            color: var(--text-white);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-yellow);
+        }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--accent-yellow);
+            border: none;
+            color: #000;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .submit-btn:hover {
+            background: var(--text-white);
+        }
+
+        /* Portrait Row */
+        .portrait-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .mini-portrait {
+            width: 45px;
+            height: 45px;
+            image-rendering: pixelated;
+            border: 2px solid var(--border-blue);
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .mini-portrait:hover { opacity: 1; }
+    /* Mobile */
+@media (max-width: 768px) { .header { padding: 0.75rem 1rem; } .content { padding: 1.5rem 1rem; } h1 { font-size: 0.8rem; } p, li { font-size: 0.8rem; } .contact-btn { font-size: 0.4rem; padding: 0.6rem 1rem; } }
+@media (max-width: 480px) { h1 { font-size: 0.65rem; } .subtitle { font-size: 0.75rem; } .missions { grid-template-columns: 1fr; } .mission-title { font-size: 0.45rem; } }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html">← BACK TO DECISIONS</a>
+        <a href="index.html">TITLE SCREEN</a>
+    </header>
+
+    <main class="content">
+        <img src="sprites/icons/Join.png" 
+             alt="Join" class="recruit-icon">
+        
+        <h1>JOIN THE RESISTANCE</h1>
+        <p class="subtitle">Captain Stark needs allies. The remaster needs testers, developers, and fans who remember the original.</p>
+
+        <div class="missions">
+            <!-- Mission 1: Testers -->
+            <div class="mission-card highlight">
+                <div class="mission-header">
+                    <img src="sprites/icons/Play.png" class="mission-icon" alt="Test">
+                    <div class="mission-title">MISSION 1: FIND TESTERS</div>
+                </div>
+                <p>Download the pre-alpha and help us find bugs, balance issues, and gameplay problems.</p>
+                <ul>
+                    <li>Play through available content</li>
+                    <li>Report bugs on Discord or GitHub</li>
+                    <li>Suggest gameplay improvements</li>
+                    <li>Test on different hardware</li>
+                </ul>
+                <div class="feature-box">
+                    <h4>FOR ADVANCED TESTERS: F9 TUNING PANEL</h4>
+                    <p><strong>Advanced feature for experienced testers.</strong> Press <span class="key-badge">F9</span> to open the real-time parameter tuning window. Press <span class="key-badge">P</span> to pause while you tweak.</p>
+                    <img src="images/tuning_panel.png" alt="Tuning Panel" class="tuning-screenshot">
+                    <ul style="margin:0.75rem 0 0.5rem;font-size:0.75rem;">
+                        <li><strong>Enemy Vehicles</strong> - Movement & Detection</li>
+                        <li><strong>Weapons</strong> - Torpedoes, Missiles, Sniper Rifle</li>
+                        <li><strong>Rendering</strong> - Cull Distance, Fog settings</li>
+                        <li><strong>Radar</strong> - Range, Cycle times, Thresholds</li>
+                    </ul>
+                    <p style="font-size:0.7rem;color:var(--text-ice);margin:0;">Save to File, Reset to Defaults, or Reload - works in standalone builds!</p>
+                </div>
+                <a href="download.html" class="contact-btn" style="width:100%;justify-content:center;margin-top:1rem;">
+                    DOWNLOAD & START TESTING
+                </a>
+            </div>
+
+            <!-- Mission 2: Developers -->
+            <div class="mission-card">
+                <div class="mission-header">
+                    <img src="sprites/icons/Repair_vehicle.png" class="mission-icon" alt="Dev">
+                    <div class="mission-title">MISSION 2: FIND DEVELOPERS</div>
+                </div>
+                <p>Know Rust? Bevy? Want to help recreate a classic? We need help with:</p>
+                <ul>
+                    <li>Terrain generation & rendering</li>
+                    <li>Character AI and pathfinding</li>
+                    <li>Combat and skiing physics</li>
+                    <li>UI/UX improvements</li>
+                    <li>Sound and music integration</li>
+                </ul>
+                <p style="font-size:0.8rem;margin-top:1rem;">Check the GitHub issues for good first contributions, or reach out to discuss larger features.</p>
+                <a href="https://github.com/Archerevan-01fischb/MW" class="contact-btn" style="width:100%;justify-content:center;margin-top:1rem;" target="_blank">
+                    VIEW SOURCE ON GITHUB
+                </a>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>REACH THE COMMANDER</h2>
+            <p>Have questions, ideas, or want to contribute? Contact me through any of these channels:</p>
+            <div class="contact-buttons">
+                <a href="https://discord.gg/BPUUUFJs2J" class="contact-btn" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                    DISCORD
+                </a>
+                <a href="https://www.reddit.com/user/PlayfulInterview984" class="contact-btn" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+                    REDDIT
+                </a>
+                <a href="https://github.com/Archerevan-01fischb/MW/discussions" class="contact-btn" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GITHUB DISCUSSIONS
+                </a>
+            </div>
+        </div>
+
+        <!-- Mailing List -->
+        <div class="mailing-section">
+            <h2>CONTACT THE RESISTANCE</h2>
+            <p class="note">Reach out to the commander or join the mailing list for updates (low traffic, no spam)</p>
+            <form id="mailingForm" onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>CALLSIGN (NAME)</label>
+                        <input type="text" name="name" placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>RADIO FREQUENCY (EMAIL)</label>
+                        <input type="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>SPECIALIZATION</label>
+                    <select name="role">
+                        <option value="tester">Tester</option>
+                        <option value="developer">Developer</option>
+                        <option value="artist">Artist</option>
+                        <option value="fan">Fan / Enthusiast</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>MESSAGE (OPTIONAL)</label>
+                    <textarea name="message" placeholder="Tell us about yourself or how you want to help..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">JOIN MAILING LIST</button>
+            </form>
+        </div>
+
+        <div class="portrait-row">
+            <img src="sprites/portraits/Capt_Stark.png" class="mini-portrait" alt="Stark">
+            <img src="sprites/portraits/Lt_Courtenay.png" class="mini-portrait" alt="Courtenay">
+            <img src="sprites/portraits/Dr_Revel.png" class="mini-portrait" alt="Revel">
+            <img src="sprites/portraits/Grazzini.png" class="mini-portrait" alt="Grazzini">
+            <img src="sprites/portraits/Hart.png" class="mini-portrait" alt="Hart">
+            <img src="sprites/portraits/Adams.png" class="mini-portrait" alt="Adams">
+        </div>
+    </main>
+
+    <script>
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const formData = new FormData(form);
+
+            // Disable button during submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SENDING...';
+
+            try {
+                const response = await fetch('forms/mailing-list.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Success - clear form and show message
+                    form.reset();
+                    alert('✓ ' + result.message);
+                } else {
+                    // Error
+                    alert('✗ ' + result.message);
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                alert('✗ Network error. Please try again or contact us via Discord.');
+            } finally {
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'JOIN MAILING LIST';
+            }
+        }
+    </script>
+</body>
+</html>

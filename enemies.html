@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enemy Forces - General Masters & His Lieutenants | Midwinter Remaster</title>
+    <meta name="description" content="Learn about General Masters and his 30 lieutenant commanders invading Midwinter island. Meet the Colonels and Captains leading the hostile forces.">
+    <meta name="keywords" content="General Masters, Midwinter enemies, Midwinter villains, game bosses, Midwinter invasion">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midwinter-remaster.titanium-helix.com/enemies.html">
+    <meta property="og:title" content="Enemy Forces - General Masters">
+    <meta property="og:description" content="Learn about General Masters and his 30 lieutenant commanders invading Midwinter island.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://midwinter-remaster.titanium-helix.com/enemies.html">
+    <meta property="twitter:title" content="Enemy Forces - General Masters">
+    <meta property="twitter:description" content="Learn about General Masters and his 30 lieutenant commanders invading Midwinter island.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1926 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .nav {
+            background: rgba(10, 22, 40, 0.95);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #64b4ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #9dd1ff;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #ff4444;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.1em;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: #8ba4c4;
+            letter-spacing: 0.15em;
+        }
+
+        /* General Masters Section */
+        .general-section {
+            background: rgba(40, 20, 20, 0.4);
+            border: 3px solid rgba(255, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .general-header {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .surrender-image {
+            flex-shrink: 0;
+            width: 450px;
+            image-rendering: pixelated;
+            border: 3px solid rgba(255, 68, 68, 0.4);
+            border-radius: 8px;
+        }
+
+        .general-info h2 {
+            font-size: 2rem;
+            color: #ff6666;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .general-rank {
+            color: #e87040;
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+        }
+
+        .general-bio {
+            background: rgba(20, 40, 70, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff4444;
+            line-height: 1.8;
+        }
+
+        .general-bio p {
+            margin-bottom: 1rem;
+        }
+
+        .general-bio p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Lieutenant Sections */
+        .lieutenants-section {
+            margin-top: 3rem;
+        }
+
+        .rank-group {
+            margin-bottom: 3rem;
+        }
+
+        .rank-title {
+            font-size: 1.5rem;
+            color: #64b4ff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 0.1em;
+            border-bottom: 2px solid rgba(100, 180, 255, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        .lieutenants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1.5rem;
+            justify-items: center;
+        }
+
+        .lieutenant {
+            text-align: center;
+        }
+
+        .lieutenant-portrait {
+            width: 140px;
+            height: 140px;
+            image-rendering: pixelated;
+            border: 3px solid rgba(255, 100, 100, 0.3);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .lieutenant-portrait:hover {
+            border-color: #ff6666;
+            box-shadow: 0 0 20px rgba(255, 100, 100, 0.4);
+            transform: scale(1.05);
+        }
+
+        .lieutenant-name {
+            font-size: 0.65rem;
+            color: #e0e6ed;
+            letter-spacing: 0.05em;
+        }
+
+        .warning-box {
+            background: rgba(232, 112, 64, 0.1);
+            border: 2px solid rgba(232, 112, 64, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .warning-box h3 {
+            color: #e87040;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.1em;
+        }
+
+        .warning-box p {
+            color: #8ba4c4;
+            font-size: 0.9rem;
+        }
+
+        /* Strategy Section */
+        .strategy-section {
+            background: rgba(20, 40, 70, 0.4);
+            border: 3px solid rgba(100, 180, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .strategy-title {
+            font-size: 1.5rem;
+            color: #64b4ff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .strategy-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: #c0d0e8;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .strategy-card {
+            background: rgba(10, 20, 40, 0.5);
+            border: 2px solid rgba(100, 180, 255, 0.2);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .strategy-card.enemy-goal {
+            border-color: rgba(255, 68, 68, 0.4);
+            background: rgba(40, 20, 20, 0.4);
+        }
+
+        .strategy-icon {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        .strategy-info h4 {
+            color: #64b4ff;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .strategy-card.enemy-goal h4 {
+            color: #ff6666;
+        }
+
+        .strategy-info p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #a0b8d8;
+        }
+
+        @media (max-width: 768px) {
+            .general-header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .surrender-image {
+                width: 100%;
+                max-width: 450px;
+            }
+
+            .lieutenants-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } h1 { font-size: 0.7rem; } h2 { font-size: 0.5rem; } p { font-size: 0.8rem; } .enemy-grid { grid-template-columns: 1fr; } .enemy-card { padding: 1rem; } .enemy-portrait { width: 80px; height: 80px; } }
+@media (max-width: 480px) { h1 { font-size: 0.6rem; } .enemy-name { font-size: 0.45rem; } }
+</style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="decisions.html" class="logo">MW</a>
+            <div class="nav-links">
+                <a href="decisions.html">← Back</a>
+                <a href="characters.html">Our Forces</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">ENEMY FORCES</h1>
+            <p class="page-subtitle">THE INVADERS FROM SHINING HOLLOW</p>
+        </div>
+
+        <!-- General Masters -->
+        <div class="general-section">
+            <div class="general-header">
+                <img src="surrender-decision.png" alt="General Masters" class="surrender-image">
+                <div class="general-info">
+                    <h2>GENERAL MASTERS</h2>
+                    <div class="general-rank">SUPREME COMMANDER • SHINING HOLLOW FORTRESS</div>
+                    <div class="general-bio">
+                        <p>General Masters leads the hostile invasion force from his heavily fortified headquarters in Shining Hollow, commanding thousands of troops who traveled inland by ski and snow-buggy from the southeastern corner of Midwinter. His forces are organized into 32 mobile units, each consisting of approximately 60 vehicles, supported by unmanned reconnaissance drones, bombers, and spotter planes directing long-range mortar fire.</p>
+
+                        <p>Masters emerged from the south-east settlements, where newer migrants to Midwinter—many embittered by their mainland experiences—had established a separate community. While Captain Stark initially ignored rumors of Masters establishing an "alternative agency of law enforcement," the general's ambitions extended far beyond mere policing. His ultimate goal is nothing less than total domination of the island, seeking to control the last habitable oasis in what the world has become: an icy desert.</p>
+
+                        <p>Despite his ruthless drive for conquest, Masters surprisingly insists on taking prisoners and treating them well, recognizing that his forces operate with limited fuel and munitions. He needs rapid victories and widespread surrender to succeed. However, his true intentions become clear in his own words: "When Midwinter is mine, De Falco, there will be great celebrations. I shall drive in triumph through every village in the land! Then is the time to deal with our prisoners. Discipline is what these people need, De Falco, discipline!" His vision of Midwinter is one of authoritarian control, where the free-spirited inhabitants of the Free Villages would be broken and bent to his will.</p>
+
+                        <p>Masters fields a formidable military machine, equipped with guided missiles, heat-seeking weapons, and advanced tracking technology. His reconnaissance drones can locate resistance fighters even when they're skiing high in the mountains. The general's strategy focuses on capturing all Heat Mines—the source of power generation across the island—knowing that control of energy means control of survival itself in Midwinter's frozen landscape. Yet he underestimates one crucial factor: the determination of ordinary civilians willing to fight for their freedom alongside the outnumbered Peace Force.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Section -->
+        <div class="strategy-section">
+            <h2 class="strategy-title">STRATEGIC WARFARE</h2>
+            <p class="strategy-intro">You are fighting a guerilla war—heavily outnumbered and outgunned. One effective strategy is a "scorched earth" policy: destroying buildings that benefit the enemy, sometimes in anticipation of their arrival. General Masters does not suspect that civilians will fight for their freedom.</p>
+
+            <div class="strategy-grid">
+                <div class="strategy-card enemy-goal">
+                    <img src="sprites/buildings/Heat-Mine-Icon.png" alt="Heat Mine" class="strategy-icon">
+                    <div class="strategy-info">
+                        <h4>ENEMY'S PRIMARY TARGET</h4>
+                        <p>Heat Mines are the enemy's primary targets. They provide all power generation on the island. Once all Heat Mines are captured or destroyed, your people will be forced to surrender. Defend at all costs.</p>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <img src="sprites/buildings/Factory-Icon.png" alt="Factory" class="strategy-icon">
+                    <div class="strategy-info">
+                        <h4>DESTROY FACTORIES</h4>
+                        <p>Blowing up Factories deprives the enemy of ammunition. Without ammunition resupply, enemy units lose their ability to engage in sustained combat.</p>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <img src="sprites/buildings/Synthesis-Plant-Icon.png" alt="Synthesis Plant" class="strategy-icon">
+                    <div class="strategy-info">
+                        <h4>DESTROY SYNTHESIS PLANTS</h4>
+                        <p>Blowing up Synthesis Plants deprives the enemy of fuel. Each enemy unit's speed and mobility depends on its fuel supply from Snow-Bear tankers.</p>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <img src="sprites/buildings/Warehouse-Icon.png" alt="Warehouse" class="strategy-icon">
+                    <div class="strategy-info">
+                        <h4>DESTROY WAREHOUSES</h4>
+                        <p>Blowing up Warehouses deprives the enemy of both fuel and ammunition. The enemy needs large warehouses to supply their huge army—stores are of little interest to them.</p>
+                    </div>
+                </div>
+
+                <div class="strategy-card">
+                    <img src="sprites/buildings/Radio-Station-Icon.png" alt="Radio Station" class="strategy-icon">
+                    <div class="strategy-info">
+                        <h4>SABOTAGE RADIO STATIONS</h4>
+                        <p>Sabotaging enemy-held radio stations enables Professor Kristiansen to recruit a full team of 32 members by overriding their jamming signals.</p>
+                    </div>
+                </div>
+
+                <div class="strategy-card enemy-goal">
+                    <img src="sprites/buildings/Enemy-HQ-Icon.png" alt="Enemy HQ" class="strategy-icon">
+                    <div class="strategy-info">
+                        <h4>ULTIMATE OBJECTIVE</h4>
+                        <p>To win, you must blow the enemy HQ at Shining Hollow to smithereens. This will eliminate General Masters and end the invasion once and for all.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonels -->
+        <div class="lieutenants-section">
+            <div class="rank-group">
+                <h3 class="rank-title">COLONELS - SENIOR COMMAND</h3>
+                <div class="lieutenants-grid">
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/0 - Colonel Cross.png" alt="Colonel Cross" class="lieutenant-portrait">
+                        <div class="lieutenant-name">COLONEL CROSS</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/0 - Colonel De Falco.png" alt="Colonel De Falco" class="lieutenant-portrait">
+                        <div class="lieutenant-name">COLONEL DE FALCO</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/0 - Colonel Gore.png" alt="Colonel Gore" class="lieutenant-portrait">
+                        <div class="lieutenant-name">COLONEL GORE</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/0 - Colonel Jaeger.png" alt="Colonel Jaeger" class="lieutenant-portrait">
+                        <div class="lieutenant-name">COLONEL JAEGER</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/0 - Colonel Ramis.png" alt="Colonel Ramis" class="lieutenant-portrait">
+                        <div class="lieutenant-name">COLONEL RAMIS</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/0 - Colonel Steele.png" alt="Colonel Steele" class="lieutenant-portrait">
+                        <div class="lieutenant-name">COLONEL STEELE</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Captains -->
+            <div class="rank-group">
+                <h3 class="rank-title">CAPTAINS - FIELD COMMANDERS</h3>
+                <div class="lieutenants-grid">
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/1 - Captain Buchanan.png" alt="Captain Buchanan" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN BUCHANAN</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/1 - Captain Kane.png" alt="Captain Kane" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN KANE</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/1 - Captain Larsen.png" alt="Captain Larsen" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN LARSEN</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/1 - Captain Lundstrom.png" alt="Captain Lundstrom" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN LUNDSTROM</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/1 - Captain O_Rourke.png" alt="Captain O'Rourke" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN O'ROURKE</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/1 - Captain Spinelli.png" alt="Captain Spinelli" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN SPINELLI</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/2 - Captain Dachtler.png" alt="Captain Dachtler" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN DACHTLER</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/2 - Captain Lamont.png" alt="Captain Lamont" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN LAMONT</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/2 - Captain McInnes.png" alt="Captain McInnes" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN MCINNES</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/2 - Captain Otaegui.png" alt="Captain Otaegui" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN OTAEGUI</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/2 - Captain Reese.png" alt="Captain Reese" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN REESE</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/2 - Captain Rossi.png" alt="Captain Rossi" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN ROSSI</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/3 - Captain Cole.png" alt="Captain Cole" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN COLE</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/3 - Captain Hossbach.png" alt="Captain Hossbach" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN HOSSBACH</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/3 - Captain Kramer.png" alt="Captain Kramer" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN KRAMER</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/3 - Captain Okoro.png" alt="Captain Okoro" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN OKORO</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/3 - Captain Reubens.png" alt="Captain Reubens" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN REUBENS</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/3 - Captain Walewski.png" alt="Captain Walewski" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN WALEWSKI</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/4 - Captain Hammer.png" alt="Captain Hammer" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN HAMMER</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/4 - Captain Leetch.png" alt="Captain Leetch" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN LEETCH</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/4 - Captain Macon.png" alt="Captain Macon" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN MACON</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/4 - Captain Marley.png" alt="Captain Marley" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN MARLEY</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/4 - Captain Nielson.png" alt="Captain Nielson" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN NIELSON</div>
+                    </div>
+                    <div class="lieutenant">
+                        <img src="portraits/enemies/4 - Captain Squire.png" alt="Captain Squire" class="lieutenant-portrait">
+                        <div class="lieutenant-name">CAPTAIN SQUIRE</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <h3>⚠ STRATEGIC INTELLIGENCE</h3>
+            <p>General Masters' HQ in Shining Hollow is the ultimate target. Destroying it will eliminate the general and end the invasion. The enemy forces consist of 32 mobile attack units and unmanned aircraft capable of tracking targets across the entire island. Heat Mines are their primary objectives—once all are captured, the war is lost.</p>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://midwinter-remaster.titanium-helix.com/sitemap.xml

@@ -1,0 +1,48 @@
+MAILING LIST FORM SETUP INSTRUCTIONS
+====================================
+
+The form is ready but needs your Gmail App Password to work.
+
+STEP 1: Create Gmail App Password
+----------------------------------
+1. Go to: https://myaccount.google.com/apppasswords
+2. Sign in with lane01evan@gmail.com
+3. Under "App name", type: Midwinter Website
+4. Click "Create"
+5. Copy the 16-character password (format: xxxx xxxx xxxx xxxx)
+
+STEP 2: Add Password to PHP Script
+-----------------------------------
+1. SSH into your NAS or use File Station
+2. Edit: /share/Web/forms/mailing-list.php
+3. Find line 53: $smtp_pass = 'YOUR_APP_PASSWORD_HERE';
+4. Replace YOUR_APP_PASSWORD_HERE with your app password
+5. Save the file
+
+Example:
+$smtp_pass = 'abcd efgh ijkl mnop';  // Remove spaces: 'abcdefghijklmnop'
+
+STEP 3: Test the Form
+---------------------
+1. Open the website recruit page
+2. Fill out the mailing list form
+3. Submit and check lane01evan@gmail.com
+
+HOW IT WORKS:
+-------------
+- Form submissions go to: forms/mailing-list.php
+- PHP script sends email via Gmail SMTP to lane01evan@gmail.com
+- All submissions are logged to: /share/Web/forms/mailing_list_log.csv
+- Rate limiting: 1 submission per minute per IP address
+
+TROUBLESHOOTING:
+----------------
+- If email fails, check PHP error log on QNAP
+- Make sure Gmail "Less secure app access" is OFF (app passwords work differently)
+- Test with: ssh fischb@10.0.0.55 "php /share/Web/forms/mailing-list.php"
+
+FILES CREATED:
+--------------
+- /share/Web/forms/mailing-list.php (main handler)
+- /share/Web/forms/mailing_list_log.csv (submission log, auto-created)
+- /share/Web/forms/.rate_limit_* (rate limit files, auto-created)

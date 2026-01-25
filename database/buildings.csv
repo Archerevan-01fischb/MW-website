@@ -1,0 +1,715 @@
+type,building,level,x,y,comment
+,,,,,
+building,hut,6,512,512,b60
+,,,,,
+building,radio-station+156,4,1194,2412,b76
+,,,,,
+building,garage,6,900,1550,b96
+,,,,,
+building,bunker,6,1200,1320,b97
+,,,,,
+building,store,6,1300,1200,b98
+,,,,,
+building,bunker,6,1350,1760,b99
+,,,,,
+building,bunker,6,250,1130,b100
+,,,,,
+building,store,6,310,830,b101
+,,,,,
+building,bunker,6,1120,1020,b102
+,,,,,
+building,church,6,500,200,b103
+,,,,,
+building,magazine,6,1130,1040,b104
+,,,,,
+building,garage,6,550,620,b105
+,,,,,
+building,factoryctory,6,500,1750,b106
+,,,,,
+building,house,6,710,1700,b107
+,,,,,
+building,magazine,6,800,2030,b108
+,,,,,
+building,house,6,1216,1392,b109
+,,,,,
+building,hut,6,2040,1390,b110
+,,,,,
+building,hut,6,1740,1435,b111
+,,,,,
+building,hut,6,1550,1270,b112
+,,,,,
+building,hut,6,1525,1150,b113
+,,,,,
+building,hut,6,1675,1350,b114
+,,,,,
+building,magazine,6,1835,1650,b115
+,,,,,
+building,bunker,6,1360,1850,b116
+,,,,,
+building,hut,6,1070,1860,b117
+,,,,,
+building,house,6,912,1860,b118
+,,,,,
+building,hut,6,1475,1825,b119
+,,,,,
+building,church,6,560,1975,b120
+,,,,,
+building,store,6,375,1755,b121
+,,,,,
+building,hut,6,1100,2250,b122
+,,,,,
+building,store,6,1480,2060,b123
+,,,,,
+building,hut,6,1850,1925,b124
+,,,,,
+building,factory,6,2160,2235,b125
+,,,,,
+building,bunker,6,2080,1550,b126
+,,,,,
+building,hut,6,1955,1325,b127
+,,,,,
+building,hut,6,2025,1335,b128
+,,,,,
+building,house,6,2012,812,b129
+,,,,,
+building,store,6,2125,700,b130
+,,,,,
+building,synthesis,6,1910,675,b131
+,,,,,
+building,hut,6,2260,540,b132
+,,,,,
+building,house,6,2350,1025,b133
+,,,,,
+building,house,6,2260,1340,b134
+,,,,,
+building,church,6,2450,1715,b135
+,,,,,
+building,bunker,6,2330,1835,b136
+,,,,,
+building,house,6,2475,2325,b137
+,,,,,
+building,magazine,6,675,245,b138
+,,,,,
+building,synthesis,6,320,425,b139
+,,,,,
+building,hut,6,450,560,b140
+,,,,,
+building,bunker,6,550,650,b141
+,,,,,
+building,bunker,6,650,545,b142
+,,,,,
+building,house,6,1050,5050,b143
+,,,,,
+building,bunker,6,1100,500,b144
+,,,,,
+building,house,6,1175,425,b145
+,,,,,
+building,radio-station,6,1225,250,b146
+,,,,,
+building,house,6,1450,625,b147
+,,,,,
+building,house,6,1700,550,b148
+,,,,,
+building,factory,6,1750,450,b149
+,,,,,
+building,church,6,1825,575,b150
+,,,,,
+building,magazine,6,2050,200,b151
+,,,,,
+building,house,6,1824,336,b152
+,,,,,
+building,house,6,200,600,b153
+,,,,,
+building,hut,6,300,625,b154
+,,,,,
+building,church,6,310,750,b155
+,,,,,
+building,bunker,6,450,850,b156
+,,,,,
+building,warehouse,6,575,975,b157
+,,,,,
+building,garage,6,650,975,b158
+,,,,,
+building,hut,6,775,980,b159
+,,,,,
+building,synthesis,6,1050,850,b160
+,,,,,
+building,bunker,6,1025,960,b161
+,,,,,
+building,factory,6,1120,700,b162
+,,,,,
+building,church,6,1500,750,b163
+,,,,,
+building,bunker,6,1780,650,b164
+,,,,,
+building,church,6,1975,425,b165
+,,,,,
+building,house,6,2050,525,b166
+,,,,,
+building,bunker,6,200,900,b167
+,,,,,
+building,radio-station,6,300,1100,b168
+,,,,,
+building,magazine,6,375,1025,b169
+,,,,,
+building,hut,6,875,1025,b170
+,,,,,
+building,church,6,1170,920,b171
+,,,,,
+building,garage,6,1250,847,b172
+,,,,,
+building,hut,6,1350,925,b173
+,,,,,
+building,store,6,1750,825,b174
+,,,,,
+building,garage,6,1960,960,b175
+,,,,,
+building,church,6,2480,820,b176
+,,,,,
+building,hut,6,2218,810,b177
+,,,,,
+building,church,6,175,1225,b178
+,,,,,
+building,magazine,6,960,1180,b179
+,,,,,
+building,hut,6,1355,965,b180
+,,,,,
+building,hut,6,1475,1175,b181
+,,,,,
+building,magazine,6,1630,1160,b182
+,,,,,
+building,store,6,1745,975,b183
+,,,,,
+building,warehouse,6,1955,1035,b184
+,,,,,
+building,house,6,2170,1100,b185
+,,,,,
+building,store,6,2200,1000,b186
+,,,,,
+building,house,6,2472,1060,b187
+,,,,,
+building,store,6,2650,980,b188
+,,,,,
+building,hut,6,2566,2690,b189
+,,,,,
+building,hut,6,850,1300,b190
+,,,,,
+building,hut,6,985,1380,b191
+,,,,,
+building,magazine,6,1300,1300,b192
+,,,,,
+building,garage,6,1400,1200,b193
+,,,,,
+building,store,6,1400,1400,b194
+,,,,,
+building,church,6,1735,1350,b195
+,,,,,
+building,bunker,6,1845,1360,b196
+,,,,,
+building,garage,6,2165,1160,b197
+,,,,,
+building,warehouse,6,2460,1145,b198
+,,,,,
+building,hut,6,2660,1150,b199
+,,,,,
+building,bunker,6,710,1517,b200
+,,,,,
+building,bunker,6,1850,1035,b201
+,,,,,
+building,store,6,1000,1000,b202
+,,,,,
+building,hut,6,1180,1510,b203
+,,,,,
+building,church,6,1320,1025,b204
+,,,,,
+building,bunker,6,1625,1540,b205
+,,,,,
+building,garage,6,1830,1550,b206
+,,,,,
+building,hut,6,2260,1350,b207
+,,,,,
+building,bunker,6,2360,1320,b208
+,,,,,
+building,bunker,6,2580,1322,b209
+,,,,,
+building,store,6,815,1740,b210
+,,,,,
+building,church,6,920,1800,b211
+,,,,,
+building,hut,6,1425,1815,b212
+,,,,,
+building,hut,6,1595,1800,b213
+,,,,,
+building,hut,6,1750,1719,b214
+,,,,,
+building,bunker,6,2000,1740,b215
+,,,,,
+building,house,6,2360,1780,b216
+,,,,,
+building,store,6,2410,1435,b217
+,,,,,
+building,synthesis,6,2550,1575,b218
+,,,,,
+building,bunker,6,2600,1600,b219
+,,,,,
+building,magazine,6,2700,1700,b220
+,,,,,
+building,bunker,6,685,2125,b221
+,,,,,
+building,synthesis,6,750,2050,b222
+,,,,,
+building,bunker,6,800,2000,b223
+,,,,,
+building,garage,6,975,1975,b224
+,,,,,
+building,hut,6,1165,1960,b225
+,,,,,
+building,hut,6,1260,1850,b226
+,,,,,
+building,magazine,6,1475,1990,b227
+,,,,,
+building,bunker,6,1650,1985,b228
+,,,,,
+building,hut,6,1760,1910,b229
+,,,,,
+building,hut,6,1850,1950,b230
+,,,,,
+building,bunker,6,1985,2235,b231
+,,,,,
+building,hut,6,2150,1945,b232
+,,,,,
+building,bunker,6,2420,1840,b233
+,,,,,
+building,store,6,1750,2300,b234
+,,,,,
+building,hut,6,800,2200,b235
+,,,,,
+building,store,6,1185,2185,b236
+,,,,,
+building,house,6,1350,2100,b237
+,,,,,
+building,garage,6,1440,1960,b238
+,,,,,
+building,hut,6,1550,2165,b239
+,,,,,
+building,magazine,6,1825,2090,b240
+,,,,,
+building,house,6,2160,2240,b241
+,,,,,
+building,garage,6,900,2300,b242
+,,,,,
+building,garage,6,975,2360,b243
+,,,,,
+building,house,6,1300,2210,b244
+,,,,,
+building,church,6,1625,2250,b245
+,,,,,
+building,garage,6,1700,2300,b246
+,,,,,
+building,house,6,2150,2160,b247
+,,,,,
+building,garage,6,2310,2260,b248
+,,,,,
+building,bunker,6,2530,2310,b249
+,,,,,
+building,magazine,6,1025,2550,b250
+,,,,,
+building,bunker,6,1160,2480,b251
+,,,,,
+building,church,6,1250,2550,b252
+,,,,,
+building,hut,6,1375,2450,b253
+,,,,,
+building,house,6,1560,2360,b254
+,,,,,
+building,bunker,6,1680,2430,b255
+,,,,,
+building,bunker,6,2140,2370,b256
+,,,,,
+building,hut,6,2575,2450,b257
+,,,,,
+building,hut,6,2750,2525,b258
+,,,,,
+building,store,6,2150,2450,b259
+,,,,,
+building,house,6,2140,2550,b260
+,,,,,
+building,garage,6,2125,2675,b261
+,,,,,
+building,house,6,2160,2725,b262
+,,,,,
+building,house,6,2308,2780,b263
+,,,,,
+building,house,6,2500,2650,b264
+,,,,,
+building,church,6,2750,2775,b265
+,,,,,
+building,store,6,2275,2900,b266
+,,,,,
+building,magazine,6,2475,2900,b267
+,,,,,
+building,bunker,6,1749,2348,b268
+,,,,,
+building,bunker,6,900,900,b269
+,,,,,
+building,house,6,1850,835,b270
+,,,,,
+building,bunker,6,1725,900,b271
+,,,,,
+building,house,6,2175,535,b272
+,,,,,
+building,bottom-cable+192,4,2198,2746,b273 e door Big Sister
+,,,,,
+building,top-cable+64,4,2242,2746,b274 w door
+,,,,,
+building,bottom-cable+128,4,1724,1584,b274 n door
+,,,,,
+building,top-cable+0,4,1724,1486,b273 s door Sao Jorge
+,,,,,
+building,bottom-cable+0,4,2028,1932,b273 n door Sierra Madre
+,,,,,
+building,top-cable+128,4,2028,2018,b274 s door
+,,,,,
+building,bottom-cable+64,4,2128,2048,b273 w door Sierra Madre 2
+,,,,,
+building,top-cable+192,4,2048,2048,b274 e door
+,,,,,
+building,bottom-cable+0,4,2222,2044,b273 s door Snowgoose Fell
+,,,,,
+building,top-cable+128,4,2222,2124,b274 n door
+,,,,,
+building,bottom-cable+192,4,2434,2472,b273 e door Sierra Miguel
+,,,,,
+building,top-cable+64,4,2546,2472,b274 w door
+,,,,,
+building,bottom-cable+128,4,1150,1596,n pico mountains
+,,,,,
+building,top-cable+0,4,1150,1538,s
+,,,,,
+building,bottom-cable+192,4,1214,1608,e pico mountains
+,,,,,
+building,top-cable+64,4,1272,1608,w
+,,,,,
+building,bottom-cable+128,4,1790,2044,n Sierra Garagercia
+,,,,,
+building,top-cable+0,4,1790,1988,s
+,,,,,
+building,bottom-cable+64,4,1920,1934,w Sierra Garagercia
+,,,,,
+building,top-cable+192,4,1886,1934,e
+,,,,,
+building,bottom-cable+128,4,1600,1898,n Bismark Ridge
+,,,,,
+building,top-cable+0,4,1600,1858,s
+,,,,,
+building,bottom-cable+64,4,1362,1610,w pico mountains
+,,,,,
+building,top-cable+192,4,1296,1610,e
+,,,,,
+building,bottom-cable+192,4,694,1222,e Mountains of Summer
+,,,,,
+building,top-cable+64,4,776,1222,w
+,,,,,
+building,bottom-cable+128,4,1600,1898,n Fox Valley
+,,,,,
+building,top-cable+0,4,1600,1858,s
+,,,,,
+building,bottom-cable+0,4,2046,1276,s Terceira Mountains
+,,,,,
+building,top-cable+128,4,2046,1340,n
+,,,,,
+building,bottom-cable+064,4,1928,328,w Wildcat heath
+,,,,,
+building,top-cable+192,4,1888,328,e
+,,,,,
+building,bottom-cable+128,4,2240,630,n Bear mountain
+,,,,,
+building,top-cable+000,4,2240,580,
+,,,,,
+building,bottom-cable+000,4,1282,444,s Eagle Mountain
+,,,,,
+building,top-cable+128,4,1282,494,
+,,,,,
+building,bottom-cable+000,4,510,206,s Scarecrow flats
+,,,,,
+building,top-cable+128,4,510,256,
+,,,,,
+building,bottom-cable+064,4,532,586,w Morgaragens Bluff
+,,,,,
+building,top-cable+192,4,462,586,
+,,,,,
+building,bottom-cable+064,4,1652,1276,e Whispering Mts
+,,,,,
+building,top-cable+192,4,1592,1276,
+,,,,,
+building,bottom-cable+128,4,1020,2050,Tensing Highlands
+,,,,,
+building,top-cable+000,4,1020,2012,
+,,,,,
+building,bottom-cable+192,4,706,2176,Mount Bleriot
+,,,,,
+building,top-cable+064,4,766,2176,
+,,,,,
+building,bottom-cable+064,4,2684,1088,Thutnder Mts
+,,,,,
+building,top-cable+192,4,2624,1088,
+,,,,,
+building,bottom-cable+192,4,1284,832,Wisprin Mts
+,,,,,
+building,top-cable+064,4,1344,832,
+,,,,,
+building,bottom-cable+128,4,1408,2176,Mt Alexander
+,,,,,
+building,top-cable+000,4,1408,2126,
+,,,,,
+building,bottom-cable+192,4,1392,1128,w Mad Johns pass
+,,,,,
+building,top-cable+64,4,1504,1128,e
+,,,,,
+building,pylon+0,8,2214,2746,b275 e-w Big Sister
+,,,,,
+building,pylon+0,8,2228,2746,b275 e-w
+,,,,,
+building,pylon+64,8,1724,1570,b275 n-s Sao Jorge
+,,,,,
+building,pylon+64,8,1724,1556,b275 n-s
+,,,,,
+building,pylon+64,8,1724,1542,b275 n-s
+,,,,,
+building,pylon+64,8,1724,1528,b275 n-s
+,,,,,
+building,pylon+64,8,1724,1514,b275 n-s
+,,,,,
+building,pylon+64,8,1724,1500,b275 n-s
+,,,,,
+building,pylon+64,8,2028,1946,b275 n-s Sierra Madre
+,,,,,
+building,pylon+64,8,2028,1960,b275 n-s
+,,,,,
+building,pylon+64,8,2028,1974,b275 n-s
+,,,,,
+building,pylon+64,8,2028,1988,b275 n-s
+,,,,,
+building,pylon+64,8,2028,2002,b275 n-s
+,,,,,
+building,pylon+0,8,2064,2048,b275 e-w Sierra Madre 2
+,,,,,
+building,pylon+0,8,2080,2048,b275 e-w
+,,,,,
+building,pylon+0,8,2096,2048,b275 e-w
+,,,,,
+building,pylon+0,8,2112,2048,b275 e-w
+,,,,,
+building,pylon+64,8,2222,2060,b275 n-s Snowgoose Fell
+,,,,,
+building,pylon+64,8,2222,2076,b275 n-s
+,,,,,
+building,pylon+64,8,2222,2092,b275 n-s
+,,,,,
+building,pylon+64,8,2222,2108,b275 n-s
+,,,,,
+building,pylon+0,8,2450,2472,b275 e-w Sierra Miguel
+,,,,,
+building,pylon+0,8,2466,2472,b275 e-w
+,,,,,
+building,pylon+0,8,2482,2472,b275 e-w
+,,,,,
+building,pylon+0,8,2498,2472,b275 e-w
+,,,,,
+building,pylon+0,8,2514,2472,b275 e-w
+,,,,,
+building,pylon+0,8,2530,2472,b275 e-w
+,,,,,
+building,pylon+64,8,1150,1586,Pico Mountains
+,,,,,
+building,pylon+64,8,1150,1576,
+,,,,,
+building,pylon+64,8,1150,1566,
+,,,,,
+building,pylon+64,8,1150,1556,
+,,,,,
+building,pylon+64,8,1150,1546,
+,,,,,
+building,pylon+0,8,1222,1608,Pico Mountains
+,,,,,
+building,pylon+0,8,1232,1608,
+,,,,,
+building,pylon+0,8,1242,1608,
+,,,,,
+building,pylon+0,8,1252,1608,
+,,,,,
+building,pylon+0,8,1262,1608,
+,,,,,
+building,pylon+64,8,1790,2034,Sierra Garagercia n/s
+,,,,,
+building,pylon+64,8,1790,2024,
+,,,,,
+building,pylon+64,8,1790,2014,
+,,,,,
+building,pylon+64,8,1790,2004,
+,,,,,
+building,pylon+64,8,1790,1994,
+,,,,,
+building,pylon+0,8,1912,1934,Sierra Garagercia w/e
+,,,,,
+building,pylon+0,8,1904,1934,
+,,,,,
+building,pylon+0,8,1896,1934,
+,,,,,
+building,pylon+64,8,1600,1890,Bismark Ridge n/s
+,,,,,
+building,pylon+64,8,1600,1882,
+,,,,,
+building,pylon+64,8,1600,1874,
+,,,,,
+building,pylon+64,8,1600,1866,
+,,,,,
+building,pylon+0,8,1352,1610,
+,,,,,
+building,pylon+0,8,1342,1610,
+,,,,,
+building,pylon+0,8,1332,1610,
+,,,,,
+building,pylon+0,8,1322,1610,Pico Mountains
+,,,,,
+building,pylon+0,8,1312,1610,
+,,,,,
+building,pylon+0,8,1302,1610,
+,,,,,
+building,pylon+0,8,704,1222,Mountains of Summer
+,,,,,
+building,pylon+0,8,714,1222,
+,,,,,
+building,pylon+0,8,724,1222,
+,,,,,
+building,pylon+0,8,734,1222,
+,,,,,
+building,pylon+0,8,744,1222,
+,,,,,
+building,pylon+0,8,754,1222,
+,,,,,
+building,pylon+0,8,764,1222,
+,,,,,
+building,pylon+64,8,1600,1888,Fox Valley
+,,,,,
+building,pylon+64,8,1600,1878,
+,,,,,
+building,pylon+64,8,1600,1868,
+,,,,,
+building,pylon+64,8,2046,1284,Terceira Mountains
+,,,,,
+building,pylon+64,8,2046,1294,
+,,,,,
+building,pylon+64,8,2046,1304,
+,,,,,
+building,pylon+64,8,2046,1314,
+,,,,,
+building,pylon+64,8,2046,1324,
+,,,,,
+building,pylon+64,8,2046,1334,
+,,,,,
+building,pylon+00,8,1898,328,
+,,,,,
+building,pylon+00,8,1908,328,
+,,,,,
+building,pylon+00,8,1918,328,
+,,,,,
+building,pylon+64,8,2240,586,
+,,,,,
+building,pylon+64,8,2240,596,
+,,,,,
+building,pylon+64,8,2240,606,
+,,,,,
+building,pylon+64,8,2240,616,
+,,,,,
+building,pylon+64,8,1282,484,
+,,,,,
+building,pylon+64,8,1282,474,
+,,,,,
+building,pylon+64,8,1282,464,
+,,,,,
+building,pylon+64,8,1282,454,
+,,,,,
+building,pylon+64,8,510,246,
+,,,,,
+building,pylon+64,8,510,236,
+,,,,,
+building,pylon+64,8,510,216,
+,,,,,
+building,pylon+00,8,472,586,
+,,,,,
+building,pylon+00,8,482,586,
+,,,,,
+building,pylon+00,8,492,586,
+,,,,,
+building,pylon+00,8,502,586,
+,,,,,
+building,pylon+00,8,512,586,
+,,,,,
+building,pylon+00,8,522,586,
+,,,,,
+building,pylon+00,8,1602,1276,
+,,,,,
+building,pylon+00,8,1612,1276,
+,,,,,
+building,pylon+00,8,1622,1276,
+,,,,,
+building,pylon+00,8,1632,1276,
+,,,,,
+building,pylon+00,8,1642,1276,
+,,,,,
+building,pylon+64,8,1020,2022,
+,,,,,
+building,pylon+64,8,1020,2032,
+,,,,,
+building,pylon+64,8,1020,2042,
+,,,,,
+building,pylon+00,8,716,2176,
+,,,,,
+building,pylon+00,8,726,2176,
+,,,,,
+building,pylon+00,8,736,2176,
+,,,,,
+building,pylon+00,8,746,2176,
+,,,,,
+building,pylon+00,8,756,2176,
+,,,,,
+building,pylon+00,8,2634,1088,
+,,,,,
+building,pylon+00,8,2644,1088,
+,,,,,
+building,pylon+00,8,2654,1088,
+,,,,,
+building,pylon+00,8,2664,1088,
+,,,,,
+building,pylon+00,8,2674,1088,
+,,,,,
+building,pylon+00,8,1294,832,
+,,,,,
+building,pylon+00,8,1304,832,
+,,,,,
+building,pylon+00,8,1314,832,
+,,,,,
+building,pylon+00,8,1324,832,
+,,,,,
+building,pylon+00,8,1334,832,
+,,,,,
+building,pylon+64,8,1408,2138,
+,,,,,
+building,pylon+64,8,1408,2148,
+,,,,,
+building,pylon+64,8,1408,2158,
+,,,,,
+building,pylon+64,8,1408,2168,
+,,,,,
+building,pylon+0,8,1408,1128,Mad Johns pass
+,,,,,
+building,pylon+0,8,1424,1128,
+,,,,,
+building,pylon+0,8,1440,1128,
+,,,,,
+building,pylon+0,8,1456,1128,
+,,,,,
+building,pylon+0,8,1472,1128,
+,,,,,
+building,pylon+0,8,1488,1128,

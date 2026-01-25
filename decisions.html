@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midwinter Game Hub - Watch Videos, Download, Browse Characters | MW Remaster</title>
+    <meta name="description" content="Watch the latest Midwinter development videos, download the game, explore 32 playable characters, learn about enemies, and search the original game manual.">
+    <meta name="keywords" content="Midwinter download, Midwinter characters, Midwinter manual, skiing game download, retro game remake">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midwinter-remaster.titanium-helix.com/decisions.html">
+    <meta property="og:title" content="Midwinter Game Hub - Videos, Downloads & More">
+    <meta property="og:description" content="Watch development videos, download the game, and explore the world of Midwinter.">
+    <meta property="og:image" content="https://midwinter-remaster.titanium-helix.com/sprites/icons/Play.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://midwinter-remaster.titanium-helix.com/decisions.html">
+    <meta property="twitter:title" content="Midwinter Game Hub - Videos, Downloads & More">
+    <meta property="twitter:description" content="Watch development videos, download the game, and explore the world of Midwinter.">
+    <meta property="twitter:image" content="https://midwinter-remaster.titanium-helix.com/sprites/icons/Play.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --border-light: #6a8bba;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-orange: #e87040;
+            --accent-yellow: #d4a840;
+            --tile-bg: #1a2030;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            color: var(--text-ice);
+            overflow-x: hidden;
+        }
+
+        /* CRT scanlines */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.08) 2px,
+                rgba(0, 0, 0, 0.08) 4px
+            );
+            z-index: 1000;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.2rem;
+            color: var(--text-white);
+            letter-spacing: 0.15em;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .header-version {
+            font-size: 0.5rem;
+            color: var(--accent-orange);
+            letter-spacing: 0.1em;
+        }
+
+        /* Main layout - mimics original decisions screen */
+        .main-container {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            grid-template-rows: auto 1fr;
+            min-height: calc(100vh - 60px);
+            gap: 0;
+        }
+
+        /* Left panel - Character portrait */
+        .left-panel {
+            background: var(--tile-bg);
+            border-right: 3px solid var(--border-blue);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .portrait-frame {
+            border: 3px solid var(--border-light);
+            background: #000;
+            padding: 4px;
+            margin-bottom: 1rem;
+            position: relative;
+            width: 148px;
+            height: 148px;
+        }
+
+        .portrait {
+            width: 140px;
+            height: 140px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .portrait.old {
+            z-index: 1;
+        }
+
+        .portrait.new {
+            z-index: 2;
+            opacity: 0;
+        }
+
+        .portrait-badge {
+            display: none;
+        }
+
+        .character-name {
+            font-size: 0.5rem;
+            text-align: center;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .character-title {
+            font-size: 0.4rem;
+            color: var(--accent-yellow);
+            text-align: center;
+        }
+
+        /* Center panel - Main action tiles */
+        .center-panel {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 0.2em;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        /* Large Play/Download Button */
+        .tile-large {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            background: linear-gradient(180deg, #2a3050 0%, var(--tile-bg) 100%);
+            border: 4px solid var(--accent-orange);
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tile-large:hover {
+            border-color: var(--accent-yellow);
+            background: linear-gradient(180deg, #3a4060 0%, #2a3050 100%);
+            box-shadow: 0 0 30px rgba(232, 112, 64, 0.4);
+            transform: scale(1.01);
+        }
+
+        .tile-icon-large {
+            width: 420px;
+            height: 180px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            border: 3px solid var(--border-blue);
+            background: #000;
+            padding: 10px;
+        }
+
+        .tile-large:hover .tile-icon-large {
+            border-color: var(--accent-yellow);
+        }
+
+        .tile-large-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tile-label-large {
+            font-size: 1.1rem;
+            color: var(--text-white);
+            letter-spacing: 0.15em;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .tile-sublabel {
+            font-size: 0.7rem;
+            color: var(--accent-orange);
+            letter-spacing: 0.1em;
+        }
+
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Individual tile */
+        .tile {
+            background: var(--tile-bg);
+            border: none; /* ORIGINAL: 3px solid var(--border-blue) */
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .tile:hover {
+            border-color: var(--accent-yellow);
+            background: #2a3050;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(212, 168, 64, 0.3);
+        }
+
+        .tile:active {
+            transform: scale(0.98);
+        }
+
+        .tile-icon {
+            width: 100px; /* ORIGINAL: 80px */
+            height: 100px; /* ORIGINAL: 80px */
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            margin-bottom: 0.75rem;
+            border: none; /* ORIGINAL: 2px solid var(--border-blue) */
+            background: #000;
+        }
+
+        .tile:hover .tile-icon {
+            border-color: var(--accent-yellow);
+        }
+
+        .tile-label {
+            font-size: 0.45rem;
+            color: var(--text-ice);
+            letter-spacing: 0.1em;
+            text-shadow: 1px 1px 0 #000;
+            line-height: 1.6;
+        }
+
+        .tile:hover .tile-label {
+            color: var(--text-white);
+        }
+
+        /* 3D Card Flip for Icons */
+        .icon-card {
+            perspective: 1000px;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 0.75rem;
+        }
+
+        .icon-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .icon-card:hover .icon-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .icon-front, .icon-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            background: #000;
+        }
+
+        .icon-front img, .icon-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .icon-back {
+            transform: rotateY(180deg);
+        }
+
+        .icon-back img {
+            image-rendering: auto;
+        }
+
+        /* Large icon card for video/download buttons */
+        .icon-card-large {
+            perspective: 1000px;
+            width: 420px;
+            height: 180px;
+        }
+
+        .icon-card-large .icon-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .icon-card-large:hover .icon-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .icon-card-large .icon-front,
+        .icon-card-large .icon-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border: 3px solid var(--border-blue);
+            background: #000;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .icon-card-large .icon-front img,
+        .icon-card-large .icon-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .icon-card-large .icon-back {
+            transform: rotateY(180deg);
+        }
+
+        .icon-card-large .icon-back img {
+            image-rendering: auto;
+        }
+
+        .tile-large:hover .icon-card-large .icon-front,
+        .tile-large:hover .icon-card-large .icon-back {
+            border-color: var(--accent-yellow);
+        }
+
+        .tile.highlight {
+            border: none; /* ORIGINAL: border-color: var(--accent-orange) */
+            background: linear-gradient(180deg, #2a2030 0%, var(--tile-bg) 100%);
+        }
+
+        .tile.highlight:hover {
+            border: none; /* ORIGINAL: border-color: var(--accent-yellow) */
+            box-shadow: 0 0 25px rgba(232, 112, 64, 0.4);
+        }
+
+        /* Right panel - Watches and info */
+        .right-panel {
+            background: var(--tile-bg);
+            border-left: 3px solid var(--border-blue);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .watch-frame {
+            border: 3px solid var(--border-light);
+            background: #000;
+            padding: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .watch {
+            width: 100px;
+            height: 100px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .stat-box {
+            width: 100%;
+            border: 2px solid var(--border-blue);
+            background: #000;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-label {
+            font-size: 0.35rem;
+            color: var(--text-ice);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
+            font-size: 0.5rem;
+            color: var(--accent-yellow);
+        }
+
+        /* Slow flashing animation for main mission */
+        .main-mission-flash {
+            animation: slowFlash 3s ease-in-out infinite;
+        }
+
+        @keyframes slowFlash {
+            0%, 100% {
+                background: #000;
+                border-color: var(--border-blue);
+            }
+            50% {
+                background: #1a3050;
+                border-color: var(--accent-yellow);
+            }
+        }
+
+        /* Digital Watch */
+        .digital-watch {
+            width: 100px;
+            height: 100px;
+            background: #0a1520;
+            border: 3px solid var(--border-blue);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .watch-label {
+            font-size: 0.3rem;
+            color: var(--text-ice);
+            margin-bottom: 0.3rem;
+            letter-spacing: 0.1em;
+        }
+
+        .watch-time {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            color: #40a0ff;
+            text-shadow: 0 0 10px rgba(64, 160, 255, 0.8);
+        }
+
+        /* Mission Boxes */
+        .mission-box {
+            width: 100%;
+            border: 2px solid var(--accent-orange);
+            background: rgba(232, 112, 64, 0.1);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+            min-height: 100px;
+        }
+
+        .mission-box:hover {
+            background: rgba(232, 112, 64, 0.25);
+            border-color: var(--accent-yellow);
+            transform: scale(1.02);
+        }
+
+        .mission-label {
+            font-size: 0.35rem;
+            color: var(--accent-orange);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .mission-value {
+            font-size: 0.4rem;
+            color: var(--text-white);
+            line-height: 2.1;
+            word-wrap: break-word;
+        }
+
+        /* Tips section */
+        .tips-section {
+            margin-top: 3rem;
+            padding: 1rem;
+            border: 2px solid var(--border-blue);
+            background: rgba(26, 32, 48, 0.5);
+        }
+
+        .tips-header {
+            font-size: 0.7rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            letter-spacing: 0.15em;
+            text-align: center;
+        }
+
+        .tip-text {
+            font-size: 0.65rem;
+            color: var(--text-ice);
+            line-height: 1.8;
+            text-align: center;
+            letter-spacing: 0.05em;
+            transition: opacity 0.4s ease-in-out;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        /* Activity image scroller */
+        .activity-scroller {
+            width: 100%;
+            border: 3px solid var(--border-blue);
+            background: #000;
+            padding: 4px;
+            margin-top: auto;
+            overflow: hidden;
+            height: 120px;
+        }
+
+        .activity-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated;
+            transition: opacity 0.1s ease-in-out;
+        }
+
+        /* Footer */
+        .footer {
+            grid-column: 1 / -1;
+            background: linear-gradient(0deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            border-top: 3px solid var(--border-blue);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            font-size: 0.4rem;
+            color: var(--text-ice);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-yellow);
+        }
+
+        .footer-credit {
+            font-size: 0.35rem;
+            color: var(--border-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .left-panel, .right-panel {
+                display: none;
+            }
+        }
+
+        /* Tile highlight animation */
+        .tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-yellow), transparent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .tile:hover::before {
+            opacity: 1;
+        }
+    /* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .header { padding: 0.75rem 1rem; }
+    .header-title { font-size: 0.9rem; }
+    .main-container { grid-template-columns: 1fr !important; padding: 1rem; gap: 1rem; }
+    .left-panel, .right-panel { display: none; }
+    .center-content { padding: 0; }
+    .tile { padding: 1rem; min-height: auto; }
+    .tile-title { font-size: 0.55rem; }
+    .tile-icon { width: 40px; height: 40px; }
+    .tile p { font-size: 0.8rem; }
+}
+@media (max-width: 480px) {
+    .header-title { font-size: 0.7rem; }
+    .tile-grid { grid-template-columns: 1fr !important; }
+    .tile-title { font-size: 0.5rem; }
+    .tile p { font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-title">MIDWINTER REMASTER</div>
+        <div class="header-version">PRE-ALPHA v0.6.0</div>
+    </header>
+
+    <main class="main-container">
+        <!-- Left Panel - Character Portrait -->
+        <aside class="left-panel">
+            <div class="portrait-frame">
+                <img src="sprites/portraits/Capt_Stark.png"
+                     alt="Captain Stark (Original)" class="portrait old" id="portraitOld">
+                <img src="portraits/Capt_Stark_new.webp"
+                     alt="Captain Stark (New)" class="portrait new" id="portraitNew">
+                <div class="portrait-badge" id="portraitBadge">ORIGINAL</div>
+            </div>
+            <div class="character-name">CAPT. STARK</div>
+            <div class="character-title">RESISTANCE LEADER</div>
+            
+            <div class="stat-box" style="margin-top: 2rem;">
+                <div class="stat-label">STATUS</div>
+                <div class="stat-value">RECRUITING</div>
+            </div>
+            <div class="stat-box main-mission-flash">
+                <div class="stat-label">MAIN MISSION</div>
+                <div class="stat-value">FIND TESTERS</div>
+            </div>
+
+            <!-- Mission Boxes -->
+            <a href="download.html" class="mission-box" style="margin-top: 2rem;">
+                <div class="mission-label">MISSION 1</div>
+                <div class="mission-value">FIND TESTERS</div>
+            </a>
+            <a href="recruit.html" class="mission-box">
+                <div class="mission-label">MISSION 2</div>
+                <div class="mission-value">RECRUIT DEVELOPERS, ARTISTS, AND OTHER COLLABORATORS</div>
+            </a>
+        </aside>
+
+        <!-- Center Panel - Main Tiles -->
+        <section class="center-panel">
+            <h1 class="section-title">WATCH THE LATEST VIDEO</h1>
+
+            <!-- Large Video Button -->
+            <a href="https://www.youtube.com/watch?v=TsMep9npCVE" class="tile-large" target="_blank">
+                <div class="icon-card-large" id="videoIconCard">
+                    <div class="icon-card-inner">
+                        <div class="icon-front">
+                            <img src="sprites/icons/Play.png" alt="Watch Video (Original)">
+                        </div>
+                        <div class="icon-back">
+                            <img src="sprites/icons/Play_new.png" alt="Watch Video (New)">
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-large-text">
+                    <span class="tile-label-large">WATCH THE LATEST VIDEO</span>
+                    <span class="tile-sublabel">DEVELOPMENT UPDATES ON YOUTUBE</span>
+                </div>
+            </a>
+
+            <!-- Download Release Button -->
+            <a href="download.html" class="tile-large" style="margin-bottom: 2rem;">
+                <div class="icon-card-large" id="downloadIconCard">
+                    <div class="icon-card-inner">
+                        <div class="icon-front">
+                            <img src="sprites/icons/Play.png" alt="Download (Original)">
+                        </div>
+                        <div class="icon-back">
+                            <img src="sprites/icons/Play_new.png" alt="Download (New)">
+                        </div>
+                    </div>
+                </div>
+                <div class="tile-large-text">
+                    <span class="tile-label-large">DOWNLOAD THE RELEASE</span>
+                    <span class="tile-sublabel">v0.6.0 PRE-ALPHA</span>
+                </div>
+            </a>
+
+            <div class="tiles-grid">
+                <a href="original.html" class="tile">
+                    <img src="images/Title_screen.png"
+                         alt="Original" class="tile-icon">
+                    <span class="tile-label">THE 1989<br>ORIGINAL</span>
+                </a>
+
+                <a href="characters.html" class="tile">
+                    <img src="sprites/icons/Character_select.png"
+                         alt="Characters" class="tile-icon">
+                    <span class="tile-label">THE 32<br>CHARACTERS</span>
+                </a>
+
+                <a href="terrain.html" class="tile">
+                    <div class="icon-card" id="terrainIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Startegic_map.png" alt="Terrain (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Startegic_map_new.png" alt="Terrain (New)">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="tile-label">TERRAIN<br>SYSTEM</span>
+                </a>
+
+                <a href="buildings.html" class="tile">
+                    <img src="sprites/icons/Enter_building.png"
+                         alt="Buildings" class="tile-icon">
+                    <span class="tile-label">BUILDINGS<br>& ASSETS</span>
+                </a>
+
+                <a href="bevy.html" class="tile">
+                    <div class="icon-card" id="bevyIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Repair_vehicle.png" alt="Bevy (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Repair_vehicle_new.png" alt="Bevy (New)">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="tile-label">RUST &<br>BEVY</span>
+                </a>
+
+                <a href="search.html" class="tile">
+                    <div class="icon-card" id="searchIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Radio_icon.png" alt="Search Manual (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Radio_icon_new.png" alt="Search Manual (New)">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="tile-label">SEARCH THE<br>MANUAL</span>
+                </a>
+
+                <a href="https://github.com/Archerevan-01fischb/MW" class="tile" target="_blank">
+                    <div class="icon-card" id="githubIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Synthesis_plant_icon.png" alt="GitHub (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Synthesis_plant_icon_new.png" alt="GitHub (New)">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="tile-label">SOURCE<br>CODE</span>
+                </a>
+
+                <a href="enemies.html" class="tile">
+                    <img src="sprites/icons/surrender_flag.png"
+                         alt="Enemy Forces" class="tile-icon">
+                    <span class="tile-label">ENEMY<br>INFORMATION</span>
+                </a>
+
+                <a href="recruit.html" class="tile">
+                    <img src="sprites/icons/Companions.png"
+                         alt="Mailing List" class="tile-icon">
+                    <span class="tile-label">MAILING<br>LIST</span>
+                </a>
+
+                <a href="https://discord.gg/BPUUUFJs2J" class="tile highlight" target="_blank">
+                    <img src="sprites/icons/Join.png"
+                         alt="Discord" class="tile-icon">
+                    <span class="tile-label">JOIN<br>DISCORD</span>
+                </a>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <div class="tips-header">GAMEPLAY TIP</div>
+                <div class="tip-text" id="tipText">Turn sharply and dig your ski edges into the snow to stop quickly.</div>
+            </div>
+        </section>
+
+        <!-- Right Panel - Watches and Status -->
+        <aside class="right-panel">
+            <div class="watch-frame">
+                <div class="digital-watch" id="digitalWatch">
+                    <div class="watch-label">LOCAL TIME</div>
+                    <div class="watch-time" id="watchTime">00:00</div>
+                </div>
+            </div>
+            <div class="watch-frame">
+                <img src="sprites/icons/Brown_watch.png"
+                     alt="Stamina" class="watch">
+            </div>
+
+            <div class="activity-scroller" style="margin-top: 2rem;">
+                <img src="sprites/icons/Ski.png" 
+                     alt="Activity" class="activity-image" id="activityImg">
+            </div>
+        </aside>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">TITLE</a>
+                <a href="https://github.com/Archerevan-01fischb/MW/issues" class="footer-link" target="_blank">REPORT BUG</a>
+            </div>
+            <div class="footer-credit">BUILT BY BRUCEFISCH & CLAUDE</div>
+        </footer>
+    </main>
+
+    <script>
+        // Cycle through activity images
+        const activities = [
+            'sprites/icons/Ski.png',
+            'sprites/icons/icon_hangglider.png',
+            'sprites/icons/Snowbuggy_image.png',
+            'sprites/icons/Snipe.png',
+            'sprites/icons/Skier_image.png',
+            'sprites/icons/Sniper_image.png',
+            'sprites/icons/icon_skiing.png',
+            'sprites/icons/icon_wolf.png',
+            'sprites/icons/Snowbuggy_FOX.png',
+            'sprites/icons/Snowbuggy_WOLF.png',
+            'sprites/icons/Snowbuggy_CAT.png',
+            'sprites/icons/cable_car_image.png',
+            'sprites/icons/Enter_building.png',
+            'sprites/icons/Sabotage.png',
+            'sprites/icons/Companions.png'
+        ];
+        let currentActivity = 0;
+        const activityImg = document.getElementById('activityImg');
+
+        setInterval(() => {
+            currentActivity = (currentActivity + 1) % activities.length;
+            activityImg.style.opacity = 0;
+            setTimeout(() => {
+                activityImg.src = activities[currentActivity];
+                activityImg.style.opacity = 1;
+            }, 50);
+        }, 1500);
+
+        // Cycle through gameplay tips
+        const tips = [
+            "Turn sharply and dig your ski edges into the snow to stop quickly.",
+            "Walking uses more Muscle Power than skiing - prefer downhill routes.",
+            "Skiing smoothly uses moderate Muscle Power, but turns and bumps drain extra energy.",
+            "Resting in cozy buildings recovers more energy than harsh warehouses or outdoors.",
+            "Cable cars let you rest automatically during the journey.",
+            "Damaged legs reduce skiing performance more than damaged arms.",
+            "Damaged arms affect sniping ability more than leg injuries.",
+            "High Morale improves every aspect of an individual's performance.",
+            "A low-pitched drone means an enemy vehicle is nearby - decide: fight or flee.",
+            "Ski close to a tree and press E to snipe from the treetop with a better view.",
+            "Grenades are effective only at close range - save them as last resort.",
+            "One accurate shot from your rifle disables any enemy vehicle or aircraft.",
+            "Even excellent drivers struggle on rough terrain - plan flat routes.",
+            "The Snow-Fox is fastest but weakest; the Snow-Wolf is slowest but strongest.",
+            "People are more likely to join if asked by one of their friends.",
+            "Check each person's biography for their friends and enemies before recruiting.",
+            "Heat mines are the island's life-blood - if all are captured, you must surrender."
+        ];
+        let currentTip = 0;
+        const tipText = document.getElementById('tipText');
+
+        setInterval(() => {
+            currentTip = (currentTip + 1) % tips.length;
+            tipText.style.opacity = 0;
+            setTimeout(() => {
+                tipText.textContent = tips[currentTip];
+                tipText.style.opacity = 1;
+            }, 400);
+        }, 8000); // Change tip every 8 seconds
+
+        // Live clock
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('watchTime').textContent = `${hours}:${minutes}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Portrait cycling - dissolve between old and new graphics
+        let showingNew = false;
+        const portraitNew = document.getElementById('portraitNew');
+
+        setInterval(() => {
+            showingNew = !showingNew;
+            portraitNew.style.opacity = showingNew ? 1 : 0;
+        }, 3500); // Switch every 3.5 seconds
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape') {
+                window.location.href = 'index.html';
+            }
+        });
+
+    </script>
+</body>
+</html>
+<style>
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .header { padding: 0.75rem 1rem; }
+    .header-title { font-size: 0.9rem; }
+    .main-container { 
+        grid-template-columns: 1fr !important; 
+        padding: 1rem;
+        gap: 1rem;
+    }
+    .left-panel, .right-panel { display: none; }
+    .center-content { padding: 0; }
+    .tile {
+        padding: 1rem;
+        min-height: auto;
+    }
+    .tile-title { font-size: 0.5rem; }
+    .tile-icon { width: 40px; height: 40px; }
+    .tile p { font-size: 0.75rem; }
+    .video-section { padding: 1rem; }
+    .video-title { font-size: 0.6rem; }
+}
+@media (max-width: 480px) {
+    .header-title { font-size: 0.7rem; letter-spacing: 0.1em; }
+    .header-version { font-size: 0.4rem; }
+    .tile-grid { grid-template-columns: 1fr !important; }
+    .tile { padding: 0.75rem; }
+    .tile-title { font-size: 0.45rem; }
+    .tile p { font-size: 0.7rem; line-height: 1.5; }
+}
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .header { padding: 0.75rem 1rem; }
+    .header-title { font-size: 0.9rem; }
+    .main-container { grid-template-columns: 1fr !important; padding: 1rem; gap: 1rem; }
+    .left-panel, .right-panel { display: none; }
+    .center-content { padding: 0; }
+    .tile { padding: 1rem; min-height: auto; }
+    .tile-title { font-size: 0.55rem; }
+    .tile-icon { width: 40px; height: 40px; }
+    .tile p { font-size: 0.8rem; }
+}
+@media (max-width: 480px) {
+    .header-title { font-size: 0.7rem; }
+    .tile-grid { grid-template-columns: 1fr !important; }
+    .tile-title { font-size: 0.5rem; }
+    .tile p { font-size: 0.75rem; }
+}
+</style>

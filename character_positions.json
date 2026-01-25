@@ -1,0 +1,42 @@
+{
+  "map_bounds": {
+    "min_x_feet": 74033,
+    "max_x_feet": 2021166,
+    "min_z_feet": 48200,
+    "max_z_feet": 1947629
+  },
+  "characters": {
+    "1": {"name": "Captain John Stark", "x_feet": 700628, "z_feet": 1405713},
+    "2": {"name": "Constable Harvey Pringle", "x_feet": 555369, "z_feet": 1680385},
+    "3": {"name": "Constable Gordon Macleod", "x_feet": 1276383, "z_feet": 1009551},
+    "4": {"name": "Constable Fergus Flynn", "x_feet": 819476, "z_feet": 227793},
+    "5": {"name": "Karl Rudzinski", "x_feet": 291261, "z_feet": 671494},
+    "6": {"name": "Franco Grazzini", "x_feet": 1551055, "z_feet": 608108},
+    "7": {"name": "Jean-Luc Chabrun", "x_feet": 1836291, "z_feet": 798265},
+    "8": {"name": "Sergeant George Tasker", "x_feet": 695346, "z_feet": 782419},
+    "9": {"name": "Sergeant Tom Llewellyn", "x_feet": 700628, "z_feet": 1405713},
+    "10": {"name": "Sergeant Victor Grice", "x_feet": 933208, "z_feet": 258825},
+    "11": {"name": "Doctor Pierre Revel", "x_feet": 539522, "z_feet": 745444},
+    "12": {"name": "Konrad Rudel", "x_feet": 1037365, "z_feet": 828638},
+    "13": {"name": "Virginia Caygill", "x_feet": 903991, "z_feet": 1227440},
+    "14": {"name": "Professor Olaf Kristiansen", "x_feet": 808912, "z_feet": 909190},
+    "15": {"name": "Jeremiah Gunn", "x_feet": 95822, "z_feet": 550004},
+    "16": {"name": "Constable Federico Garcia", "x_feet": 1421642, "z_feet": 1241966},
+    "17": {"name": "Constable Homer Wright", "x_feet": 640461, "z_feet": 901762},
+    "18": {"name": "Constable Harry Cropper", "x_feet": 106386, "z_feet": 901267},
+    "19": {"name": "Constable Shigeru Iwamoto", "x_feet": 1831009, "z_feet": 940883},
+    "20": {"name": "Constable Bill Doughty", "x_feet": 1094148, "z_feet": 671494},
+    "21": {"name": "Lieutenant Howard Courtenay", "x_feet": 462931, "z_feet": 449643},
+    "22": {"name": "Davy Hart", "x_feet": 1670208, "z_feet": 1133879},
+    "23": {"name": "Jenny Adams", "x_feet": 555368, "z_feet": 1040653},
+    "24": {"name": "Constable Bob Hammond", "x_feet": 226224, "z_feet": 714827},
+    "25": {"name": "Constable Oliver Jessop", "x_feet": 132975, "z_feet": 1066024},
+    "26": {"name": "Lieutenant Barnaby Gaunt", "x_feet": 968219, "z_feet": 1058195},
+    "27": {"name": "Nurse Sarah Maddocks", "x_feet": 1609157, "z_feet": 492697},
+    "28": {"name": "Constable Kurt Muller", "x_feet": 1394591, "z_feet": 342386},
+    "29": {"name": "Constable Luke Jackson", "x_feet": 1670208, "z_feet": 1133879},
+    "30": {"name": "Gregory Flint", "x_feet": 1033404, "z_feet": 1305352},
+    "31": {"name": "Lieutenant Charles Ambler", "x_feet": 1691032, "z_feet": 877498},
+    "32": {"name": "Mrs Amelia Randles", "x_feet": 462931, "z_feet": 291179}
+  }
+}

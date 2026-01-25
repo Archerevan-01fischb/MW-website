@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midwinter Remaster - Official Fan Recreation in Rust | MW Game</title>
+    <meta name="description" content="A faithful recreation of the groundbreaking 1989 DOS game Midwinter by Mike Singleton. Built with Rust and Bevy engine. Explore the snowy island, ski down mountains, and stop General Masters' invasion.">
+    <meta name="keywords" content="Midwinter, Mike Singleton, DOS game remake, Rust game, Bevy engine, skiing game, 1989 game, retro game, open world, Midwinter island, General Masters">
+    <meta name="author" content="Midwinter Remaster Team">
+    <link rel="canonical" href="https://midwinter-remaster.titanium-helix.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midwinter-remaster.titanium-helix.com/">
+    <meta property="og:title" content="Midwinter Remaster - Official Fan Recreation">
+    <meta property="og:description" content="A faithful recreation of the groundbreaking 1989 DOS game Midwinter by Mike Singleton. Built with Rust and Bevy engine.">
+    <meta property="og:image" content="https://midwinter-remaster.titanium-helix.com/images/fan_remaster_logo.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://midwinter-remaster.titanium-helix.com/">
+    <meta property="twitter:title" content="Midwinter Remaster - Official Fan Recreation">
+    <meta property="twitter:description" content="A faithful recreation of the groundbreaking 1989 DOS game Midwinter by Mike Singleton. Built with Rust and Bevy engine.">
+    <meta property="twitter:image" content="https://midwinter-remaster.titanium-helix.com/images/fan_remaster_logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        /* CRT screen effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.1) 2px,
+                    rgba(0, 0, 0, 0.1) 4px
+                );
+            z-index: 1000;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+            z-index: 999;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .title-image {
+            max-width: 90vw;
+            max-height: 60vh;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            border: 4px solid #4a6b8a;
+            box-shadow: 
+                0 0 0 2px #1a2a3a,
+                0 0 40px rgba(74, 107, 138, 0.5),
+                inset 0 0 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 3rem;
+        }
+
+        .prompt-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .enter-icon {
+            width: 64px;
+            height: 64px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        .prompt {
+            color: #a8c8e8;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            text-shadow: 0 0 10px rgba(168, 200, 232, 0.8);
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .version {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            color: #e87040;
+            font-size: 0.5rem;
+            letter-spacing: 0.1em;
+            z-index: 10;
+        }
+
+        .copyright {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            color: #4a6b8a;
+            font-size: 0.4rem;
+            letter-spacing: 0.1em;
+            z-index: 10;
+            max-width: 300px;
+            text-align: left;
+            line-height: 1.8;
+        }
+
+        /* Hover effect on whole page */
+        body:hover .title-image {
+            box-shadow: 
+                0 0 0 2px #1a2a3a,
+                0 0 60px rgba(74, 107, 138, 0.8),
+                0 0 100px rgba(168, 200, 232, 0.3),
+                inset 0 0 60px rgba(0, 0, 0, 0.3);
+        }
+
+        body:hover .prompt {
+            color: #fff;
+        }
+
+        /* Loading dots for transition */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .loading-text {
+            color: #a8c8e8;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+        }
+
+        /* Stamina icon loading indicator */
+        .stamina-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-top: 1.5rem;
+        }
+
+        /* White background bar (shows empty stamina) */
+        .stamina-bg {
+            position: absolute;
+            left: 8px;
+            bottom: 21px;
+            width: 105px;
+            height: 89px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Red fill bar (grows from bottom to top) */
+        .stamina-fill {
+            position: absolute;
+            left: 8px;
+            bottom: 21px;
+            width: 105px;
+            height: 0px;
+            background: #ff4040;
+            animation: fillStamina 1.5s ease-out forwards;
+        }
+
+        /* Human outline overlay */
+        .stamina-outline {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 120px;
+            height: 120px;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            pointer-events: none;
+        }
+
+        @keyframes fillStamina {
+            from { height: 0px; }
+            to { height: 89px; }
+        }
+    /* Mobile */
+@media (max-width: 768px) { .container { padding: 2rem 1rem; } .title-image { max-width: 95vw; margin-bottom: 2rem; } .prompt { font-size: 0.8rem; } .enter-icon { width: 48px; height: 48px; } .version, .copyright { font-size: 0.35rem; } }
+@media (max-width: 480px) { .prompt { font-size: 0.6rem; } .prompt-container { gap: 0.75rem; } }
+</style>
+</head>
+<body onclick="enterGame()">
+    <div class="loading" id="loading">
+        <div class="loading-text">LOADING...</div>
+        <div class="stamina-container">
+            <div class="stamina-bg"></div>
+            <div class="stamina-fill"></div>
+            <img src="images/human_stamina_outline.png" alt="" class="stamina-outline">
+        </div>
+    </div>
+
+    <div class="container">
+        <img src="images/fan_remaster_logo.png" alt="Midwinter Fan Remaster" class="title-image">
+        <div class="prompt-container">
+            <img src="images/Enter_building.png" alt="" class="enter-icon">
+            <p class="prompt">CLICK TO ENTER</p>
+            <img src="images/Enter_building.png" alt="" class="enter-icon" style="transform: scaleX(-1);">
+        </div>
+    </div>
+
+    <div class="version">PRE-ALPHA v0.6.0</div>
+    <div class="copyright">
+        ORIGINAL GAME © 1989<br>
+        MIKE SINGLETON<br>
+        MICROPROSE
+    </div>
+
+    <script>
+        function enterGame() {
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+            
+            setTimeout(() => {
+                window.location.href = 'decisions.html';
+            }, 1800);
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Enter') {
+                enterGame();
+            }
+        });
+    </script>
+</body>
+</html>

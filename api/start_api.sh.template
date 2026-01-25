@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Start Midwinter Search API in Docker
+
+export DOCKER_HOST=unix:///var/run/system-docker.sock
+DOCKER=/share/CACHEDEV1_DATA/.qpkg/container-station/bin/docker
+
+# Stop existing container if running
+$DOCKER stop midwinter-search-api 2>/dev/null
+$DOCKER rm midwinter-search-api 2>/dev/null
+
+# Run the container
+$DOCKER run -d \
+  --name midwinter-search-api \
+  --restart unless-stopped \
+  -p 5000:5000 \
+  -v /share/Web/api:/app \
+  -w /app \
+  -e ANTHROPIC_API_KEY="YOUR_ANTHROPIC_API_KEY_HERE" \
+  python:3.11-slim \
+  sh -c "pip install --no-cache-dir -r requirements.txt && python search_api.py"
+
+echo "Midwinter Search API started!"
+echo "Check status with: docker ps"

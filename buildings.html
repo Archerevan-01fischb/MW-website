@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buildings & Assets - Midwinter Remaster</title>
+    <meta name="description" content="Explore the buildings and assets of Midwinter island - from strategic Heat Mines to mountain shelters.">
+    <meta name="keywords" content="Midwinter buildings, Heat Mines, cable cars, game assets, Midwinter locations">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midwinter-remaster.titanium-helix.com/buildings.html">
+    <meta property="og:title" content="Buildings & Assets - Midwinter Remaster">
+    <meta property="og:description" content="Explore the buildings and assets of Midwinter island.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://midwinter-remaster.titanium-helix.com/buildings.html">
+    <meta property="twitter:title" content="Buildings & Assets - Midwinter Remaster">
+    <meta property="twitter:description" content="Explore the buildings and assets of Midwinter island.">
+
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --border-light: #6a8bba;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-orange: #e87040;
+            --accent-yellow: #d4a840;
+            --accent-red: #c04040;
+            --tile-bg: #1a2030;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+        }
+
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+        }
+
+        .header a:hover { color: var(--accent-yellow); }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1.5rem;
+            image-rendering: pixelated;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--text-white);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-ice);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .category {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-blue);
+        }
+
+        .buildings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .building-card {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.25rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .building-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .building-card.strategic {
+            border-color: var(--accent-red);
+        }
+
+        .building-card.strategic:hover {
+            border-color: #e05050;
+        }
+
+        .building-icon {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            flex-shrink: 0;
+            border-radius: 4px;
+        }
+
+        .building-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .building-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: var(--text-white);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .building-desc {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-ice);
+        }
+
+        .building-tag {
+            display: inline-block;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.4rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-critical {
+            background: var(--accent-red);
+            color: var(--text-white);
+        }
+
+        .tag-military {
+            background: var(--accent-orange);
+            color: var(--text-white);
+        }
+
+        .tag-demolition {
+            background: #8b4513;
+            color: var(--text-white);
+        }
+
+        .tag-sabotage {
+            background: #6a5acd;
+            color: var(--text-white);
+        }
+
+        .tag-food {
+            background: #2e8b57;
+            color: var(--text-white);
+        }
+
+        .tag-sleep {
+            background: #4169e1;
+            color: var(--text-white);
+        }
+
+        .tag-snipe {
+            background: #dc143c;
+            color: var(--text-white);
+        }
+
+        .tag-supplies {
+            background: #b8860b;
+            color: var(--text-white);
+        }
+
+        .tag-vehicle {
+            background: #708090;
+            color: var(--text-white);
+        }
+
+        .tag-fuel {
+            background: #ff6347;
+            color: var(--text-white);
+        }
+
+        .tag-rearm {
+            background: #cd853f;
+            color: var(--text-white);
+        }
+
+        .building-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .content { padding: 1.5rem 1rem; }
+            h1 { font-size: 0.8rem; }
+            .category-title { font-size: 0.55rem; }
+            .buildings-grid { grid-template-columns: 1fr; }
+            .building-card { padding: 1rem; }
+            .building-icon { width: 80px; height: 80px; }
+            .building-name { font-size: 0.5rem; }
+            .building-desc { font-size: 0.8rem; }
+            .header { padding: 0.75rem 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 0.65rem; }
+            .building-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .building-icon { width: 120px; height: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html">&larr; BACK TO DECISIONS</a>
+    </header>
+
+    <main class="content">
+        <div class="page-header">
+            <img src="sprites/icons/Enter_building.png" class="page-icon" alt="Buildings">
+            <h1>BUILDINGS & ASSETS</h1>
+            <p class="page-subtitle">The buildings and structures of Midwinter island serve as vital resources for survival and resistance. Each location plays a crucial role in the struggle against General Masters' forces.</p>
+        </div>
+
+        <!-- Strategic Buildings -->
+        <section class="category">
+            <h2 class="category-title">STRATEGIC TARGETS</h2>
+            <div class="buildings-grid">
+                <div class="building-card strategic">
+                    <img src="sprites/buildings/Heat-Mine-Icon.png" alt="Heat Mine" class="building-icon">
+                    <div class="building-info">
+                        <span class="building-tag tag-critical">DEFEND</span>
+                        <h3 class="building-name">HEAT MINE</h3>
+                        <p class="building-desc">The means by which all power is generated on the island. The enemy's primary targets - once all Heat Mines are captured or destroyed, your people will be forced to surrender.</p>
+                    </div>
+                </div>
+
+                <div class="building-card strategic">
+                    <img src="sprites/buildings/Enemy-HQ-Icon.png" alt="Enemy Headquarters" class="building-icon">
+                    <div class="building-info">
+                        <span class="building-tag tag-critical">YOUR GOAL</span>
+                        <h3 class="building-name">ENEMY HQ</h3>
+                        <p class="building-desc">Located at Shining Hollow and guarded like a fortress. Your goal is to destroy it, eliminating General Masters. Getting there will prove dangerous and difficult. But worth it.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Radio-Station-Icon.png" alt="Radio Station" class="building-icon">
+                    <div class="building-info">
+                        <h3 class="building-name">RADIO STATION</h3>
+                        <p class="building-desc">Strategically vital - often the only means of communication with remote settlements. Professor Kristiansen can override enemy jamming signals here to recruit up to four Peace Force members.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Military Buildings -->
+        <section class="category">
+            <h2 class="category-title">MILITARY & DEFENSE</h2>
+            <div class="buildings-grid">
+                <div class="building-card">
+                    <img src="sprites/buildings/Bunker-Icon.png" alt="Bunker" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-snipe">SNIPE</span>
+                            <span class="building-tag tag-sleep">SLEEP</span>
+                        </div>
+                        <h3 class="building-name">BUNKER</h3>
+                        <p class="building-desc">Provides sniping positions with a greater margin of safety than open country. The enemy are still likely to fire at you, but bunkers afford protection. Can also shelter overnight.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Magazine-Icon.png" alt="Magazine" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-supplies">SUPPLIES</span>
+                            <span class="building-tag tag-rearm">RE-ARM</span>
+                        </div>
+                        <h3 class="building-name">MAGAZINE</h3>
+                        <p class="building-desc">Military ammunition storage. Re-arm your snow-buggy here and get fresh supplies of bullets, grenades and dynamite. Five minutes will be added to your personal time.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Police-Station-Icon.png" alt="Police Station" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-demolition">DEMOLITION</span>
+                            <span class="building-tag tag-food">FOOD</span>
+                            <span class="building-tag tag-sleep">SLEEP</span>
+                        </div>
+                        <h3 class="building-name">POLICE STATION</h3>
+                        <p class="building-desc">If Peace Officers are caught on duty, they'll be imprisoned here. Rescue prisoners by blowing up the station with dynamite to liberate its occupants. Meals available.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources & Services -->
+        <section class="category">
+            <h2 class="category-title">RESOURCES & SERVICES</h2>
+            <div class="buildings-grid">
+                <div class="building-card">
+                    <img src="sprites/buildings/Garage-Icon.png" alt="Garage" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-vehicle">VEHICLE</span>
+                            <span class="building-tag tag-fuel">FUEL</span>
+                            <span class="building-tag tag-rearm">RE-ARM</span>
+                        </div>
+                        <h3 class="building-name">GARAGE</h3>
+                        <p class="building-desc">Find snow-buggies here - may be fully operational or need repair (up to 4.5 hours). Refuel and re-arm your buggy. Garages are few and far between, so plan your route carefully.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Store-Icon.png" alt="Store" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-supplies">SUPPLIES</span>
+                            <span class="building-tag tag-food">FOOD</span>
+                            <span class="building-tag tag-rearm">RE-ARM</span>
+                        </div>
+                        <h3 class="building-name">STORE</h3>
+                        <p class="building-desc">Get fresh supplies of bullets, grenades and dynamite. Note that Stores only have limited stocks of dynamite. You can carry more dynamite if you have a snow-buggy. Meals available.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Warehouse-Icon.png" alt="Warehouse" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-sabotage">SABOTAGE TARGET</span>
+                        </div>
+                        <h3 class="building-name">WAREHOUSE</h3>
+                        <p class="building-desc">Storage facility found throughout the island's settlements. Part of the infrastructure supporting the scattered communities of Midwinter.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Factory-Icon.png" alt="Factory" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-sabotage">SABOTAGE TARGET</span>
+                        </div>
+                        <h3 class="building-name">FACTORY</h3>
+                        <p class="building-desc">Industrial facilities containing machinery and generators. The early factories were key to harnessing geothermal power and constructing transport, buildings and arms.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Synthesis-Plant-Icon.png" alt="Synthesis Plant" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-fuel">FUEL</span>
+                            <span class="building-tag tag-sabotage">SABOTAGE TARGET</span>
+                        </div>
+                        <h3 class="building-name">SYNTHESIS PLANT</h3>
+                        <p class="building-desc">Produces fuel for the island's vehicles and heating systems. A vital part of the infrastructure that keeps Midwinter's communities operational.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shelter -->
+        <section class="category">
+            <h2 class="category-title">SHELTER & REST</h2>
+            <div class="buildings-grid">
+                <div class="building-card">
+                    <img src="sprites/buildings/House-Icon.png" alt="House" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-food">FOOD</span>
+                            <span class="building-tag tag-sleep">SLEEP</span>
+                        </div>
+                        <h3 class="building-name">HOUSE</h3>
+                        <p class="building-desc">Residential shelter where you can eat meals to replenish energy and sleep to restore alertness. You can eat as much as you like, but there's little point once energy is at maximum.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Mountain-Hut-Icon.png" alt="Mountain Hut" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-food">FOOD</span>
+                            <span class="building-tag tag-sleep">SLEEP</span>
+                        </div>
+                        <h3 class="building-name">MOUNTAIN HUT</h3>
+                        <p class="building-desc">Remote shelters found in the highlands. Eat meals to replenish energy and sleep to restore alertness. Essential waypoints when traversing the mountain terrain.</p>
+                    </div>
+                </div>
+
+                <div class="building-card">
+                    <img src="sprites/buildings/Church-Icon.png" alt="Church" class="building-icon">
+                    <div class="building-info">
+                        <div class="building-tags">
+                            <span class="building-tag tag-snipe">SNIPE</span>
+                        </div>
+                        <h3 class="building-name">CHURCH</h3>
+                        <p class="building-desc">An individual's first visit raises morale. You can snipe from the church steeples, which gives an excellent view of the surrounding landscape. Usually found in settlements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transport -->
+        <section class="category">
+            <h2 class="category-title">TRANSPORT</h2>
+            <div class="buildings-grid">
+                <div class="building-card">
+                    <img src="sprites/buildings/Cable-Car-Icon.png" alt="Cable Car Station" class="building-icon">
+                    <div class="building-info">
+                        <h3 class="building-name">CABLE CAR STATION</h3>
+                        <p class="building-desc">Found in pairs - a bottom station and top station connected by pylons. At the top station you'll always find a hang-glider. Some of the most stunning views can be seen whilst travelling by cable car.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other -->
+        <section class="category">
+            <h2 class="category-title">OTHER</h2>
+            <div class="buildings-grid">
+                <div class="building-card">
+                    <img src="sprites/buildings/Ruin-Icon.png" alt="Ruin" class="building-icon">
+                    <div class="building-info">
+                        <h3 class="building-name">RUIN</h3>
+                        <p class="building-desc">Buildings destroyed by sabotage become ruins. You can still enter them, though they no longer provide their original functions. A testament to the destruction of war.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

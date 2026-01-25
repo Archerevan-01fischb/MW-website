@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franco Grazzini - Midwinter Characters</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1926 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .nav {
+            background: rgba(10, 22, 40, 0.95);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: #64b4ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .nav a:hover {
+            color: #9dd1ff;
+        }
+        
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .character-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+
+        .mini-map {
+            flex-shrink: 0;
+            width: 200px;
+        }
+
+        .mini-map h3 {
+            font-size: 0.7rem;
+            color: #8ba4c4;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .map-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 2px solid rgba(100, 180, 255, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #0a1628;
+        }
+
+        .map-image {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+            object-fit: cover;
+        }
+
+        .location-marker {
+            position: absolute;
+            /* Lindberg Plateau: (1605114, 661672) feet
+               World: 2,112,000 x 2,112,000 feet
+               X% = 1605114 / 2112000 = 76.0%
+               Z% = 661672 / 2112000 = 31.3% */
+            left: 76.0%;
+            top: 31.3%;
+            width: 60px;
+            height: 60px;
+            transform: translate(-50%, -50%);
+        }
+
+        .location-pin {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            image-rendering: pixelated;
+            z-index: 10;
+        }
+
+        .location-marker::before,
+        .location-marker::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .location-marker::before {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px 6px 0 6px;
+            border-color: #ff0000 transparent transparent transparent;
+            animation: arrow-from-top 2s ease-in-out infinite;
+        }
+
+        .location-marker::after {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 6px 8px 6px;
+            border-color: transparent transparent #ff0000 transparent;
+            animation: arrow-from-bottom 2s ease-in-out infinite;
+        }
+
+        @keyframes arrow-from-top {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes arrow-from-bottom {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateX(-50%) translateY(20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes arrow-from-left {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(-50%) translateX(-20px) rotate(180deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0) rotate(180deg);
+            }
+        }
+
+        @keyframes arrow-from-right {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(-50%) translateX(20px) rotate(180deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0) rotate(180deg);
+            }
+        }
+
+        .arrow-left,
+        .arrow-right {
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .arrow-left {
+            left: 0;
+            transform: translateY(-50%) rotate(180deg);
+            border-width: 6px 8px 6px 0;
+            border-color: transparent #ff0000 transparent transparent;
+            animation: arrow-from-left 2s ease-in-out infinite;
+        }
+
+        .arrow-right {
+            right: 0;
+            transform: translateY(-50%) rotate(180deg);
+            border-width: 6px 0 6px 8px;
+            border-color: transparent transparent transparent #ff0000;
+            animation: arrow-from-right 2s ease-in-out infinite;
+        }
+
+        .portrait-container {
+            flex-shrink: 0;
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .portrait {
+            width: 200px;
+            height: 200px;
+            border: 3px solid rgba(100, 180, 255, 0.3);
+            border-radius: 8px;
+            image-rendering: pixelated;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .portrait.old {
+            z-index: 1;
+        }
+
+        .portrait.new {
+            z-index: 2;
+            opacity: 0;
+        }
+        
+        .character-info h1 {
+            font-size: 2rem;
+            color: #64b4ff;
+            margin-bottom: 0.5rem;
+        }
+        
+        .character-meta {
+            color: #8ba4c4;
+            margin-bottom: 1rem;
+        }
+        
+        .character-meta span {
+            margin-right: 1.5rem;
+        }
+        
+        .biography {
+            background: rgba(20, 40, 70, 0.5);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #64b4ff;
+            margin-bottom: 2rem;
+        }
+        
+        .section {
+            background: rgba(20, 40, 70, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section h2 {
+            color: #64b4ff;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+        
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .attributes-grid ul {
+            list-style: none;
+        }
+        
+        .attributes-grid li {
+            padding: 0.35rem 0;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.1);
+        }
+        
+        .relationships {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .friend {
+            background: rgba(80, 180, 100, 0.2);
+            color: #7ddf8c;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .dislike {
+            background: rgba(220, 100, 100, 0.2);
+            color: #e88;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .relationship-link {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+        }
+        
+        .relationship-link:hover {
+            text-decoration-style: solid;
+        }
+        
+        .character-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(100, 180, 255, 0.2);
+        }
+        
+        .character-nav a {
+            color: #64b4ff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(100, 180, 255, 0.3);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .character-nav a:hover {
+            background: rgba(100, 180, 255, 0.1);
+            border-color: #64b4ff;
+        }
+        
+        @media (max-width: 900px) {
+            .character-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .mini-map {
+                order: 3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } .char-header { flex-direction: column; text-align: center; } .portrait-large { width: 100px; height: 100px; } h1 { font-size: 0.6rem; } .stats-grid { grid-template-columns: 1fr 1fr; } .stat-label { font-size: 0.4rem; } p { font-size: 0.8rem; line-height: 1.6; } }
+@media (max-width: 480px) { h1 { font-size: 0.5rem; } .bio { font-size: 0.75rem; } }
+</style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="decisions.html" class="logo">MW</a>
+            <div class="nav-links">
+                <a href="characters.html">Characters</a>
+                <a href="original.html">Original Game</a>
+                <a href="terrain.html">Terrain</a>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="character-header">
+            <div class="portrait-container">
+                <img src="portraits/16 - Franco Grazzini.png" alt="Franco Grazzini (Original)" class="portrait old" id="portraitOld">
+                <img src="portraits/new/16 - Franco Grazzini.png" alt="Franco Grazzini (New)" class="portrait new" id="portraitNew">
+            </div>
+            <div class="character-info">
+                <h1>Franco Grazzini</h1>
+                <div class="character-meta">
+                    <span>Age: 29</span>
+                    <span>Pilot</span>
+                    <span>📍 Lindberg Plateau</span>
+                </div>
+            </div>
+            <div class="mini-map">
+                <h3>LAST KNOWN LOCATION</h3>
+                <div class="map-container">
+                    <img src="sprites/strategic_map.png" alt="Strategic Map" class="map-image">
+                    <div class="location-marker">
+                        <span class="arrow-left"></span>
+                        <span class="arrow-right"></span>
+                        <img src="sprites/location_pin.png" alt="Location" class="location-pin">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="biography">
+            <p>Grazzini is a fearless flier. Rather boastful by nature, he is not overly popular amongst the menfolk of the Free Villages but he has a certain charm for the ladies, especially Nurse Maddocks. Grazzini is in love with Virginia Caygill and nurses a jealous hatred of Rudzinski.</p>
+        </div>
+        
+        <div class="section">
+            <h2>Relationships</h2>
+            <div style="margin-bottom: 1rem;">
+                <strong>Friends:</strong>
+                <div class="relationships" style="margin-top: 0.5rem;">
+                    <span class="friend">♥ <a href="character_15.html" class="relationship-link">Jeremiah Gunn</a></span> <span class="friend">♥ <a href="character_27.html" class="relationship-link">Sarah Maddocks</a></span>
+                </div>
+            </div>
+            <div>
+                <strong>Dislikes:</strong>
+                <div class="relationships" style="margin-top: 0.5rem;">
+                    <span class="dislike">✗ <a href="character_3.html" class="relationship-link">Gordon Macleod</a></span> <span class="dislike">✗ <a href="character_5.html" class="relationship-link">Karl Rudzinski</a></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Attributes</h2>
+            <div class="attributes-grid">
+                <div>
+                    <h3 style="color: #8ba4c4; font-size: 0.9rem; margin-bottom: 0.5rem;">Skills</h3>
+                    <ul>
+                        <li>HANG-GLIDING: EXCELLENT</li>
+                        <li>SABOTAGE: FAIRLY GOOD</li>
+                        <li>SKIING: BELOW PAR</li>
+                        <li>SNIPING: BELOW PAR</li>
+                        <li>DRIVING: ABYSMAL</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #8ba4c4; font-size: 0.9rem; margin-bottom: 0.5rem;">Qualities</h3>
+                    <ul>
+                        <li>ENDURANCE: GOOD</li>
+                        <li>ENERGY: GOOD</li>
+                        <li>SHARPNESS: GOOD</li>
+                        <li>STURDINESS: GOOD</li>
+                        <li>ALERTNESS: FAIRLY GOOD</li>
+                        <li>STAMINA: FAIRLY GOOD</li>
+                        <li>OPTIMISM: AVERAGE</li>
+                        <li>MORALE: ABYSMAL</li>
+                        <li>STRENGTH: ABYSMAL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="character-nav">
+            <a href="character_5.html">← Karl Rudzinski</a>
+            <a href="characters.html">All Characters</a>
+            <a href="character_7.html">Jean-Luc Chabrun →</a>
+        </div>
+    </main>
+
+    <script>
+        // Portrait cycling - dissolve between old and new graphics
+        // Randomly start with old or new portrait
+        let showingNew = Math.random() > 0.5;
+        const portraitOld = document.getElementById('portraitOld');
+        const portraitNew = document.getElementById('portraitNew');
+
+        if (portraitOld && portraitNew) {
+            portraitOld.style.opacity = 1;
+            portraitNew.style.opacity = showingNew ? 1 : 0;
+
+            setInterval(() => {
+                showingNew = !showingNew;
+                portraitOld.style.opacity = 1;
+                portraitNew.style.opacity = showingNew ? 1 : 0;
+            }, 4000);
+        }
+    </script>
+</body>
+</html>

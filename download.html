@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW - Download</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --border-light: #6a8bba;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-orange: #e87040;
+            --accent-yellow: #d4a840;
+            --tile-bg: #1a2030;
+            --success-green: #40c878;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+            z-index: 1000;
+        }
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+        }
+        .header a:hover { color: var(--accent-yellow); }
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .icon {
+            width: 300px;
+            height: auto;
+            margin: 0 auto 2rem;
+            display: block;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.2rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .version {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--accent-orange);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .scroll-indicator {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .scroll-arrow {
+            font-size: 2rem;
+            color: var(--accent-yellow);
+            display: block;
+            line-height: 0.8;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(10px);
+                opacity: 0.6;
+            }
+        }
+        
+        /* Video Section */
+        .video-section {
+            margin-bottom: 3rem;
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            border: 3px solid var(--border-blue);
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .video-label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.65rem;
+            color: var(--accent-yellow);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* Download Buttons */
+        .downloads-section {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .downloads-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .download-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-blue);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .download-btn:hover {
+            border-color: var(--accent-yellow);
+            background: #1a2535;
+            transform: translateY(-2px);
+        }
+        .download-btn .platform {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+        .download-btn .file {
+            font-size: 0.75rem;
+            color: var(--text-ice);
+            margin-bottom: 0.25rem;
+        }
+        .download-btn .size {
+            font-size: 0.7rem;
+            color: var(--border-light);
+        }
+        .download-btn.primary {
+            border-color: var(--accent-orange);
+        }
+        .download-btn.primary:hover {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 20px rgba(232, 112, 64, 0.3);
+        }
+
+        /* Installation */
+        .install-section {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .install-section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+        }
+        .install-section ol {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+        .install-section li {
+            margin-bottom: 0.5rem;
+        }
+        .warning {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(232, 112, 64, 0.1);
+            border-left: 3px solid var(--accent-orange);
+        }
+        .warning strong {
+            color: var(--accent-orange);
+        }
+
+        /* Requirements */
+        .requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .req-box {
+            background: var(--tile-bg);
+            border: 2px solid var(--border-blue);
+            padding: 1rem;
+        }
+        .req-box h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.75rem;
+        }
+        .req-box ul {
+            list-style: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 2rem 1rem; } h1 { font-size: 0.7rem; } h2 { font-size: 0.55rem; } p, li { font-size: 0.8rem; } .download-btn { font-size: 0.45rem; padding: 0.75rem 1.25rem; } .platform-grid { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { h1 { font-size: 0.6rem; } .download-card { padding: 1rem; } }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html">← BACK TO DECISIONS</a>
+        <a href="index.html">TITLE SCREEN</a>
+    </header>
+
+    <main class="content">
+        <img src="sprites/icons/Play.png" class="icon" alt="Download">
+        <h1>DOWNLOAD</h1>
+        <p class="version">v0.6.0 PRE-ALPHA</p>
+
+        <div class="scroll-indicator">
+            <span class="scroll-arrow">▼</span>
+            <span class="scroll-arrow">▼</span>
+        </div>
+
+        <div class="video-section">
+            <p class="video-label">LATEST RELEASE VIDEO</p>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/TsMep9npCVE" 
+                    title="Midwinter Fan Remaster"
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div class="downloads-section">
+            <h2>SELECT YOUR PLATFORM</h2>
+            <div class="download-grid">
+                <a href="https://midwinter-remaster.titanium-helix.com/releases/v0.6.0/MW-windows-v0.6.0.zip" class="download-btn primary">
+                    <span class="platform">WINDOWS</span>
+                    <span class="file">MW-windows-v0.6.0.zip</span>
+                    <span class="size">1.2 GB</span>
+                </a>
+                <a href="https://midwinter-remaster.titanium-helix.com/releases/v0.6.0/MW-mac-apple-silicon-v0.6.0.zip" class="download-btn">
+                    <span class="platform">MAC (M1/M2/M3)</span>
+                    <span class="file">MW-mac-apple-silicon-v0.6.0.zip</span>
+                    <span class="size">1.2 GB</span>
+                </a>
+                <a href="https://midwinter-remaster.titanium-helix.com/releases/v0.6.0/MW-mac-intel-v0.6.0.zip" class="download-btn">
+                    <span class="platform">MAC (INTEL)</span>
+                    <span class="file">MW-mac-intel-v0.6.0.zip</span>
+                    <span class="size">1.2 GB</span>
+                </a>
+                <a href="https://midwinter-remaster.titanium-helix.com/releases/v0.6.0/MW-linux-v0.6.0.zip" class="download-btn">
+                    <span class="platform">LINUX</span>
+                    <span class="file">MW-linux-v0.6.0.zip</span>
+                    <span class="size">1.2 GB</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="install-section">
+            <h2>INSTALLATION</h2>
+            <ol>
+                <li>Download the zip for your platform</li>
+                <li>Extract the zip file</li>
+                <li>Run the MW executable from inside the extracted folder</li>
+            </ol>
+            <div class="warning">
+                <strong>Mac Users:</strong> First launch may show a security warning. Right-click the app and select "Open" to bypass, or go to System Preferences → Security → "Open Anyway"
+            </div>
+        </div>
+
+        <div class="requirements">
+            <div class="req-box">
+                <h3>MINIMUM</h3>
+                <ul>
+                    <li>OS: Windows 10 / macOS 10.15 / Linux</li>
+                    <li>RAM: 4 GB</li>
+                    <li>Graphics: OpenGL 3.3+</li>
+                    <li>Storage: 500 MB</li>
+                </ul>
+            </div>
+            <div class="req-box">
+                <h3>RECOMMENDED</h3>
+                <ul>
+                    <li>OS: Windows 11 / macOS 12+</li>
+                    <li>RAM: 8 GB</li>
+                    <li>Graphics: Dedicated GPU</li>
+                    <li>Storage: 1 GB</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

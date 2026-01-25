@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "midwinter": {
+      "command": "python",
+      "args": ["mcp-midwinter-search/server.py"]
+    }
+  }
+}

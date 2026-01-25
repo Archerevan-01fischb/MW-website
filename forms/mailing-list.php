@@ -1,0 +1,129 @@
+<?php
+/**
+ * Midwinter Mailing List Form Handler
+ * Sends form submissions via Gmail SMTP
+ */
+
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    exit();
+}
+
+// Rate limiting
+$ip = $_SERVER['REMOTE_ADDR'];
+$rate_file = __DIR__ . '/.rate_' . md5($ip);
+if (file_exists($rate_file) && (time() - filemtime($rate_file)) < 60) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'message' => 'Please wait before submitting again']);
+    exit();
+}
+
+// Get form data
+$name = isset($_POST['name']) ? trim($_POST['name']) : 'Anonymous';
+$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+$role = isset($_POST['role']) ? trim($_POST['role']) : 'fan';
+$message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Valid email required']);
+    exit();
+}
+
+// Gmail config
+$gmail_user = 'lane01evan@gmail.com';
+$gmail_pass = 'onkojkqiecgkktbo';
+
+// Build email content
+$subject = "MW Mailing List: New {$role} signup";
+$body = "New Midwinter Mailing List Submission\r\n\r\n";
+$body .= "Name: {$name}\r\n";
+$body .= "Email: {$email}\r\n";
+$body .= "Role: {$role}\r\n";
+$body .= "Submitted: " . date('Y-m-d H:i:s') . "\r\n";
+$body .= "IP: {$ip}\r\n\r\n";
+$body .= "Message:\r\n{$message}\r\n";
+
+try {
+    $socket = @fsockopen('ssl://smtp.gmail.com', 465, $errno, $errstr, 30);
+    if (!$socket) throw new Exception("Connect failed: $errstr");
+
+    // Helper to read response
+    $read = function() use ($socket) {
+        $response = '';
+        while ($line = fgets($socket, 512)) {
+            $response .= $line;
+            if (substr($line, 3, 1) == ' ') break;
+        }
+        return $response;
+    };
+
+    $read(); // greeting
+
+    fputs($socket, "EHLO localhost\r\n");
+    $read();
+
+    fputs($socket, "AUTH LOGIN\r\n");
+    $read();
+
+    fputs($socket, base64_encode($gmail_user) . "\r\n");
+    $read();
+
+    fputs($socket, base64_encode($gmail_pass) . "\r\n");
+    $auth = $read();
+    if (strpos($auth, '235') === false) throw new Exception('Auth failed');
+
+    fputs($socket, "MAIL FROM: <{$gmail_user}>\r\n");
+    $read();
+
+    fputs($socket, "RCPT TO: <{$gmail_user}>\r\n");
+    $read();
+
+    fputs($socket, "DATA\r\n");
+    $read();
+
+    // Email headers and body
+    $headers = "From: MW Website <{$gmail_user}>\r\n";
+    $headers .= "Reply-To: {$email}\r\n";
+    $headers .= "To: {$gmail_user}\r\n";
+    $headers .= "Subject: {$subject}\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $headers .= "\r\n";
+
+    fputs($socket, $headers . $body . "\r\n.\r\n");
+    $read();
+
+    fputs($socket, "QUIT\r\n");
+    fclose($socket);
+
+    // Log submission
+    $log = __DIR__ . '/mailing_list.csv';
+    if (!file_exists($log)) {
+        file_put_contents($log, "timestamp,name,email,role,message,ip\n");
+    }
+    $row = '"' . implode('","', [date('Y-m-d H:i:s'), $name, $email, $role, str_replace('"', "'", $message), $ip]) . "\"\n";
+    file_put_contents($log, $row, FILE_APPEND);
+
+    // Update rate limit
+    touch($rate_file);
+
+    echo json_encode(['success' => true, 'message' => 'Welcome to the resistance! Check your email for confirmation.']);
+
+} catch (Exception $e) {
+    error_log('Mailing list error: ' . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+}
+?>

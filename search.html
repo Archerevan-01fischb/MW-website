@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Midwinter Game Manual - Characters, Equipment, Locations | MW Remaster</title>
+    <meta name="description" content="Search the complete Midwinter game manual. Find information about characters, equipment, locations, and game mechanics from the original 1989 DOS game.">
+    <meta name="keywords" content="Midwinter manual, game manual search, Midwinter guide, Midwinter characters, Midwinter equipment">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://midwinter-remaster.titanium-helix.com/search.html">
+    <meta property="og:title" content="Search Midwinter Game Manual">
+    <meta property="og:description" content="Search the complete Midwinter game manual for characters, equipment, and locations.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://midwinter-remaster.titanium-helix.com/search.html">
+    <meta property="twitter:title" content="Search Midwinter Game Manual">
+    <meta property="twitter:description" content="Search the complete Midwinter game manual for characters, equipment, and locations.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0d1926 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .nav {
+            background: rgba(10, 22, 40, 0.95);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(100, 180, 255, 0.2);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #64b4ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #9dd1ff;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            color: #64b4ff;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .page-subtitle {
+            color: #8ba4c4;
+            font-size: 1.1rem;
+        }
+
+        /* Search Box */
+        .search-container {
+            background: rgba(20, 40, 70, 0.5);
+            border: 3px solid rgba(100, 180, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: rgba(10, 20, 40, 0.8);
+            border: 2px solid rgba(100, 180, 255, 0.3);
+            color: #e0e6ed;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #64b4ff;
+            box-shadow: 0 0 10px rgba(100, 180, 255, 0.3);
+        }
+
+        .search-button {
+            background: #64b4ff;
+            color: #0a1628;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-button:hover {
+            background: #9dd1ff;
+            transform: translateY(-2px);
+        }
+
+        .search-button:disabled {
+            background: #4a6b8a;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .search-options {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-options label {
+            color: #8ba4c4;
+            font-size: 1rem;
+        }
+
+        .search-options select {
+            background: rgba(10, 20, 40, 0.8);
+            border: 2px solid rgba(100, 180, 255, 0.3);
+            color: #e0e6ed;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        /* Loading Indicator */
+        .loading {
+            text-align: center;
+            color: #64b4ff;
+            padding: 2rem;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        /* Results */
+        .results-container {
+            display: none;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .results-header {
+            background: rgba(20, 40, 70, 0.3);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #64b4ff;
+        }
+
+        .results-count {
+            color: #64b4ff;
+            font-size: 1rem;
+        }
+
+        .result-item {
+            background: rgba(20, 40, 70, 0.3);
+            border: 2px solid rgba(100, 180, 255, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+        }
+
+        .result-item:hover {
+            border-color: rgba(100, 180, 255, 0.5);
+            background: rgba(30, 50, 80, 0.4);
+        }
+
+        .result-page {
+            color: #e87040;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-section {
+            color: #8ba4c4;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-content {
+            color: #e0e6ed;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .result-content mark {
+            background: rgba(232, 112, 64, 0.3);
+            color: #ffa366;
+            padding: 0.1rem 0.2rem;
+            border-radius: 2px;
+        }
+
+        .error-message {
+            background: rgba(232, 64, 64, 0.1);
+            border: 2px solid rgba(232, 64, 64, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: #ff6666;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #8ba4c4;
+            padding: 3rem;
+            background: rgba(20, 40, 70, 0.3);
+            border-radius: 8px;
+        }
+
+        .no-results h3 {
+            color: #64b4ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-query {
+            background: rgba(100, 180, 255, 0.1);
+            border: 1px solid rgba(100, 180, 255, 0.3);
+            color: #64b4ff;
+            padding: 0.65rem 1.2rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .example-query:hover {
+            background: rgba(100, 180, 255, 0.2);
+            border-color: #64b4ff;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    /* Mobile */
+@media (max-width: 768px) { .search-container { padding: 1rem; } h1 { font-size: 0.7rem; } .search-box input { font-size: 0.8rem; padding: 0.75rem; } .search-box button { font-size: 0.5rem; padding: 0.75rem 1rem; } .example-btn { font-size: 0.4rem; padding: 0.5rem 0.75rem; } .result-card { padding: 1rem; } }
+@media (max-width: 480px) { h1 { font-size: 0.55rem; } .subtitle { font-size: 0.7rem; } .examples { gap: 0.5rem; } }
+</style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="decisions.html" class="logo">MW</a>
+            <div class="nav-links">
+                <a href="decisions.html">← Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">SEARCH THE ORIGINAL 1989 MANUAL</h1>
+            <p class="page-subtitle">Ask questions using natural language - powered by Claude AI</p>
+            <p class="page-subtitle" style="margin-top: 0.75rem; font-size: 1rem; color: #64b4ff; line-height: 1.6;">
+                This search uses AI to understand your questions and find relevant information from the original 1989 Midwinter game manual.
+                Ask questions naturally, like "who is General Masters?" or "how do I ski faster?"
+            </p>
+            <p style="margin-top: 1rem; font-size: 1rem;">
+                <a href="Midwinter_Manual.pdf" target="_blank" style="color: #64b4ff; text-decoration: none; border-bottom: 2px solid rgba(100, 180, 255, 0.3); padding-bottom: 2px; transition: all 0.2s;">
+                    📖 Browse the complete high-quality manual (PDF)
+                </a>
+            </p>
+        </div>
+
+        <div class="search-container">
+            <form class="search-form" id="searchForm">
+                <input
+                    type="text"
+                    class="search-input"
+                    id="searchInput"
+                    placeholder="Enter search query (e.g., 'General Masters', 'skiing', 'weapons')..."
+                    required
+                >
+                <button type="submit" class="search-button" id="searchButton">
+                    Search
+                </button>
+            </form>
+
+            <div class="search-options">
+                <label for="sectionFilter">Filter by section:</label>
+                <select id="sectionFilter">
+                    <option value="">All Sections</option>
+                    <option value="characters">Characters</option>
+                    <option value="equipment">Equipment</option>
+                    <option value="locations">Locations</option>
+                    <option value="story_sections">Story Sections</option>
+                    <option value="general_content">General Content</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(100, 180, 255, 0.2);">
+                <p style="color: #8ba4c4; font-size: 1rem; margin-bottom: 0.75rem;">Try these example searches:</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <button type="button" class="example-query" data-query="Who is General Masters?">Who is General Masters?</button>
+                    <button type="button" class="example-query" data-query="How do I ski faster?">How do I ski faster?</button>
+                    <button type="button" class="example-query" data-query="What weapons are available?">What weapons are available?</button>
+                    <button type="button" class="example-query" data-query="Tell me about Captain Stark">Tell me about Captain Stark</button>
+                    <button type="button" class="example-query" data-query="What vehicles can I use?">What vehicles can I use?</button>
+                    <button type="button" class="example-query" data-query="How do I recruit characters?">How do I recruit characters?</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div style="font-size: 1.4rem; margin-bottom: 1rem; color: #64b4ff;">Searching manual...</div>
+            <div style="font-size: 1.05rem; color: #e0e6ed; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                Please wait up to several minutes while the AI searches the entire manual and generates comprehensive, well-formatted answers to your question.
+            </div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="results-container" id="resultsContainer">
+            <div class="results-header">
+                <div class="results-count" id="resultsCount"></div>
+            </div>
+            <div id="resultsContent"></div>
+        </div>
+    </main>
+
+    <script>
+        // CONFIGURATION: Update this to your NAS IP/domain and port
+        const API_BASE = '/api-proxy';  // Flask API via Cloudflare Tunnel
+
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const sectionFilter = document.getElementById('sectionFilter');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const resultsCount = document.getElementById('resultsCount');
+        const resultsContent = document.getElementById('resultsContent');
+
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await performSearch();
+        });
+
+        async function performSearch() {
+            const query = searchInput.value.trim();
+            const section = sectionFilter.value;
+
+            if (!query) return;
+
+            // Show loading, hide results and errors
+            loading.classList.add('active');
+            errorMessage.classList.remove('active');
+            resultsContainer.classList.remove('active');
+            searchButton.disabled = true;
+
+            try {
+                const endpoint = section ? `${API_BASE}/search/section.php` : `${API_BASE}/search.php`;
+                const body = section ? { query, section } : { query };
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Search failed');
+                }
+
+                displayResults(data.results, data.raw_response, query);
+
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                loading.classList.remove('active');
+                searchButton.disabled = false;
+            }
+        }
+
+        function displayResults(results, rawResponse, query) {
+            // If we have a raw response from Claude, show that instead
+            if (rawResponse && (!results || results.length === 0)) {
+                resultsCount.textContent = 'AI Summary';
+
+                // Convert markdown to HTML with better paragraph formatting
+                let lines = rawResponse.split('\n');
+                let htmlLines = [];
+                let inParagraph = false;
+
+                for (let i = 0; i < lines.length; i++) {
+                    let line = lines[i];
+
+                    // Skip empty lines
+                    if (line.trim() === '') {
+                        if (inParagraph) {
+                            htmlLines.push('</p>');
+                            inParagraph = false;
+                        }
+                        continue;
+                    }
+
+                    // Headers
+                    if (line.startsWith('# ')) {
+                        if (inParagraph) htmlLines.push('</p>');
+                        htmlLines.push(`<h1 style="color: #64b4ff; font-size: 1.6rem; margin: 1.5rem 0 0.75rem 0; font-weight: 600;">${line.substring(2)}</h1>`);
+                        inParagraph = false;
+                    } else if (line.startsWith('## ')) {
+                        if (inParagraph) htmlLines.push('</p>');
+                        htmlLines.push(`<h2 style="color: #9dd1ff; font-size: 1.3rem; margin: 1.25rem 0 0.5rem 0; font-weight: 600;">${line.substring(3)}</h2>`);
+                        inParagraph = false;
+                    } else if (line.startsWith('### ')) {
+                        if (inParagraph) htmlLines.push('</p>');
+                        htmlLines.push(`<h3 style="color: #8ba4c4; font-size: 1.1rem; margin: 1rem 0 0.5rem 0; font-weight: 600;">${line.substring(4)}</h3>`);
+                        inParagraph = false;
+                    } else if (line.startsWith('---')) {
+                        if (inParagraph) htmlLines.push('</p>');
+                        htmlLines.push('<hr style="border: none; border-top: 1px solid rgba(100, 180, 255, 0.2); margin: 1.5rem 0;">');
+                        inParagraph = false;
+                    } else if (line.startsWith('- ')) {
+                        if (inParagraph) htmlLines.push('</p>');
+                        htmlLines.push(`<div style="margin-left: 1.5rem; margin-bottom: 0.5rem;">• ${line.substring(2)}</div>`);
+                        inParagraph = false;
+                    } else {
+                        // Regular paragraph text
+                        if (!inParagraph) {
+                            htmlLines.push('<p style="margin-bottom: 1rem; line-height: 1.8;">');
+                            inParagraph = true;
+                        } else {
+                            htmlLines.push(' ');
+                        }
+                        htmlLines.push(line);
+                    }
+                }
+
+                if (inParagraph) {
+                    htmlLines.push('</p>');
+                }
+
+                let htmlContent = htmlLines.join('')
+                    // Bold text
+                    .replace(/\*\*(.+?)\*\*/g, '<strong style="color: #e87040; font-weight: 600;">$1</strong>')
+                    // Italic text
+                    .replace(/\*(.+?)\*/g, '<em style="color: #9dd1ff;">$1</em>');
+
+                resultsContent.innerHTML = `
+                    <div class="result-item">
+                        <div class="result-content">${htmlContent}</div>
+                    </div>
+                `;
+                resultsContainer.classList.add('active');
+                return;
+            }
+
+            if (!results || results.length === 0) {
+                resultsContent.innerHTML = `
+                    <div class="no-results">
+                        <h3>No results found</h3>
+                        <p>Try different search terms or check your spelling</p>
+                    </div>
+                `;
+                resultsCount.textContent = 'No results found';
+                resultsContainer.classList.add('active');
+                return;
+            }
+
+            resultsCount.textContent = `Found ${results.length} result${results.length === 1 ? '' : 's'}`;
+
+            resultsContent.innerHTML = results.map(result => `
+                <div class="result-item">
+                    <div class="result-page">Page ${result.page_number || 'N/A'}</div>
+                    <div class="result-section">[${result.section || 'General'}]</div>
+                    <div class="result-content">${highlightQuery(result.content || result.text || '', query)}</div>
+                </div>
+            `).join('');
+
+            resultsContainer.classList.add('active');
+        }
+
+        function highlightQuery(text, query) {
+            const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        function escapeRegex(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function showError(message) {
+            errorMessage.textContent = `Error: ${message}`;
+            errorMessage.classList.add('active');
+            resultsContainer.classList.remove('active');
+        }
+
+        // Handle example query clicks
+        document.querySelectorAll('.example-query').forEach(button => {
+            button.addEventListener('click', () => {
+                searchInput.value = button.dataset.query;
+                performSearch();
+            });
+        });
+
+        // Auto-focus search input on load
+        searchInput.focus();
+    </script>
+</body>
+</html>

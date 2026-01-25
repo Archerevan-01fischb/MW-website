@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW - MCP Manual Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-yellow: #d4a840;
+            --accent-orange: #e87040;
+            --tile-bg: #1a2030;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+        }
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+        }
+        .header a:hover { color: var(--accent-yellow); }
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 0.95rem;
+        }
+        .icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            display: block;
+            image-rendering: pixelated;
+        }
+        .info-box {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .info-box h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+        }
+        .info-box p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .info-box code {
+            background: #000;
+            padding: 0.2rem 0.5rem;
+            color: var(--accent-orange);
+            font-size: 0.85rem;
+        }
+        pre {
+            background: #000;
+            border: 2px solid var(--border-blue);
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin: 1rem 0;
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(74, 107, 154, 0.3);
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-yellow);
+            color: #000;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            margin-top: 1rem;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: var(--text-white);
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } h1 { font-size: 0.7rem; } h2 { font-size: 0.5rem; } p, li { font-size: 0.8rem; line-height: 1.6; } .header { padding: 0.75rem 1rem; } }
+@media (max-width: 480px) { h1 { font-size: 0.55rem; } }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html">← BACK TO DECISIONS</a>
+    </header>
+    <main class="content">
+        <img src="sprites/icons/Radio_icon.png" class="icon" alt="MCP Search">
+        <h1>MCP MANUAL SEARCH</h1>
+        <p class="subtitle">An MCP server that provides search capabilities for the Midwinter game manual database.</p>
+
+        <div class="info-box">
+            <h2>WHAT IS THIS?</h2>
+            <p>The Midwinter Database Search MCP Server allows Claude (or other MCP-compatible AI assistants) to search through comprehensive documentation about the original 1989 Midwinter game.</p>
+            <p>Query character stats, game mechanics, locations, items, and lore directly from your AI assistant.</p>
+        </div>
+
+        <div class="info-box">
+            <h2>FEATURES</h2>
+            <ul class="feature-list">
+                <li>✓ Full-text search across game manual content</li>
+                <li>✓ Character attribute lookups</li>
+                <li>✓ Location and building information</li>
+                <li>✓ Game mechanics documentation</li>
+                <li>✓ SQLite-based for fast queries</li>
+                <li>✓ No external dependencies</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h2>CONFIGURATION</h2>
+            <p>Add to your <code>.mcp.json</code> in the project root:</p>
+            <pre>{
+  "mcpServers": {
+    "midwinter": {
+      "command": "python",
+      "args": ["mcp-midwinter-search/server.py"]
+    }
+  }
+}</pre>
+        </div>
+
+        <div class="info-box">
+            <h2>REQUIREMENTS</h2>
+            <p>• Python 3.10+<br>
+            • <code>pip install mcp</code><br>
+            • Database file at <code>database/midwinter_unified.db</code> (included in repo)</p>
+            <a href="https://github.com/Archerevan-01fischb/MW/tree/master/mcp-midwinter-search" class="btn" target="_blank">VIEW ON GITHUB</a>
+        </div>
+    </main>
+</body>
+</html>

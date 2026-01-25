@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MW - Rust & Bevy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --border-blue: #4a6b9a;
+            --text-ice: #a8c8e8;
+            --text-white: #e8f0f8;
+            --accent-yellow: #d4a840;
+            --accent-orange: #e87040;
+            --tile-bg: #1a2030;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg-dark);
+            min-height: 100vh;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--text-ice);
+        }
+        .header {
+            background: linear-gradient(180deg, #1a2a4a 0%, var(--bg-dark) 100%);
+            padding: 1rem 2rem;
+            border-bottom: 3px solid var(--border-blue);
+        }
+        .header a {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-ice);
+            text-decoration: none;
+        }
+        .header a:hover { color: var(--accent-yellow); }
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.45rem;
+            color: var(--accent-yellow);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            display: block;
+            image-rendering: pixelated;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .tech-card {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .tech-card h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.55rem;
+            color: var(--accent-yellow);
+            margin-bottom: 0.75rem;
+        }
+        .tech-card p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .section {
+            background: var(--tile-bg);
+            border: 3px solid var(--border-blue);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .section h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-blue);
+        }
+        .section p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .section ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+        .section li {
+            padding: 0.4rem 0;
+            position: relative;
+            padding-left: 1rem;
+        }
+        .section li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-orange);
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-yellow);
+            color: #000;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            margin-top: 1rem;
+            margin-right: 1rem;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: var(--text-white);
+        }
+    /* Mobile */
+@media (max-width: 768px) { .content { padding: 1.5rem 1rem; } h1 { font-size: 0.7rem; } h2 { font-size: 0.5rem; } p, li { font-size: 0.8rem; line-height: 1.6; } .header { padding: 0.75rem 1rem; } }
+@media (max-width: 480px) { h1 { font-size: 0.55rem; } }
+</style>
+</head>
+<body>
+    <header class="header">
+        <a href="decisions.html">← BACK TO DECISIONS</a>
+    </header>
+    <main class="content">
+        <img src="sprites/icons/Factory.png" class="icon" alt="Factory">
+        <h1>RUST & BEVY</h1>
+        <p class="subtitle">THE TECHNOLOGY BEHIND THE REMASTER</p>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h3>RUST</h3>
+                <p>64.2% of codebase. Memory-safe systems programming for reliable game logic.</p>
+            </div>
+            <div class="tech-card">
+                <h3>BEVY 0.16</h3>
+                <p>Modern ECS game engine. Data-driven architecture for flexible systems.</p>
+            </div>
+            <div class="tech-card">
+                <h3>SQLITE</h3>
+                <p>Character and settlement data storage. Fast queries for game state.</p>
+            </div>
+            <div class="tech-card">
+                <h3>RON</h3>
+                <p>Rusty Object Notation for human-readable configuration files.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>WHY RUST?</h2>
+            <p>Rust provides memory safety without garbage collection, making it ideal for games that need predictable performance. The strong type system catches bugs at compile time, and the ecosystem has excellent tooling.</p>
+            <p>For a project reconstructing complex 1989 game mechanics, Rust's reliability means we can focus on gameplay logic rather than chasing memory bugs.</p>
+        </div>
+
+        <div class="section">
+            <h2>WHY BEVY?</h2>
+            <p>Bevy is a refreshingly simple, data-driven game engine built in Rust. Its Entity Component System (ECS) architecture naturally maps to Midwinter's design:</p>
+            <ul>
+                <li>Characters are entities with Health, Position, Skills components</li>
+                <li>Terrain chunks are entities with Mesh, Elevation data</li>
+                <li>Systems handle skiing physics, AI, time progression</li>
+                <li>Resources manage global game state</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>PROJECT STRUCTURE</h2>
+            <ul>
+                <li><strong>src/</strong> - Main Rust source code</li>
+                <li><strong>src/terrain/</strong> - Terrain generation and rendering</li>
+                <li><strong>src/player/</strong> - Movement, controls, input</li>
+                <li><strong>src/ui/</strong> - Navigation screens, HUD</li>
+                <li><strong>src/map_view/</strong> - Strategic map system</li>
+                <li><strong>assets/</strong> - Sprites, models, sounds, configs</li>
+                <li><strong>database/</strong> - SQLite character/settlement data</li>
+                <li><strong>docs/</strong> - Comprehensive documentation</li>
+            </ul>
+            <a href="https://github.com/Archerevan-01fischb/MW" class="btn" target="_blank">VIEW SOURCE</a>
+            <a href="https://bevyengine.org/" class="btn" target="_blank">BEVY DOCS</a>
+        </div>
+    </main>
+</body>
+</html>

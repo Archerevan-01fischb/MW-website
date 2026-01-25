@@ -1,0 +1,9 @@
+services:
+  midwinter-search:
+    build: .
+    container_name: midwinter-manual-search
+    ports:
+      - "8501:8501"
+    environment:
+      - ANTHROPIC_API_KEY=YOUR_KEY_HERE
+    restart: unless-stopped
