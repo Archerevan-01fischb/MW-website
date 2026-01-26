@@ -82,52 +82,73 @@ Write-Host "Deploying..." -ForegroundColor Green
 
 # Deploy HTML files
 Write-Host "  Uploading HTML files..." -ForegroundColor Gray
-scp $LOCAL_PATH/*.html "${NAS_HOST}:${NAS_WEB_PATH}/"
-if ($LASTEXITCODE -ne 0) { Write-Host "ERROR: Failed to upload HTML files" -ForegroundColor Red; exit 1 }
+$htmlFiles = Get-ChildItem -Path $LOCAL_PATH -Filter "*.html" -File | ForEach-Object { $_.FullName }
+if ($htmlFiles) {
+    & scp $htmlFiles "${NAS_HOST}:${NAS_WEB_PATH}/"
+    if ($LASTEXITCODE -ne 0) { Write-Host "ERROR: Failed to upload HTML files" -ForegroundColor Red; exit 1 }
+}
 
 # Deploy XML files
 Write-Host "  Uploading XML files..." -ForegroundColor Gray
-scp $LOCAL_PATH/*.xml "${NAS_HOST}:${NAS_WEB_PATH}/"
+$xmlFiles = Get-ChildItem -Path $LOCAL_PATH -Filter "*.xml" -File | ForEach-Object { $_.FullName }
+if ($xmlFiles) {
+    & scp $xmlFiles "${NAS_HOST}:${NAS_WEB_PATH}/"
+}
 
 # Deploy config files
 Write-Host "  Uploading config files..." -ForegroundColor Gray
-scp $LOCAL_PATH/robots.txt $LOCAL_PATH/nginx.conf "${NAS_HOST}:${NAS_WEB_PATH}/"
+$configFiles = @("$LOCAL_PATH/robots.txt", "$LOCAL_PATH/nginx.conf") | Where-Object { Test-Path $_ }
+if ($configFiles) {
+    & scp $configFiles "${NAS_HOST}:${NAS_WEB_PATH}/"
+}
 
 # Deploy api-proxy
 Write-Host "  Uploading api-proxy..." -ForegroundColor Gray
-scp -r $LOCAL_PATH/api-proxy/* "${NAS_HOST}:${NAS_WEB_PATH}/api-proxy/"
+if (Test-Path "$LOCAL_PATH/api-proxy") {
+    & scp -r "$LOCAL_PATH/api-proxy" "${NAS_HOST}:${NAS_WEB_PATH}/"
+}
 
 # Deploy forms (just the PHP, not logs)
 Write-Host "  Uploading forms..." -ForegroundColor Gray
-scp $LOCAL_PATH/forms/mailing-list.php "${NAS_HOST}:${NAS_WEB_PATH}/forms/"
+if (Test-Path "$LOCAL_PATH/forms/mailing-list.php") {
+    & scp "$LOCAL_PATH/forms/mailing-list.php" "${NAS_HOST}:${NAS_WEB_PATH}/forms/"
+}
 
 # Deploy images directory
 Write-Host "  Syncing images..." -ForegroundColor Gray
 if (Test-Path "$LOCAL_PATH/images") {
-    scp -r "$LOCAL_PATH/images" "${NAS_HOST}:${NAS_WEB_PATH}/"
+    & scp -r "$LOCAL_PATH/images" "${NAS_HOST}:${NAS_WEB_PATH}/"
     if ($LASTEXITCODE -ne 0) { Write-Host "    WARNING: images sync may have failed" -ForegroundColor Yellow }
 }
 
 # Deploy sprites directory (includes icons with _new variants)
 Write-Host "  Syncing sprites..." -ForegroundColor Gray
 if (Test-Path "$LOCAL_PATH/sprites") {
-    scp -r "$LOCAL_PATH/sprites" "${NAS_HOST}:${NAS_WEB_PATH}/"
+    & scp -r "$LOCAL_PATH/sprites" "${NAS_HOST}:${NAS_WEB_PATH}/"
     if ($LASTEXITCODE -ne 0) { Write-Host "    WARNING: sprites sync may have failed" -ForegroundColor Yellow }
 }
 
 # Deploy portraits directory (includes /new subfolder)
 Write-Host "  Syncing portraits..." -ForegroundColor Gray
 if (Test-Path "$LOCAL_PATH/portraits") {
-    scp -r "$LOCAL_PATH/portraits" "${NAS_HOST}:${NAS_WEB_PATH}/"
+    & scp -r "$LOCAL_PATH/portraits" "${NAS_HOST}:${NAS_WEB_PATH}/"
     if ($LASTEXITCODE -ne 0) { Write-Host "    WARNING: portraits sync may have failed" -ForegroundColor Yellow }
 }
 
 # Deploy map tiles (if exists)
 if (Test-Path "$LOCAL_PATH/map") {
     Write-Host "  Syncing map tiles..." -ForegroundColor Gray
-    ssh ${NAS_HOST} "mkdir -p ${NAS_WEB_PATH}/map"
-    scp -r "$LOCAL_PATH/map" "${NAS_HOST}:${NAS_WEB_PATH}/"
+    & ssh ${NAS_HOST} "mkdir -p ${NAS_WEB_PATH}/map"
+    & scp -r "$LOCAL_PATH/map" "${NAS_HOST}:${NAS_WEB_PATH}/"
     if ($LASTEXITCODE -ne 0) { Write-Host "    WARNING: map sync may have failed" -ForegroundColor Yellow }
+}
+
+# Deploy fonts directory (if exists)
+if (Test-Path "$LOCAL_PATH/fonts") {
+    Write-Host "  Syncing fonts..." -ForegroundColor Gray
+    & ssh ${NAS_HOST} "mkdir -p ${NAS_WEB_PATH}/fonts"
+    & scp -r "$LOCAL_PATH/fonts" "${NAS_HOST}:${NAS_WEB_PATH}/"
+    if ($LASTEXITCODE -ne 0) { Write-Host "    WARNING: fonts sync may have failed" -ForegroundColor Yellow }
 }
 
 Write-Host ""

@@ -51,7 +51,7 @@ Then deploy:
 
 The script:
 - Uploads changed files to NAS
-- Syncs asset directories: `sprites/`, `portraits/`, `images/`, `map/`
+- Syncs asset directories: `sprites/`, `portraits/`, `images/`, `map/`, `fonts/`
 - Tests homepage loads
 - Verifies Search API is responding
 - Tests mailing list endpoint
@@ -62,8 +62,9 @@ The script:
 These directories are synced in full during deployment:
 - `sprites/` - Game icons (including `icons/*_new.png` for flip effects)
 - `portraits/` - Character portraits (including `new/` subfolder for cycling)
-- `images/` - General images
+- `images/` - General images (including `interiors/` for building lightboxes)
 - `map/` - Deep zoom map tiles (`.dzi` + `_files/` folder)
+- `fonts/` - Custom fonts (Midwinter.ttf)
 
 **If new assets aren't showing:** Verify they exist on server:
 ```bash
@@ -190,6 +191,63 @@ The website uses a retro/pixel aesthetic:
 --accent-yellow: #d4a840;
 --tile-bg: #1a2030;
 ```
+
+---
+
+## Tile Flip Effect (decisions.html)
+
+Tiles on the decisions page use a 3D card flip effect on hover. The front shows the original pixel-art icon, the back shows a modern HD version.
+
+**How it works:**
+- Original icon: `sprites/icons/IconName.png`
+- New HD icon: `sprites/icons/IconName_new.png`
+- Uses CSS `icon-card` class with `transform: rotateY(180deg)` on hover
+
+**Current flip-enabled tiles:**
+
+| Tile | Original | New (_new.png) |
+|------|----------|----------------|
+| Watch Video | Play.png | Play_new.png |
+| Download | Play.png | Play_new.png |
+| 32 Characters | Character_select.png | Character_select_new.png |
+| Terrain System | Startegic_map.png | Startegic_map_new.png |
+| Buildings | Enter_building.png | Enter_building_new.png |
+| Rust & Bevy | Repair_vehicle.png | Repair_vehicle_new.png |
+| Search Manual | Radio_icon.png | Radio_icon_new.png |
+| Source Code | Synthesis_plant_icon.png | Synthesis_plant_icon_new.png |
+| Enemy Info | surrender_flag.png | surrender_flag_new.png |
+| Join Discord | Join.png | Join_new.png |
+
+**Additional `_new.png` icons available (not yet used on tiles):**
+- Decision_icon_new.png, Eat_new.png, Move_new.png, Sabotage_new.png
+- SOS_new.png, Re-arm_new.png, Refuel_new.png, Sleep_new.png
+
+**To add flip effect to a tile:**
+```html
+<div class="icon-card" id="uniqueIconCard">
+    <div class="icon-card-inner">
+        <div class="icon-front">
+            <img src="sprites/icons/Original.png" alt="Description (Original)">
+        </div>
+        <div class="icon-back">
+            <img src="sprites/icons/Original_new.png" alt="Description (New)">
+        </div>
+    </div>
+</div>
+```
+
+**IMPORTANT when deploying new icons:**
+Always deploy BOTH the HTML changes AND the new PNG files:
+```bash
+scp decisions.html fischb@10.0.0.55:/share/Web/
+scp sprites/icons/*_new.png fischb@10.0.0.55:/share/Web/sprites/icons/
+```
+
+**Cloudflare caching issue:**
+Production goes through Cloudflare which caches images. If updated icons don't appear:
+1. Add cache buster to the img src: `image.png?v=2`
+2. Or purge cache from Cloudflare dashboard
+3. Staging (internal) doesn't have this issue
 
 ---
 

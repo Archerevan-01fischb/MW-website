@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MW - Rust & Bevy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Midwinter';
+            src: url('fonts/Midwinter.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --bg-dark: #0a0a12;
             --border-blue: #4a6b9a;
@@ -19,7 +27,7 @@
         body {
             background: var(--bg-dark);
             min-height: 100vh;
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Midwinter', 'IBM Plex Mono', monospace;
             color: var(--text-ice);
         }
         .header {
@@ -28,8 +36,8 @@
             border-bottom: 3px solid var(--border-blue);
         }
         .header a {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--text-ice);
             text-decoration: none;
         }
@@ -40,15 +48,15 @@
             padding: 4rem 2rem;
         }
         h1 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 1rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1.8rem;
             color: var(--text-white);
             text-align: center;
             margin-bottom: 0.5rem;
         }
         .subtitle {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.45rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.8rem;
             color: var(--accent-yellow);
             text-align: center;
             margin-bottom: 3rem;
@@ -73,13 +81,14 @@
             text-align: center;
         }
         .tech-card h3 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.55rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--accent-yellow);
             margin-bottom: 0.75rem;
         }
         .tech-card p {
-            font-size: 0.85rem;
+            font-family: 'Midwinter', sans-serif;
+            font-size: 1rem;
             line-height: 1.5;
         }
         .section {
@@ -89,16 +98,18 @@
             margin-bottom: 2rem;
         }
         .section h2 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1rem;
             color: var(--accent-yellow);
             margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--border-blue);
         }
         .section p {
+            font-family: 'Midwinter', sans-serif;
             line-height: 1.7;
             margin-bottom: 1rem;
+            font-size: 1rem;
         }
         .section ul {
             list-style: none;
@@ -121,7 +132,7 @@
             background: var(--accent-yellow);
             color: #000;
             text-decoration: none;
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Midwinter', cursive;
             font-size: 0.5rem;
             margin-top: 1rem;
             margin-right: 1rem;

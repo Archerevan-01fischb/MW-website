@@ -20,10 +20,15 @@
     <meta property="twitter:title" content="Midwinter Game Hub - Videos, Downloads & More">
     <meta property="twitter:description" content="Watch development videos, download the game, and explore the world of Midwinter.">
     <meta property="twitter:image" content="https://midwinter-remaster.titanium-helix.com/sprites/icons/Play.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Midwinter';
+            src: url('fonts/Midwinter.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --bg-dark: #0a0a12;
             --border-blue: #4a6b9a;
@@ -44,7 +49,7 @@
         body {
             background: var(--bg-dark);
             min-height: 100vh;
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Midwinter', cursive;
             color: var(--text-ice);
             overflow-x: hidden;
         }
@@ -79,14 +84,14 @@
         }
 
         .header-title {
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             color: var(--text-white);
             letter-spacing: 0.15em;
             text-shadow: 2px 2px 0 #000;
         }
 
         .header-version {
-            font-size: 0.5rem;
+            font-size: 0.75rem;
             color: var(--accent-orange);
             letter-spacing: 0.1em;
         }
@@ -145,7 +150,7 @@
         }
 
         .character-name {
-            font-size: 0.5rem;
+            font-size: 0.75rem;
             text-align: center;
             color: var(--text-white);
             margin-bottom: 0.5rem;
@@ -153,7 +158,7 @@
         }
 
         .character-title {
-            font-size: 0.4rem;
+            font-size: 0.6rem;
             color: var(--accent-yellow);
             text-align: center;
         }
@@ -166,7 +171,7 @@
         }
 
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             color: var(--text-white);
             text-align: center;
             margin-bottom: 2rem;
@@ -218,14 +223,14 @@
         }
 
         .tile-label-large {
-            font-size: 1.1rem;
+            font-size: 1.6rem;
             color: var(--text-white);
             letter-spacing: 0.15em;
             text-shadow: 2px 2px 0 #000;
         }
 
         .tile-sublabel {
-            font-size: 0.7rem;
+            font-size: 1rem;
             color: var(--accent-orange);
             letter-spacing: 0.1em;
         }
@@ -279,7 +284,7 @@
         }
 
         .tile-label {
-            font-size: 0.45rem;
+            font-size: 0.7rem;
             color: var(--text-ice);
             letter-spacing: 0.1em;
             text-shadow: 1px 1px 0 #000;
@@ -432,13 +437,13 @@
         }
 
         .stat-label {
-            font-size: 0.35rem;
+            font-size: 0.55rem;
             color: var(--text-ice);
             margin-bottom: 0.3rem;
         }
 
         .stat-value {
-            font-size: 0.5rem;
+            font-size: 0.75rem;
             color: var(--accent-yellow);
         }
 
@@ -472,15 +477,15 @@
         }
 
         .watch-label {
-            font-size: 0.3rem;
+            font-size: 0.45rem;
             color: var(--text-ice);
             margin-bottom: 0.3rem;
             letter-spacing: 0.1em;
         }
 
         .watch-time {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.9rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1.35rem;
             color: #40a0ff;
             text-shadow: 0 0 10px rgba(64, 160, 255, 0.8);
         }
@@ -505,14 +510,14 @@
         }
 
         .mission-label {
-            font-size: 0.35rem;
+            font-size: 0.55rem;
             color: var(--accent-orange);
             margin-bottom: 0.5rem;
             letter-spacing: 0.1em;
         }
 
         .mission-value {
-            font-size: 0.4rem;
+            font-size: 0.6rem;
             color: var(--text-white);
             line-height: 2.1;
             word-wrap: break-word;
@@ -527,7 +532,7 @@
         }
 
         .tips-header {
-            font-size: 0.7rem;
+            font-size: 1rem;
             color: var(--accent-yellow);
             margin-bottom: 1rem;
             letter-spacing: 0.15em;
@@ -535,7 +540,7 @@
         }
 
         .tip-text {
-            font-size: 0.65rem;
+            font-size: 1rem;
             color: var(--text-ice);
             line-height: 1.8;
             text-align: center;
@@ -581,7 +586,7 @@
         }
 
         .footer-link {
-            font-size: 0.4rem;
+            font-size: 0.6rem;
             color: var(--text-ice);
             text-decoration: none;
             letter-spacing: 0.1em;
@@ -593,7 +598,7 @@
         }
 
         .footer-credit {
-            font-size: 0.35rem;
+            font-size: 0.55rem;
             color: var(--border-blue);
         }
 
@@ -730,8 +735,16 @@
                 </a>
 
                 <a href="characters.html" class="tile">
-                    <img src="sprites/icons/Character_select.png"
-                         alt="Characters" class="tile-icon">
+                    <div class="icon-card" id="charactersIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Character_select.png" alt="Characters (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Character_select_new.png" alt="Characters (New)">
+                            </div>
+                        </div>
+                    </div>
                     <span class="tile-label">THE 32<br>CHARACTERS</span>
                 </a>
 
@@ -750,8 +763,16 @@
                 </a>
 
                 <a href="buildings.html" class="tile">
-                    <img src="sprites/icons/Enter_building.png"
-                         alt="Buildings" class="tile-icon">
+                    <div class="icon-card" id="buildingsIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Enter_building.png" alt="Buildings (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Enter_building_new.png" alt="Buildings (New)">
+                            </div>
+                        </div>
+                    </div>
                     <span class="tile-label">BUILDINGS<br>& ASSETS</span>
                 </a>
 
@@ -762,7 +783,7 @@
                                 <img src="sprites/icons/Repair_vehicle.png" alt="Bevy (Original)">
                             </div>
                             <div class="icon-back">
-                                <img src="sprites/icons/Repair_vehicle_new.png" alt="Bevy (New)">
+                                <img src="sprites/icons/Repair_vehicle_new.png?v=2" alt="Bevy (New)">
                             </div>
                         </div>
                     </div>
@@ -776,7 +797,7 @@
                                 <img src="sprites/icons/Radio_icon.png" alt="Search Manual (Original)">
                             </div>
                             <div class="icon-back">
-                                <img src="sprites/icons/Radio_icon_new.png" alt="Search Manual (New)">
+                                <img src="sprites/icons/Radio_icon_new.png?v=2" alt="Search Manual (New)">
                             </div>
                         </div>
                     </div>
@@ -798,8 +819,16 @@
                 </a>
 
                 <a href="enemies.html" class="tile">
-                    <img src="sprites/icons/surrender_flag.png"
-                         alt="Enemy Forces" class="tile-icon">
+                    <div class="icon-card" id="enemiesIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/surrender_flag.png" alt="Enemies (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/surrender_flag_new.png" alt="Enemies (New)">
+                            </div>
+                        </div>
+                    </div>
                     <span class="tile-label">ENEMY<br>INFORMATION</span>
                 </a>
 
@@ -810,8 +839,16 @@
                 </a>
 
                 <a href="https://discord.gg/BPUUUFJs2J" class="tile highlight" target="_blank">
-                    <img src="sprites/icons/Join.png"
-                         alt="Discord" class="tile-icon">
+                    <div class="icon-card" id="joinIconCard">
+                        <div class="icon-card-inner">
+                            <div class="icon-front">
+                                <img src="sprites/icons/Join.png" alt="Discord (Original)">
+                            </div>
+                            <div class="icon-back">
+                                <img src="sprites/icons/Join_new.png" alt="Discord (New)">
+                            </div>
+                        </div>
+                    </div>
                     <span class="tile-label">JOIN<br>DISCORD</span>
                 </a>
             </div>

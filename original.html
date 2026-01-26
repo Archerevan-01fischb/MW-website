@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MW - The Original Midwinter (1989)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Midwinter';
+            src: url('fonts/Midwinter.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --bg-dark: #0a0a12;
             --border-blue: #4a6b9a;
@@ -24,7 +30,7 @@
         body {
             background: var(--bg-dark);
             min-height: 100vh;
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Midwinter', 'IBM Plex Mono', monospace;
             color: var(--text-ice);
         }
 
@@ -48,8 +54,8 @@
         }
 
         .header a {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--text-ice);
             text-decoration: none;
             letter-spacing: 0.1em;
@@ -79,8 +85,8 @@
         }
 
         h1 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 1.5rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 2.25rem;
             color: var(--text-white);
             text-align: center;
             margin-bottom: 0.5rem;
@@ -89,8 +95,8 @@
         }
 
         .subtitle {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.5rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.75rem;
             color: var(--accent-yellow);
             text-align: center;
             margin-bottom: 3rem;
@@ -111,15 +117,16 @@
         }
 
         .info-label {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.4rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.6rem;
             color: var(--text-ice);
             margin-bottom: 0.5rem;
             letter-spacing: 0.1em;
         }
 
         .info-value {
-            font-size: 1rem;
+            font-family: 'Midwinter', sans-serif;
+            font-size: 1.5rem;
             color: var(--text-white);
         }
 
@@ -128,8 +135,8 @@
         }
 
         .section h2 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.7rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1.05rem;
             color: var(--accent-yellow);
             margin-bottom: 1.5rem;
             padding-bottom: 0.5rem;
@@ -138,9 +145,10 @@
         }
 
         .section p {
+            font-family: 'Midwinter', sans-serif;
             line-height: 1.8;
             margin-bottom: 1rem;
-            font-size: 0.95rem;
+            font-size: 1.4rem;
         }
 
         .feature-list {
@@ -166,14 +174,16 @@
         }
 
         .feature-text strong {
+            font-family: 'Midwinter', sans-serif;
             display: block;
             color: var(--text-white);
             margin-bottom: 0.25rem;
-            font-size: 0.85rem;
+            font-size: 1.3rem;
         }
 
         .feature-text span {
-            font-size: 0.8rem;
+            font-family: 'Midwinter', sans-serif;
+            font-size: 1.2rem;
             color: var(--text-ice);
         }
 
@@ -185,8 +195,8 @@
         }
 
         .links-section h3 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--text-white);
             margin-bottom: 1.5rem;
         }
@@ -198,8 +208,8 @@
             background: var(--border-blue);
             color: var(--text-white);
             text-decoration: none;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.45rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.7rem;
             letter-spacing: 0.1em;
             transition: all 0.2s;
         }

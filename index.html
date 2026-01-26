@@ -22,10 +22,14 @@
     <meta property="twitter:title" content="Midwinter Remaster - Official Fan Recreation">
     <meta property="twitter:description" content="A faithful recreation of the groundbreaking 1989 DOS game Midwinter by Mike Singleton. Built with Rust and Bevy engine.">
     <meta property="twitter:image" content="https://midwinter-remaster.titanium-helix.com/images/fan_remaster_logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Midwinter';
+            src: url('fonts/Midwinter.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -39,7 +43,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Midwinter', cursive;
             overflow: hidden;
             cursor: pointer;
         }

@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MW - Download</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Midwinter';
+            src: url('fonts/Midwinter.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --bg-dark: #0a0a12;
             --border-blue: #4a6b9a;
@@ -21,7 +29,7 @@
         body {
             background: var(--bg-dark);
             min-height: 100vh;
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'Midwinter', 'IBM Plex Mono', monospace;
             color: var(--text-ice);
         }
         body::before {
@@ -42,8 +50,8 @@
             align-items: center;
         }
         .header a {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--text-ice);
             text-decoration: none;
         }
@@ -62,15 +70,15 @@
             image-rendering: crisp-edges;
         }
         h1 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 1.2rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1.8rem;
             color: var(--text-white);
             text-align: center;
             margin-bottom: 0.5rem;
         }
         .version {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.7rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1rem;
             color: var(--accent-orange);
             text-align: center;
             margin-bottom: 1rem;
@@ -119,8 +127,8 @@
             height: 100%;
         }
         .video-label {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.65rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1rem;
             color: var(--accent-yellow);
             text-align: center;
             margin-bottom: 1rem;
@@ -134,8 +142,8 @@
             margin-bottom: 2rem;
         }
         .downloads-section h2 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.7rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 1rem;
             color: var(--text-white);
             text-align: center;
             margin-bottom: 1.5rem;
@@ -161,18 +169,20 @@
             transform: translateY(-2px);
         }
         .download-btn .platform {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.55rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.85rem;
             color: var(--text-white);
             margin-bottom: 0.5rem;
         }
         .download-btn .file {
-            font-size: 0.75rem;
+            font-family: 'Midwinter', sans-serif;
+            font-size: 1.1rem;
             color: var(--text-ice);
             margin-bottom: 0.25rem;
         }
         .download-btn .size {
-            font-size: 0.7rem;
+            font-family: 'Midwinter', sans-serif;
+            font-size: 1rem;
             color: var(--border-light);
         }
         .download-btn.primary {
@@ -191,23 +201,27 @@
             margin-bottom: 2rem;
         }
         .install-section h2 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--accent-yellow);
             margin-bottom: 1rem;
         }
         .install-section ol {
+            font-family: 'Midwinter', sans-serif;
             margin-left: 1.5rem;
             line-height: 1.8;
+            font-size: 1.1rem;
         }
         .install-section li {
             margin-bottom: 0.5rem;
         }
         .warning {
+            font-family: 'Midwinter', sans-serif;
             margin-top: 1.5rem;
             padding: 1rem;
             background: rgba(232, 112, 64, 0.1);
             border-left: 3px solid var(--accent-orange);
+            font-size: 1rem;
         }
         .warning strong {
             color: var(--accent-orange);
@@ -226,14 +240,15 @@
             padding: 1rem;
         }
         .req-box h3 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.6rem;
+            font-family: 'Midwinter', cursive;
+            font-size: 0.9rem;
             color: var(--accent-yellow);
             margin-bottom: 0.75rem;
         }
         .req-box ul {
+            font-family: 'Midwinter', sans-serif;
             list-style: none;
-            font-size: 0.85rem;
+            font-size: 1.1rem;
             line-height: 1.6;
         }
     /* Mobile */
