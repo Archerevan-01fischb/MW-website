@@ -252,6 +252,56 @@
             }
             .building-icon { width: 120px; height: 120px; }
         }
+
+        /* Lightbox Overlay */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 80vh;
+            border: 4px solid var(--border-light);
+            box-shadow: 0 0 50px rgba(106, 139, 186, 0.3);
+        }
+
+        .lightbox-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            color: var(--text-white);
+            text-align: center;
+            margin-top: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        .building-card[data-interior] {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -270,7 +320,7 @@
         <section class="category">
             <h2 class="category-title">STRATEGIC TARGETS</h2>
             <div class="buildings-grid">
-                <div class="building-card strategic">
+                <div class="building-card strategic" data-interior="images/interiors/heat-mine.png" data-name="Heat Mine Interior">
                     <img src="sprites/buildings/Heat-Mine-Icon.png" alt="Heat Mine" class="building-icon">
                     <div class="building-info">
                         <span class="building-tag tag-critical">DEFEND</span>
@@ -279,7 +329,7 @@
                     </div>
                 </div>
 
-                <div class="building-card strategic">
+                <div class="building-card strategic" data-interior="images/interiors/enemy-hq.png" data-name="Enemy HQ Interior">
                     <img src="sprites/buildings/Enemy-HQ-Icon.png" alt="Enemy Headquarters" class="building-icon">
                     <div class="building-info">
                         <span class="building-tag tag-critical">YOUR GOAL</span>
@@ -288,7 +338,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/radio-station.png" data-name="Radio Station Interior">
                     <img src="sprites/buildings/Radio-Station-Icon.png" alt="Radio Station" class="building-icon">
                     <div class="building-info">
                         <h3 class="building-name">RADIO STATION</h3>
@@ -302,7 +352,7 @@
         <section class="category">
             <h2 class="category-title">MILITARY & DEFENSE</h2>
             <div class="buildings-grid">
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/bunker.png" data-name="Bunker Interior">
                     <img src="sprites/buildings/Bunker-Icon.png" alt="Bunker" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -314,7 +364,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/magazine.png" data-name="Magazine Interior">
                     <img src="sprites/buildings/Magazine-Icon.png" alt="Magazine" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -326,7 +376,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/police-station.png" data-name="Police Station Interior">
                     <img src="sprites/buildings/Police-Station-Icon.png" alt="Police Station" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -345,7 +395,7 @@
         <section class="category">
             <h2 class="category-title">RESOURCES & SERVICES</h2>
             <div class="buildings-grid">
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/garage.png" data-name="Garage Interior">
                     <img src="sprites/buildings/Garage-Icon.png" alt="Garage" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -358,7 +408,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/store.png" data-name="Store Interior">
                     <img src="sprites/buildings/Store-Icon.png" alt="Store" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -371,7 +421,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/warehouse.png" data-name="Warehouse Interior">
                     <img src="sprites/buildings/Warehouse-Icon.png" alt="Warehouse" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -382,7 +432,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/factory.png" data-name="Factory Interior">
                     <img src="sprites/buildings/Factory-Icon.png" alt="Factory" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -393,7 +443,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/synthesis-plant.png" data-name="Synthesis Plant Interior">
                     <img src="sprites/buildings/Synthesis-Plant-Icon.png" alt="Synthesis Plant" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -411,7 +461,7 @@
         <section class="category">
             <h2 class="category-title">SHELTER & REST</h2>
             <div class="buildings-grid">
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/house.png" data-name="House Interior">
                     <img src="sprites/buildings/House-Icon.png" alt="House" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -423,7 +473,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/mountain-hut.png" data-name="Mountain Hut Interior">
                     <img src="sprites/buildings/Mountain-Hut-Icon.png" alt="Mountain Hut" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -435,7 +485,7 @@
                     </div>
                 </div>
 
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/church.png" data-name="Church Interior">
                     <img src="sprites/buildings/Church-Icon.png" alt="Church" class="building-icon">
                     <div class="building-info">
                         <div class="building-tags">
@@ -452,7 +502,7 @@
         <section class="category">
             <h2 class="category-title">TRANSPORT</h2>
             <div class="buildings-grid">
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/cable-car.png" data-name="Cable Car Interior">
                     <img src="sprites/buildings/Cable-Car-Icon.png" alt="Cable Car Station" class="building-icon">
                     <div class="building-info">
                         <h3 class="building-name">CABLE CAR STATION</h3>
@@ -466,7 +516,7 @@
         <section class="category">
             <h2 class="category-title">OTHER</h2>
             <div class="buildings-grid">
-                <div class="building-card">
+                <div class="building-card" data-interior="images/interiors/ruin.png" data-name="Ruin Interior">
                     <img src="sprites/buildings/Ruin-Icon.png" alt="Ruin" class="building-icon">
                     <div class="building-info">
                         <h3 class="building-name">RUIN</h3>
@@ -476,5 +526,59 @@
             </div>
         </section>
     </main>
+
+    <!-- Lightbox Overlay -->
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            <div class="lightbox-title" id="lightboxTitle"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        let hoverTimeout;
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        document.querySelectorAll('.building-card[data-interior]').forEach(card => {
+            if (isTouchDevice) {
+                // Touch devices: tap to open
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const interiorSrc = card.dataset.interior;
+                    const name = card.dataset.name;
+                    lightboxImage.src = interiorSrc;
+                    lightboxTitle.textContent = name;
+                    lightbox.classList.add('active');
+                });
+            } else {
+                // Desktop: hover to open
+                card.addEventListener('mouseenter', () => {
+                    const interiorSrc = card.dataset.interior;
+                    const name = card.dataset.name;
+
+                    // Small delay to prevent accidental triggers
+                    hoverTimeout = setTimeout(() => {
+                        lightboxImage.src = interiorSrc;
+                        lightboxTitle.textContent = name;
+                        lightbox.classList.add('active');
+                    }, 300);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    clearTimeout(hoverTimeout);
+                    lightbox.classList.remove('active');
+                });
+            }
+        });
+
+        // Click overlay to close (for touch devices)
+        lightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+    </script>
 </body>
 </html>
