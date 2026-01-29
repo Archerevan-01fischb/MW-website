@@ -416,40 +416,41 @@
             searchButton.disabled = true;
 
             try {
-                const endpoint = section ? `${API_BASE}/search/section.php` : `${API_BASE}/search.php`;
-                const body = section ? { query, section } : { query };
-
-                const response = await fetch(endpoint, {
+                // Start the search job
+                const startResponse = await fetch(`${API_BASE}/search-start.php`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(body)
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: section ? `${query} in the ${section} section` : query })
                 });
 
-                // Try to parse JSON, handle empty/invalid responses
-                let data;
-                const text = await response.text();
+                const startData = await startResponse.json();
+                if (!startResponse.ok || startData.error) {
+                    throw new Error(startData.error || 'Failed to start search');
+                }
 
-                try {
-                    data = JSON.parse(text);
-                } catch (parseError) {
-                    // JSON parse failed - likely timeout or incomplete response
-                    if (text.length === 0) {
-                        throw new Error('Empty response - the request may have timed out');
+                const jobId = startData.job_id;
+
+                // Poll for results
+                let attempts = 0;
+                const maxAttempts = 120; // 10 minutes max (5 sec intervals)
+
+                while (attempts < maxAttempts) {
+                    await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+
+                    const statusResponse = await fetch(`${API_BASE}/search-status.php?job_id=${jobId}`);
+                    const statusData = await statusResponse.json();
+
+                    if (statusData.status === 'complete') {
+                        displayResults(statusData.result.results, statusData.result.raw_response, query);
+                        return;
+                    } else if (statusData.status === 'error') {
+                        throw new Error(statusData.error || 'Search failed');
                     }
-                    throw new Error('Unexpected end of JSON input');
+                    // Still pending/running, continue polling
+                    attempts++;
                 }
 
-                if (!response.ok) {
-                    throw new Error(data.error || 'Search failed');
-                }
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
-
-                displayResults(data.results, data.raw_response, query);
+                throw new Error('Search timed out after 10 minutes');
 
             } catch (error) {
                 showError(error.message);
