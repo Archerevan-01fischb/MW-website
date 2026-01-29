@@ -571,11 +571,12 @@
             // Parse error for user-friendly messages
             let userMessage = message;
             let isRetryable = false;
+            const query = searchInput.value.trim();
 
             if (message.includes('rate_limit') || message.includes('429') || message.includes('too many')) {
                 userMessage = 'The search service is temporarily busy. Please wait a moment and try again.';
                 isRetryable = true;
-            } else if (message.includes('Unexpected end of JSON') || message.includes('Failed to fetch')) {
+            } else if (message.includes('Unexpected end of JSON') || message.includes('Failed to fetch') || message.includes('Empty response')) {
                 userMessage = 'The search request timed out. Please try again with a simpler query.';
                 isRetryable = true;
             } else if (message.includes('authentication') || message.includes('401')) {
@@ -593,9 +594,20 @@
                 </div>`;
             }
 
+            // Add contact link
+            html += `<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(232, 64, 64, 0.2); font-size: 0.9rem;">
+                <span style="color: #8ba4c4;">Still having issues?</span>
+                <a href="https://discord.gg/BWHsHDmH" target="_blank" style="color: #64b4ff; margin-left: 0.5rem;">Join Discord</a>
+                <span style="color: #555; margin: 0 0.5rem;">|</span>
+                <a href="mailto:lane01evan@gmail.com?subject=MW Search Error&body=Query: ${encodeURIComponent(query)}%0AError: ${encodeURIComponent(message)}%0ATime: ${encodeURIComponent(new Date().toISOString())}" style="color: #64b4ff;">Email Support</a>
+            </div>`;
+
             errorMessage.innerHTML = html;
             errorMessage.classList.add('active');
             resultsContainer.classList.remove('active');
+
+            // Send automatic error report (silent)
+            sendErrorReport(query, message);
 
             // Auto-retry countdown for rate limits
             if (isRetryable && message.includes('rate_limit')) {
@@ -613,6 +625,21 @@
                     }
                 }, 1000);
             }
+        }
+
+        // Send error report silently
+        function sendErrorReport(query, error) {
+            const formData = new FormData();
+            formData.append('name', 'Search Error Bot');
+            formData.append('email', 'search-error@midwinter-remaster.titanium-helix.com');
+            formData.append('role', 'error-report');
+            formData.append('message', `Search Error Report\n\nQuery: ${query}\nError: ${error}\nTime: ${new Date().toISOString()}\nURL: ${window.location.href}`);
+
+            // Fire and forget - don't wait for response
+            fetch('/forms/mailing-list.php', {
+                method: 'POST',
+                body: formData
+            }).catch(() => {}); // Silently ignore failures
         }
 
         // Handle example query clicks
