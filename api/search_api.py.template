@@ -1,0 +1,606 @@
+#!/usr/bin/env python3
+"""
+Flask API backend for Midwinter manual search
+Implements MCP-style tools for Claude to use via Anthropic API
+"""
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import anthropic
+import sqlite3
+import os
+import json
+import uuid
+import threading
+from datetime import datetime
+
+app = Flask(__name__)
+CORS(app)
+
+# Job queue for async searches
+search_jobs = {}  # {job_id: {'status': 'pending'|'running'|'complete'|'error', 'result': ..., 'created': datetime}}
+
+# Configuration
+DB_PATH = os.path.join(os.path.dirname(__file__), 'midwinter_unified.db')
+KEY_FILE = os.path.join(os.path.dirname(__file__), '.anthropic_key')
+
+def get_api_key():
+    """Get API key from file (preferred) or environment"""
+    if os.path.exists(KEY_FILE):
+        with open(KEY_FILE, 'r') as f:
+            return f.read().strip()
+    return os.environ.get('ANTHROPIC_API_KEY')
+
+def get_client():
+    """Get Anthropic client with current API key"""
+    key = get_api_key()
+    return anthropic.Anthropic(api_key=key) if key else None
+
+# Tool implementations (from MCP server)
+def search_manual_db(query: str) -> str:
+    """Full-text search across the manual"""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        results = []
+
+        # Try FTS first
+        try:
+            cursor = conn.execute("""
+                SELECT page_number, section_type,
+                       snippet(manual_fts, 2, '>>>', '<<<', '...', 64) as snippet,
+                       bm25(manual_fts) as rank
+                FROM manual_fts
+                WHERE manual_fts MATCH ?
+                ORDER BY rank
+                LIMIT 15
+            """, (query,))
+            results = cursor.fetchall()
+        except:
+            pass
+
+        # If no FTS results, try LIKE search with OR (more flexible)
+        if not results:
+            words = [w for w in query.split() if len(w) > 2]
+            if words:
+                where_clauses = " OR ".join([f"content LIKE ?" for _ in words])
+                params = [f"%{word}%" for word in words]
+                cursor = conn.execute(f"""
+                    SELECT page_number, section_type,
+                           substr(content, 1, 300) as snippet
+                    FROM manual_pages
+                    WHERE {where_clauses}
+                    ORDER BY page_number
+                    LIMIT 15
+                """, params)
+                results = cursor.fetchall()
+
+        conn.close()
+
+        if not results:
+            return f"No results found for '{query}'"
+
+        output = [f"Found {len(results)} results for '{query}':\n"]
+        for r in results:
+            output.append(f"**Page {r['page_number']}** [{r['section_type']}]")
+            output.append(f"  {r['snippet']}\n")
+
+        return "\n".join(output)
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+def quick_search_db(query: str) -> str:
+    """Fast entity lookup for characters, buildings, etc."""
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        conn.row_factory = sqlite3.Row
+        results = []
+
+        # Search characters
+        cursor = conn.execute("""
+            SELECT full_name, title, age, occupation, biography
+            FROM characters
+            WHERE full_name LIKE ? OR search_text LIKE ?
+            LIMIT 10
+        """, (f"%{query}%", f"%{query}%"))
+
+        chars = cursor.fetchall()
+        if chars:
+            results.append("=== CHARACTERS ===")
+            for c in chars:
+                results.append(f"\n**{c['full_name']}**")
+                if c['title']:
+                    results.append(f"  Title: {c['title']}")
+                if c['age']:
+                    results.append(f"  Age: {c['age']}")
+                if c['occupation']:
+                    results.append(f"  Occupation: {c['occupation']}")
+                if c['biography']:
+                    bio = c['biography'][:300] + "..." if len(c['biography']) > 300 else c['biography']
+                    results.append(f"  Bio: {bio}")
+
+        conn.close()
+
+        if not results:
+            return f"No entities found matching '{query}'"
+
+        return "\n".join(results)
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+# Define tools for Claude
+TOOLS = [
+    {
+        "name": "search_manual",
+        "description": "Search the Midwinter game manual using full-text search. Returns page numbers, sections, and relevant text snippets.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Search query - keywords or phrases to find in the manual"
+                }
+            },
+            "required": ["query"]
+        }
+    },
+    {
+        "name": "quick_search",
+        "description": "Fast lookup for specific entities like characters, buildings, vehicles by name.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Entity name to search for"
+                }
+            },
+            "required": ["query"]
+        }
+    }
+]
+
+@app.route('/api/health', methods=['GET'])
+def health():
+    """Health check endpoint"""
+    return jsonify({
+        'status': 'ok',
+        'api_configured': get_api_key() is not None,
+        'database_configured': os.path.exists(DB_PATH)
+    })
+
+@app.route('/api/search/fast', methods=['POST'])
+def search_fast():
+    """Fast AI search - Claude with tools, limited to 1 round"""
+    data = request.get_json()
+    query = data.get('query', '').strip()
+
+    if not query:
+        return jsonify({'error': 'Query parameter required'}), 400
+
+    client = get_client()
+    if not client:
+        return jsonify({'error': 'API not configured'}), 500
+
+    try:
+        messages = [{
+            "role": "user",
+            "content": f"""Search the Midwinter game manual to answer: {query}
+
+Tips: For "who is best at X" questions, search for the skill name (e.g. "gliding skill" or "skiing skill"). Character abilities are often mentioned with their names (Grazzini, Stark, etc)."""
+        }]
+
+        # First call - Claude will request tool use
+        response = client.messages.create(
+            model="claude-3-5-haiku-latest",
+            max_tokens=1024,
+            tools=TOOLS,
+            messages=messages
+        )
+
+        # Process ONE round of tool calls only
+        if response.stop_reason == "tool_use":
+            messages.append({"role": "assistant", "content": response.content})
+
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    if block.name == "search_manual":
+                        result = search_manual_db(block.input["query"])
+                    elif block.name == "quick_search":
+                        result = quick_search_db(block.input["query"])
+                    else:
+                        result = "Unknown tool"
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
+
+            messages.append({"role": "user", "content": tool_results})
+
+            # Final response with results
+            response = client.messages.create(
+                model="claude-3-5-haiku-latest",
+                max_tokens=1024,
+                messages=messages
+            )
+
+        # Extract text
+        answer = ""
+        for block in response.content:
+            if hasattr(block, 'text'):
+                answer += block.text
+
+        return jsonify({
+            'success': True,
+            'query': query,
+            'results': [],
+            'raw_response': answer or "No results found."
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/search', methods=['POST'])
+def search():
+    """Natural language search using Claude with manual search tools"""
+    data = request.get_json()
+    query = data.get('query', '').strip()
+
+    if not query:
+        return jsonify({'error': 'Query parameter required'}), 400
+
+    client = get_client()
+    if not client:
+        return jsonify({'error': 'API not configured'}), 500
+
+    try:
+        messages = [{
+            "role": "user",
+            "content": f"""Search the Midwinter manual for: {query}
+
+Give a concise answer with page citations. Use **bold** for key terms."""
+        }]
+
+        response = client.messages.create(
+            model="claude-3-5-haiku-latest",
+            max_tokens=1024,
+            tools=TOOLS,
+            messages=messages
+        )
+
+        # Process tool calls
+        while response.stop_reason == "tool_use":
+            # Add assistant's response
+            messages.append({"role": "assistant", "content": response.content})
+
+            # Execute each tool call
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    # Execute the appropriate tool
+                    if block.name == "search_manual":
+                        result = search_manual_db(block.input["query"])
+                    elif block.name == "quick_search":
+                        result = quick_search_db(block.input["query"])
+                    else:
+                        result = "Unknown tool"
+
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
+
+            # Add tool results
+            messages.append({"role": "user", "content": tool_results})
+
+            # Get next response
+            response = client.messages.create(
+                model="claude-sonnet-4-5-20250929",
+                max_tokens=2048,
+                tools=TOOLS,
+                messages=messages
+            )
+
+        # Extract final text response
+        final_text = ""
+        for block in response.content:
+            if hasattr(block, 'text'):
+                final_text += block.text
+
+        # Parse results for structured display
+        results = []
+        import re
+        page_pattern = r'\*\*Page (\d+)\*\* \[([^\]]+)\]'
+        matches = re.finditer(page_pattern, final_text)
+
+        for match in matches:
+            # Extract snippet after page marker
+            start = match.end()
+            next_match = re.search(r'\*\*Page \d+\*\*', final_text[start:])
+            end = start + next_match.start() if next_match else len(final_text)
+            snippet = final_text[start:end].strip()
+
+            results.append({
+                'page_number': int(match.group(1)),
+                'section': match.group(2),
+                'content': snippet[:400]
+            })
+
+        return jsonify({
+            'success': True,
+            'query': query,
+            'results': results,
+            'raw_response': final_text if not results else None
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/search/section', methods=['POST'])
+def search_section():
+    """Search within a specific section"""
+    data = request.get_json()
+    query = data.get('query', '').strip()
+    section = data.get('section', '')
+
+    if not query:
+        return jsonify({'error': 'Query parameter required'}), 400
+
+    # Modify query to focus on section
+    data['query'] = f"{query} in the {section} section"
+    return search()
+
+# =============================================================================
+# ASYNC SEARCH ENDPOINTS (for long-running searches)
+# =============================================================================
+
+def run_search_job(job_id, query):
+    """Run search in background thread"""
+    try:
+        search_jobs[job_id]['status'] = 'running'
+
+        client = get_client()
+        if not client:
+            search_jobs[job_id] = {'status': 'error', 'error': 'API not configured'}
+            return
+
+        messages = [{
+            "role": "user",
+            "content": f"""Answer this question about the 1989 game Midwinter: {query}
+
+Use the search tools to find relevant information. Try multiple searches if needed - search for character names, skills, or related terms."""
+        }]
+
+        response = client.messages.create(
+            model="claude-3-5-haiku-latest",
+            max_tokens=1024,
+            tools=TOOLS,
+            messages=messages
+        )
+
+        # Process tool calls (allow multiple rounds)
+        rounds = 0
+        while response.stop_reason == "tool_use" and rounds < 3:
+            messages.append({"role": "assistant", "content": response.content})
+
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    if block.name == "search_manual":
+                        result = search_manual_db(block.input["query"])
+                    elif block.name == "quick_search":
+                        result = quick_search_db(block.input["query"])
+                    else:
+                        result = "Unknown tool"
+
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
+
+            messages.append({"role": "user", "content": tool_results})
+
+            response = client.messages.create(
+                model="claude-3-5-haiku-latest",
+                max_tokens=1024,
+                tools=TOOLS,
+                messages=messages
+            )
+            rounds += 1
+
+        # If still requesting tools after max rounds, execute them then force final answer
+        if response.stop_reason == "tool_use":
+            messages.append({"role": "assistant", "content": response.content})
+            # Execute remaining tool calls
+            tool_results = []
+            for block in response.content:
+                if block.type == "tool_use":
+                    if block.name == "search_manual":
+                        result = search_manual_db(block.input["query"])
+                    elif block.name == "quick_search":
+                        result = quick_search_db(block.input["query"])
+                    else:
+                        result = "Unknown tool"
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": result
+                    })
+            messages.append({"role": "user", "content": tool_results + [{"type": "text", "text": "Now provide your final answer based on all search results."}]})
+            response = client.messages.create(
+                model="claude-3-5-haiku-latest",
+                max_tokens=1024,
+                messages=messages
+            )
+
+        # Extract final text
+        final_text = ""
+        for block in response.content:
+            if hasattr(block, 'text'):
+                final_text += block.text
+
+        # Parse results
+        import re
+        results = []
+        page_pattern = r'\*\*Page (\d+)\*\* \[([^\]]+)\]'
+        matches = re.finditer(page_pattern, final_text)
+
+        for match in matches:
+            start = match.end()
+            next_match = re.search(r'\*\*Page \d+\*\*', final_text[start:])
+            end = start + next_match.start() if next_match else len(final_text)
+            snippet = final_text[start:end].strip()
+
+            results.append({
+                'page_number': int(match.group(1)),
+                'section': match.group(2),
+                'content': snippet[:400]
+            })
+
+        search_jobs[job_id] = {
+            'status': 'complete',
+            'result': {
+                'success': True,
+                'query': query,
+                'results': results,
+                'raw_response': final_text if not results else None
+            }
+        }
+
+    except Exception as e:
+        search_jobs[job_id] = {'status': 'error', 'error': str(e)}
+
+@app.route('/api/search/start', methods=['POST'])
+def search_start():
+    """Start an async search job - returns immediately with job_id"""
+    data = request.get_json()
+    query = data.get('query', '').strip()
+
+    if not query:
+        return jsonify({'error': 'Query parameter required'}), 400
+
+    # Create job
+    job_id = str(uuid.uuid4())[:8]
+    search_jobs[job_id] = {'status': 'pending', 'created': datetime.now().isoformat()}
+
+    # Start background thread
+    thread = threading.Thread(target=run_search_job, args=(job_id, query))
+    thread.daemon = True
+    thread.start()
+
+    return jsonify({'job_id': job_id, 'status': 'pending'})
+
+@app.route('/api/search/status/<job_id>', methods=['GET'])
+def search_status(job_id):
+    """Check status of a search job"""
+    if job_id not in search_jobs:
+        return jsonify({'error': 'Job not found'}), 404
+
+    job = search_jobs[job_id]
+
+    if job['status'] == 'complete':
+        result = job['result']
+        # Clean up old job
+        del search_jobs[job_id]
+        return jsonify({'status': 'complete', 'result': result})
+    elif job['status'] == 'error':
+        error = job.get('error', 'Unknown error')
+        del search_jobs[job_id]
+        return jsonify({'status': 'error', 'error': error})
+    else:
+        return jsonify({'status': job['status']})
+
+if __name__ == '__main__':
+    print("Starting Midwinter Manual Search API...")
+    print(f"API Key configured: {get_api_key() is not None}")
+    print(f"Database path: {DB_PATH}")
+    print(f"Database exists: {os.path.exists(DB_PATH)}")
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
+# =============================================================================
+# MAILING LIST ENDPOINT
+# =============================================================================
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime
+
+# Gmail configuration
+GMAIL_USER = 'lane01evan@gmail.com'
+GMAIL_APP_PASSWORD = 'onkojkqiecgkktbo'
+
+# Rate limiting (simple in-memory)
+rate_limit_cache = {}
+
+@app.route('/api/mailing-list', methods=['POST', 'OPTIONS'])
+def mailing_list():
+    # Handle CORS preflight
+    if request.method == 'OPTIONS':
+        return '', 200
+    
+    # Get form data
+    name = request.form.get('name', 'Anonymous').strip()
+    email = request.form.get('email', '').strip()
+    role = request.form.get('role', 'fan').strip()
+    message = request.form.get('message', '').strip()
+    
+    # Get IP for rate limiting
+    ip = request.remote_addr
+    
+    # Simple rate limiting (1 per minute)
+    now = datetime.now().timestamp()
+    if ip in rate_limit_cache:
+        if now - rate_limit_cache[ip] < 60:
+            return jsonify({'success': False, 'message': 'Please wait before submitting again'}), 429
+    
+    # Validate email
+    if not email or '@' not in email:
+        return jsonify({'success': False, 'message': 'Valid email required'}), 400
+    
+    try:
+        # Build email
+        msg = MIMEMultipart()
+        msg['From'] = f'MW Website <{GMAIL_USER}>'
+        msg['To'] = GMAIL_USER
+        msg['Reply-To'] = email
+        msg['Subject'] = f'MW Mailing List: New {role} signup'
+        
+        body = f"""New Midwinter Mailing List Submission
+
+Name: {name}
+Email: {email}
+Role: {role}
+Submitted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+IP: {ip}
+
+Message:
+{message if message else '(none)'}
+"""
+        msg.attach(MIMEText(body, 'plain'))
+        
+        # Send via Gmail SMTP
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(GMAIL_USER, GMAIL_APP_PASSWORD)
+            server.send_message(msg)
+        
+        # Update rate limit
+        rate_limit_cache[ip] = now
+        
+        # Log to file
+        log_file = os.path.join(os.path.dirname(__file__), 'mailing_list.csv')
+        with open(log_file, 'a') as f:
+            if os.path.getsize(log_file) == 0:
+                f.write('timestamp,name,email,role,message,ip\n')
+            f.write(f'"{datetime.now()}","{name}","{email}","{role}","{message.replace(chr(34), chr(39))}","{ip}"\n')
+        
+        return jsonify({'success': True, 'message': 'Welcome to the resistance! You have been added to the mailing list.'})
+        
+    except Exception as e:
+        print(f'Mailing list error: {e}')
+        return jsonify({'success': False, 'message': 'Error sending email. Please try Discord instead.'}), 500

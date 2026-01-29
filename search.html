@@ -416,7 +416,7 @@
             searchButton.disabled = true;
 
             try {
-                // Start the search job
+                // Use async search with polling (handles long AI searches)
                 const startResponse = await fetch(`${API_BASE}/search-start.php`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -430,12 +430,23 @@
 
                 const jobId = startData.job_id;
 
-                // Poll for results
+                // Poll for results (every 2 seconds)
                 let attempts = 0;
-                const maxAttempts = 120; // 10 minutes max (5 sec intervals)
+                const maxAttempts = 60; // 2 min max
+                const loadingEl = document.getElementById('loading');
 
                 while (attempts < maxAttempts) {
-                    await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+                    await new Promise(r => setTimeout(r, 2000));
+
+                    // Show progress message after 30 seconds
+                    if (attempts === 15) {
+                        loadingEl.innerHTML = `
+                            <div style="font-size: 1.4rem; margin-bottom: 1rem; color: #64b4ff;">Still searching...</div>
+                            <div style="font-size: 1.05rem; color: #e0e6ed; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                                This is a complex query. The AI is searching through the manual. Please wait...
+                            </div>
+                        `;
+                    }
 
                     const statusResponse = await fetch(`${API_BASE}/search-status.php?job_id=${jobId}`);
                     const statusData = await statusResponse.json();
@@ -446,11 +457,9 @@
                     } else if (statusData.status === 'error') {
                         throw new Error(statusData.error || 'Search failed');
                     }
-                    // Still pending/running, continue polling
                     attempts++;
                 }
-
-                throw new Error('Search timed out after 10 minutes');
+                throw new Error('Search timed out');
 
             } catch (error) {
                 showError(error.message);

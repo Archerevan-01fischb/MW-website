@@ -14,6 +14,7 @@ api/.env
 api/start_api.sh
 api/search_api.py
 api/get-pip.py
+forms/mailing-list.php
 
 # Database (large, download from NAS)
 api/midwinter_unified.db

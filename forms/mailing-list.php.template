@@ -3,7 +3,7 @@
  * Midwinter Mailing List Form Handler
  * Sends form submissions via Gmail SMTP
  *
- * SETUP: Copy this file to mailing-list.php and fill in credentials
+ * SETUP: Copy to mailing-list.php and fill in Gmail credentials below
  */
 
 header('Access-Control-Allow-Origin: *');
