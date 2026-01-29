@@ -2,6 +2,8 @@
 /**
  * Midwinter Mailing List Form Handler
  * Sends form submissions via Gmail SMTP
+ *
+ * SETUP: Copy this file to mailing-list.php and fill in credentials
  */
 
 header('Access-Control-Allow-Origin: *');
@@ -41,9 +43,9 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-// Gmail config
-$gmail_user = 'lane01evan@gmail.com';
-$gmail_pass = 'onkojkqiecgkktbo';
+// Gmail config - FILL THESE IN
+$gmail_user = 'YOUR_GMAIL@gmail.com';
+$gmail_pass = 'YOUR_APP_PASSWORD';
 
 // Build email content
 $subject = "MW Mailing List: New {$role} signup";
