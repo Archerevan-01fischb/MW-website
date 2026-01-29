@@ -427,10 +427,26 @@
                     body: JSON.stringify(body)
                 });
 
-                const data = await response.json();
+                // Try to parse JSON, handle empty/invalid responses
+                let data;
+                const text = await response.text();
+
+                try {
+                    data = JSON.parse(text);
+                } catch (parseError) {
+                    // JSON parse failed - likely timeout or incomplete response
+                    if (text.length === 0) {
+                        throw new Error('Empty response - the request may have timed out');
+                    }
+                    throw new Error('Unexpected end of JSON input');
+                }
 
                 if (!response.ok) {
                     throw new Error(data.error || 'Search failed');
+                }
+
+                if (data.error) {
+                    throw new Error(data.error);
                 }
 
                 displayResults(data.results, data.raw_response, query);
@@ -552,9 +568,51 @@
         }
 
         function showError(message) {
-            errorMessage.textContent = `Error: ${message}`;
+            // Parse error for user-friendly messages
+            let userMessage = message;
+            let isRetryable = false;
+
+            if (message.includes('rate_limit') || message.includes('429') || message.includes('too many')) {
+                userMessage = 'The search service is temporarily busy. Please wait a moment and try again.';
+                isRetryable = true;
+            } else if (message.includes('Unexpected end of JSON') || message.includes('Failed to fetch')) {
+                userMessage = 'The search request timed out. Please try again with a simpler query.';
+                isRetryable = true;
+            } else if (message.includes('authentication') || message.includes('401')) {
+                userMessage = 'Search service configuration error. Please try again later.';
+            } else if (message.includes('500') || message.includes('Internal')) {
+                userMessage = 'The search service encountered an error. Please try again.';
+                isRetryable = true;
+            }
+
+            let html = `<div style="font-size: 1.1rem; margin-bottom: 0.5rem;">⚠️ ${userMessage}</div>`;
+
+            if (isRetryable) {
+                html += `<div style="font-size: 0.9rem; color: #8ba4c4; margin-top: 0.75rem;">
+                    <span id="retryCountdown"></span>
+                </div>`;
+            }
+
+            errorMessage.innerHTML = html;
             errorMessage.classList.add('active');
             resultsContainer.classList.remove('active');
+
+            // Auto-retry countdown for rate limits
+            if (isRetryable && message.includes('rate_limit')) {
+                let seconds = 30;
+                const countdown = document.getElementById('retryCountdown');
+                countdown.textContent = `You can retry in ${seconds} seconds...`;
+
+                const timer = setInterval(() => {
+                    seconds--;
+                    if (seconds > 0) {
+                        countdown.textContent = `You can retry in ${seconds} seconds...`;
+                    } else {
+                        countdown.innerHTML = '<button onclick="performSearch()" style="background: #64b4ff; color: #0a1628; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-family: inherit;">Retry Search</button>';
+                        clearInterval(timer);
+                    }
+                }, 1000);
+            }
         }
 
         // Handle example query clicks
