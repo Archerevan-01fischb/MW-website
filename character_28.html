@@ -225,14 +225,31 @@
 
         .portrait-container {
             flex-shrink: 0;
+            position: relative;
+            width: 200px;
+            height: 200px;
         }
-        
+
         .portrait {
             width: 200px;
-            height: auto;
+            height: 200px;
             border: 3px solid rgba(100, 180, 255, 0.3);
             border-radius: 8px;
             image-rendering: pixelated;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .portrait.old {
+            z-index: 1;
+        }
+
+        .portrait.new {
+            z-index: 2;
+            opacity: 0;
         }
         
         .character-info h1 {
@@ -391,7 +408,8 @@
     <main>
         <div class="character-header">
             <div class="portrait-container">
-                <img src="portraits/10 - Constable Kurt Muller.png" alt="Constable Kurt Muller" class="portrait">
+                <img src="portraits/10 - Constable Kurt Muller.png" alt="Constable Kurt Muller (Original)" class="portrait old" id="portraitOld">
+                <img src="portraits/new/10 - Constable Kurt Muller.png?v=2" alt="Constable Kurt Muller (New)" class="portrait new" id="portraitNew">
             </div>
             <div class="character-info">
                 <h1>Constable Kurt Muller</h1>
@@ -471,5 +489,24 @@
             <a href="character_29.html">Constable Luke Jackson →</a>
         </div>
     </main>
+
+    <script>
+        // Portrait cycling - dissolve between old and new graphics
+        // Randomly start with old or new portrait
+        let showingNew = Math.random() > 0.5;
+        const portraitOld = document.getElementById('portraitOld');
+        const portraitNew = document.getElementById('portraitNew');
+
+        if (portraitOld && portraitNew) {
+            portraitOld.style.opacity = 1;
+            portraitNew.style.opacity = showingNew ? 1 : 0;
+
+            setInterval(() => {
+                showingNew = !showingNew;
+                portraitOld.style.opacity = 1;
+                portraitNew.style.opacity = showingNew ? 1 : 0;
+            }, 4000);
+        }
+    </script>
 </body>
 </html>
