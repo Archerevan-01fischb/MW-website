@@ -8,7 +8,7 @@ param(
 
 $NAS_USER = "fischb"
 $NAS_HOST = "10.0.0.55"
-$STAGING_PATH = "/share/Web-staging"
+$STAGING_PATH = "/share/CACHEDEV1_DATA/Web-staging"
 $LOCAL_PATH = $PSScriptRoot
 
 # Files and directories to deploy
